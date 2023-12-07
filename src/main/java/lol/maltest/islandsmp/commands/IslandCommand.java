@@ -47,7 +47,7 @@ public class IslandCommand extends BaseCommand {
 
         // Check if the player has an island
         if (user.getIsland() != null) {
-            player.sendActionBar(HexUtils.colour("&cʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ ᴀɴ ɪsʟᴀɴᴅ!"));
+            player.sendActionBar(HexUtils.colour("&dcʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ ᴀɴ ɪsʟᴀɴᴅ!"));
             return;
         }
 

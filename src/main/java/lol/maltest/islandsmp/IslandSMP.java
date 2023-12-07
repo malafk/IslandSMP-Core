@@ -1,6 +1,5 @@
 package lol.maltest.islandsmp;
 
-import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.PaperCommandManager;
 import lol.maltest.islandsmp.commands.IslandCommand;
 import lol.maltest.islandsmp.manager.IslandCreationManager;
@@ -53,22 +52,20 @@ public final class IslandSMP extends JavaPlugin {
         wc.generator(new VoidChunkGenerator());
         wc.createWorld();
 
-//        islandStorage = new IslandStorage();
-//        userStorage = new UserStorage();
+        islandStorage = new IslandStorage();
+        userStorage = new UserStorage();
 
         islandCreationManager = new IslandCreationManager();
 
-//        islandCache = new IslandCache(islandCreationManager, islandStorage);
-//        userCache = new UserCache(userStorage);
+        islandCache = new IslandCache(islandCreationManager, islandStorage);
+        userCache = new UserCache(userStorage);
 
-//        getServer().getPluginManager().registerEvents(new JoinListener(userCache), this);
-//        getServer().getPluginManager().registerEvents(new LeaveListener(userCache), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(userCache), this);
+        getServer().getPluginManager().registerEvents(new LeaveListener(userCache), this);
 
         loadCommands();
 
     }
-
-    Queue
 
     public void loadCommands() {
         PaperCommandManager commandManager = new PaperCommandManager(this);
