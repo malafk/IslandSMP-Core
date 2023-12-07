@@ -38,7 +38,7 @@ public class IslandCommand extends BaseCommand {
 
     @Default
     public void onIslandCommand(Player player) {
-        player.sendMessage("helol");
+        player.sendMessage("trying to fix my git");
     }
 
     @Subcommand("create")
