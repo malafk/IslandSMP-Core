@@ -1,0 +1,6 @@
+name: IslandSMP
+version: '${version}'
+main: lol.maltest.islandsmp.IslandSMP
+api-version: '1.20'
+author: maltest
+website: https://maltest.org

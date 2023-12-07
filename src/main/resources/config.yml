@@ -1,0 +1,7 @@
+# Mongo DB Configuration
+mongo-connection: "mongodb://172.18.0.1:27017/"
+mongo-database-name: "islandsdev"
+
+# Island Configuration
+world-name: "island"
+schematic-name: "island"
