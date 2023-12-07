@@ -1,6 +1,8 @@
 package lol.maltest.islandsmp.listener;
 
+import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
+import lol.maltest.islandsmp.entities.User;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -24,6 +26,12 @@ public final class JoinListener implements Listener {
 
         // Cache the profile
         userCache.cacheProfileFromDatabase(player);
+
+        User user = UserCache.getUser(player);
+
+//        if(user.getIslandUUID() != null) {
+//            user.setIsland(IslandCache.getIsland(user.getIslandUUID()));
+//        }
 
     }
 }

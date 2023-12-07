@@ -1,5 +1,6 @@
 package lol.maltest.islandsmp.cache;
 
+import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.storage.UserStorage;
 import lol.maltest.islandsmp.entities.User;
 
@@ -36,6 +37,19 @@ public final class UserCache {
 
             if (user != null) {
                 users.add(user);
+
+
+                if(user.getIslandUUID() != null) {
+                    Island is = IslandCache.getIsland(user.getIslandUUID());
+
+                    if(is == null) {
+                        System.out.println(user.getPlayer() + " had a invalid island id");
+                        return;
+                    }
+
+                    user.setIsland(IslandCache.getIsland(user.getIslandUUID()));
+                }
+
                 return;
             }
 

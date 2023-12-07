@@ -11,17 +11,34 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.function.FlatRegionFunction;
+import com.sk89q.worldedit.function.RegionFunction;
+import com.sk89q.worldedit.function.RegionMaskingFilter;
+import com.sk89q.worldedit.function.biome.BiomeReplace;
+import com.sk89q.worldedit.function.mask.Mask;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.function.visitor.FlatRegionVisitor;
+import com.sk89q.worldedit.function.visitor.RegionVisitor;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.regions.Regions;
 import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.session.SessionOwner;
+import com.sk89q.worldedit.world.biome.BiomeType;
 import com.sk89q.worldedit.world.biome.BiomeTypes;
 import lol.maltest.islandsmp.IslandSMP;
+import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
+import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.utils.HexUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,24 +68,40 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
-        IslandSMP.getInstance().getIslandCache().createIsland("test", player.getUniqueId());
+        plugin.getGridManager().createIsland(player);
+    }
+
+    @Subcommand("forcesave")
+    @CommandPermission("minecraft.operator")
+    public void onForceSaveCommand(Player player) {
+        for (Island island : IslandCache.activeIslands) {
+            plugin.getIslandCache().islandStorage.saveAsync(island);
+        }
+        player.sendMessage("done");
     }
 
     @Subcommand("test")
     @CommandPermission("minecraft.operator")
     public void onTestCommand(Player player) {
+//
+//        int spawnX = -181;
+//        int spawnY = 94;
+//        int spawnZ = 134;
+//
+//
+//        player.sendMessage("Hopefully pasting");
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    pasteSchematic(player.getWorld(), new File(plugin.getDataFolder(), "schematics/schem.schem"), BlockVector3.at(0, -14, 0));
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }.runTaskAsynchronously(plugin);
 
-        int spawnX = -181;
-        int spawnY = 94;
-        int spawnZ = 134;
-
-
-        try {
-            player.sendMessage("Hopefully pasting");
-            pasteSchematic(player.getWorld(), new File(plugin.getDataFolder(), "schematics/schem.schem"), BlockVector3.at(0, -14, 0));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        plugin.getGridManager().pasteTest(player, player.getLocation());
     }
 
     public void pasteSchematic(World world, File schematicFile, BlockVector3 pasteLocation) throws IOException {
@@ -86,7 +119,7 @@ public class IslandCommand extends BaseCommand {
                 BlockVector3 centerOffset = schematicSize.divide(2);
                 BlockVector3 pasteCenter = pasteLocation.add(centerOffset);
 
-                pasteCenter = BlockVector3.at(pasteCenter.getX() - 368, pasteCenter.getY(), pasteCenter.getZ());
+                pasteCenter = BlockVector3.at(-pasteCenter.getX(), pasteCenter.getY(), pasteCenter.getZ());
 
                 // Paste the schematic
                 Operation operation = holder.createPaste(editSession)
@@ -100,13 +133,19 @@ public class IslandCommand extends BaseCommand {
                 world.getWorldBorder().setCenter(pasteCenter.getX(), pasteCenter.getZ());
                 world.getWorldBorder().setSize(radius * 2);
 
-                // Change biome
-                for (int x = pasteLocation.getX(); x < pasteLocation.getX() + schematicSize.getX(); x++) {
-                    for (int z = pasteLocation.getZ(); z < pasteLocation.getZ() + schematicSize.getZ(); z++) {
-                        BlockVector3 position = BlockVector3.at(x, 0, z);
-                        editSession.setBiome(position, BiomeTypes.JUNGLE);
-                    }
-                }
+                // Shift the region to coincide with the paste location instead of schematic's origin
+                BlockVector3 pastedMaxPoint = pasteLocation.subtract(schematicSize.subtract(BlockVector3.ONE));
+
+                // Retrieve the minimum and maximum X coordinates
+                int minX = pasteLocation.getX();
+                int maxX = pastedMaxPoint.getX();
+                int minZ = pasteLocation.getZ();
+                int maxZ = pastedMaxPoint.getZ();
+
+                System.out.println("minX: " + minX + " maxX" + maxX);
+
+                Bukkit.broadcastMessage("minZ:" + minZ + " maxZ:" + maxZ);
+
             } catch (MaxChangedBlocksException e) {
                 throw new RuntimeException(e);
             }

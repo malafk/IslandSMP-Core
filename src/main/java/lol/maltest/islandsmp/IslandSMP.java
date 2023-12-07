@@ -2,7 +2,9 @@ package lol.maltest.islandsmp;
 
 import co.aikar.commands.PaperCommandManager;
 import lol.maltest.islandsmp.commands.IslandCommand;
-import lol.maltest.islandsmp.manager.IslandCreationManager;
+import lol.maltest.islandsmp.entities.User;
+import lol.maltest.islandsmp.manager.BorderManager;
+import lol.maltest.islandsmp.manager.GridManager;
 import lol.maltest.islandsmp.storage.UserStorage;
 import lombok.Getter;
 import lol.maltest.islandsmp.cache.IslandCache;
@@ -13,11 +15,8 @@ import lol.maltest.islandsmp.listener.LeaveListener;
 import lol.maltest.islandsmp.storage.IslandStorage;
 import lol.maltest.islandsmp.utils.VoidChunkGenerator;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Queue;
 
 public final class IslandSMP extends JavaPlugin {
 
@@ -27,11 +26,13 @@ public final class IslandSMP extends JavaPlugin {
     private IslandStorage islandStorage;
     private UserStorage userStorage;
 
-    private IslandCreationManager islandCreationManager;
+    @Getter private GridManager gridManager;
+    @Getter private BorderManager borderManager;
 
     @Getter private IslandCache islandCache;
     @Getter private UserCache userCache;
 
+    @Getter private String worldName;
 
     @Override
     public void onEnable() {
@@ -40,7 +41,7 @@ public final class IslandSMP extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
 
-        String worldName = IslandSMP.getInstance().getConfig().getString("world-name");
+        worldName = IslandSMP.getInstance().getConfig().getString("world-name");
 
         // Check if the world already exists
         if (worldExists(worldName)) {
@@ -55,9 +56,10 @@ public final class IslandSMP extends JavaPlugin {
         islandStorage = new IslandStorage();
         userStorage = new UserStorage();
 
-        islandCreationManager = new IslandCreationManager();
+        gridManager = new GridManager(this);
+        borderManager = new BorderManager(this);
 
-        islandCache = new IslandCache(islandCreationManager, islandStorage);
+        islandCache = new IslandCache(islandStorage);
         userCache = new UserCache(userStorage);
 
         getServer().getPluginManager().registerEvents(new JoinListener(userCache), this);
@@ -77,6 +79,10 @@ public final class IslandSMP extends JavaPlugin {
     public void onDisable() {
         for (Island island : IslandCache.activeIslands) {
             islandStorage.saveAsync(island);
+        }
+
+        for(User user : UserCache.users) {
+            userStorage.saveAsync(user);
         }
     }
 

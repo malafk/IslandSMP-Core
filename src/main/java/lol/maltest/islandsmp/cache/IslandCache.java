@@ -1,7 +1,6 @@
 package lol.maltest.islandsmp.cache;
 
 import lol.maltest.islandsmp.IslandSMP;
-import lol.maltest.islandsmp.manager.IslandCreationManager;
 import lol.maltest.islandsmp.storage.IslandStorage;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.utils.LocationUtils;
@@ -16,11 +15,9 @@ public final class IslandCache {
 
     // Identifiers
     public static final List<Island> activeIslands = new ArrayList<>();
-    private final IslandCreationManager islandCreationManager;
-    private final IslandStorage islandStorage;
+    public final IslandStorage islandStorage;
 
-    public IslandCache(IslandCreationManager islandCreationManager, IslandStorage islandStorage) {
-        this.islandCreationManager = islandCreationManager;
+    public IslandCache(IslandStorage islandStorage) {
         this.islandStorage = islandStorage;
         activeIslands.addAll(islandStorage.loadAllObjects());
 
@@ -42,18 +39,4 @@ public final class IslandCache {
         return null;
     }
 
-    public void createIsland(String islandName, UUID islandOwner) {
-        Island island = new Island(islandName, UUID.randomUUID(), islandOwner);
-        activeIslands.add(island);
-
-        // create island method or just do it in the island constructor
-
-        Bukkit.getScheduler().runTaskLaterAsynchronously(IslandSMP.getInstance(), () -> {
-            Player player = Bukkit.getPlayer(islandOwner);
-            if (player == null) {
-                return;
-            }
-            player.teleportAsync(LocationUtils.locFromString(island.getIslandCentreLocation()));
-        }, 40L);
-    }
 }

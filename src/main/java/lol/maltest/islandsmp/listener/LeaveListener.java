@@ -4,6 +4,7 @@ import lol.maltest.islandsmp.cache.UserCache;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public final class LeaveListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerQuitEvent event) {
 
         // Identifiers
         UUID player = event.getPlayer().getUniqueId();

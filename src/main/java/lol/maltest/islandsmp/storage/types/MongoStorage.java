@@ -1,4 +1,5 @@
 package lol.maltest.islandsmp.storage.types;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.client.*;
@@ -55,12 +56,23 @@ public abstract class MongoStorage<I, T extends IslandStorageObject<I>> {
         return CompletableFuture.runAsync(() -> {
             Document document = serialize(object);
             if (document != null) {
+                System.out.println("saving");
                 collection.replaceOne(
                         Filters.eq(ID_FIELD, String.valueOf(object.getIslandUUID())),
                         document,
                         new ReplaceOptions().upsert(true));
             }
         });
+    }
+
+    public void save(T object) {
+        Document document = serialize(object);
+        if (document != null) {
+            collection.replaceOne(
+                    Filters.eq(ID_FIELD, String.valueOf(object.getIslandUUID())),
+                    document,
+                    new ReplaceOptions().upsert(true));
+        }
     }
 
     // Get the first object from the key, use this if it's like a profile system and a player will only ever have one profile
