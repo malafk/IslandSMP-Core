@@ -1,27 +1,29 @@
 package lol.maltest.islandsmp.entities;
 
 import lol.maltest.islandsmp.entities.sub.IslandLocation;
+import lol.maltest.islandsmp.entities.sub.IslandMember;
 import lol.maltest.islandsmp.entities.type.IslandStorageObject;
+import lol.maltest.islandsmp.utils.IslandRank;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
 @Setter
 public final class Island extends IslandStorageObject<UUID> {
 
     // Object Values
     @Getter @Setter private String islandName;
     @Getter private final UUID islandOwner;
-    @Setter private IslandLocation islandLocation;
+    @Getter @Setter private IslandLocation islandLocation;
 
-    private List<UUID> islandMembers;
+    private List<IslandMember> islandMembers = new ArrayList<>();
 
     // Island Upgrade Related Levels
-    private int worldBorderSize = 150;
+    @Getter private int worldBorderSize = 150;
     private int oreDropUpgrade, farmDropUpgrade, mobDropUpgrade, mobSpawnUpgrade, xpUpgrade;
     private boolean keepInventoryUpgrade;
 
@@ -61,4 +63,17 @@ public final class Island extends IslandStorageObject<UUID> {
     }
 
 
+    public List<IslandMember> getIslandMembers() {
+        List<IslandMember> members = new ArrayList<>();
+        IslandMember owner = new IslandMember(islandOwner);
+        owner.setRank(IslandRank.OWNER);
+        members.add(owner);
+
+        if(islandMembers != null) {
+            members.addAll(islandMembers);
+        }
+
+
+        return members;
+    }
 }

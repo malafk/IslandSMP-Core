@@ -41,6 +41,15 @@ public class HexUtils {
         return LegacyComponentSerializer.builder().character('&').hexColors().build().deserialize(message).applyFallbackStyle(TextDecoration.ITALIC.withState(false));
     }
 
+    public static List<Component> colorListComponent(List<String> given) {
+        List<Component> list = new ArrayList<>();
+        for (String s : given) {
+            list.add(colour(s));
+        }
+
+        return list;
+    }
+
     public static List<String> colourList(List<String> given) {
         List<String> list = new ArrayList<>();
         for (String s : given) {

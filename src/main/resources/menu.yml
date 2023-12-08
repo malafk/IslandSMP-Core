@@ -1,4 +1,24 @@
 file-version: 1.0
+pages:
+  buttons:
+    back:
+      name: "&#36FB2B&lᴘʀᴇᴠɪᴏᴜѕ ᴘᴀɢᴇ"
+      lore:
+        - "&8Action Button"
+        - "&f"
+        - "&f"
+    forward:
+      name: "&#36FB2B&lɴᴇхᴛ ᴘᴀɢᴇ"
+      lore:
+        - "&8Action Button"
+        - "&f"
+        - "&f"
+    backmenu:
+      name: "&#f83131&lʙᴀᴄᴋ"
+      lore:
+        - "&8Action Button"
+        - "&f"
+        - "&f"
 main:
   title: "Team Menu"
   rows: 4
@@ -84,5 +104,23 @@ main:
         - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
         - " &8● &fView and edit your islands"
         - "      &fpermissions."
+        - "&f"
+        - "&f"
+members:
+  title: "Island Members"
+  buttons:
+    member:
+      name: "&#36FB2B&l%player%"
+      lore:
+        - "&8Island Member"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fRole: &7%rank%"
+        - " &8● &fStatus: &7%status%"
+        - "&f"
+        - "&#36FB2Bᴀᴄᴛɪᴏɴѕ"
+        - " &8● &fLeft Click: &7Promote"
+        - " &8● &fRight Click: &7Demote"
+        - " &8● &fMiddle Click: &7Kick"
         - "&f"
         - "&f"
