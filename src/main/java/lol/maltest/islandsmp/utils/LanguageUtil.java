@@ -16,7 +16,7 @@ public class LanguageUtil {
 
     private YamlDocument _languageFile;
 
-    public String IslandCreated;
+    public static String IslandCreated;
 
     public LanguageUtil(JavaPlugin plugin) {
         try {

@@ -13,8 +13,8 @@ public class IslandLocation {
     public IslandLocation(int minX, int maxX, int minZ, int maxZ) {
         this.minX = minX;
         this.maxX = maxX;
-        this.minZ = minZ;
-        this.maxZ = maxZ;
+        this.minZ = Math.abs(minZ);
+        this.maxZ = Math.abs(maxZ);
 
         this.worldName = IslandSMP.getInstance().getWorldName();
 
@@ -35,11 +35,11 @@ public class IslandLocation {
 
     public Location getMiddleLocation() {
         int middleX = (minX + maxX) / 2;
+
+
         int middleZ = (minZ + maxZ) / 2;
 
-        // For Y-coordinate, you can choose an appropriate value.
-        // For instance, you might want to use the spawnY or another value that makes sense in your world context.
-        int middleY = spawnY;  // or any other appropriate Y value
+        int middleY = spawnY;
 
         return new Location(Bukkit.getWorld(this.worldName), middleX, middleY, middleZ);
     }

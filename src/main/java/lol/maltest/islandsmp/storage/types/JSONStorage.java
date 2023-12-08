@@ -59,6 +59,28 @@ public abstract class JSONStorage<I, T extends PlayerStorageObject<I>> {
         });
     }
 
+    public void save(T object) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(object);
+        if (json != null) {
+            try {
+                File objectFile = getObjectFile(object.getPlayer());
+
+                if (!objectFile.exists()) {
+                    try {
+                        objectFile.createNewFile();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                Files.writeString(objectFile.toPath(), json);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // Delete file baed on identifier method
     public CompletableFuture<Void> deleteAsync(I identifier) {
         return CompletableFuture.runAsync(() -> {
@@ -115,7 +137,6 @@ public abstract class JSONStorage<I, T extends PlayerStorageObject<I>> {
 
         return objects;
     }
-
 
 
     // Helper method to get all object files in the directory

@@ -35,15 +35,13 @@ public class GridManager {
     private IslandSMP plugin;
     private World gridWorld;
 
-    private ArrayList<Island> testActiveIslands = new ArrayList<>();
-
     public GridManager(IslandSMP plugin) {
         this.plugin = plugin;
         this.gridWorld = Bukkit.getWorld("island");
     }
 
     public Location getFreeGridLocation() {
-        int gridSize = testActiveIslands.size();
+        int gridSize = IslandCache.activeIslands.size();
         int columns = 29999; // Set the number of columns as needed
 
         // The x-coordinate is the modulus of gridSize and columns
@@ -60,10 +58,10 @@ public class GridManager {
     }
 
 
+
     public void pasteTest(Player player, Location location) {
         Bukkit.broadcastMessage("Creating  island test");
         Island island = new Island("s Island", UUID.randomUUID(), UUID.randomUUID());
-        testActiveIslands.add(island);
 
 
         new BukkitRunnable() {
@@ -92,9 +90,6 @@ public class GridManager {
 
 
 //        Bukkit.broadcastMessage("X: " + island.getIslandLocation().getX() + " Y: " + island.getIslandLocation().getY() + " Z: " + island.getIslandLocation().getZ());
-    }
-
-    private void teleportPlayerToIsland(Player player, Island island) {
     }
 
     public void createIsland(Player player) {

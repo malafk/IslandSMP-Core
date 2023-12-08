@@ -1,6 +1,11 @@
 package lol.maltest.islandsmp.utils;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,7 @@ public class HexUtils {
         return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', msg);
     }
 
-    public static String colour(String s) {
+    private static String color(String s) {
         Pattern HEX_PATTERN = Pattern.compile("&#(\\w{6})");
         Matcher matcher = HEX_PATTERN.matcher(s);
         StringBuffer buffer = new StringBuffer();
@@ -32,10 +37,14 @@ public class HexUtils {
         return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
     }
 
+    public static @NotNull Component colour(String message) {
+        return LegacyComponentSerializer.builder().character('&').hexColors().build().deserialize(message).applyFallbackStyle(TextDecoration.ITALIC.withState(false));
+    }
+
     public static List<String> colourList(List<String> given) {
         List<String> list = new ArrayList<>();
         for (String s : given) {
-            list.add(colour(s));
+            list.add(color(s));
         }
 
         return list;

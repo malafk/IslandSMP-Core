@@ -28,12 +28,16 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.session.SessionOwner;
 import com.sk89q.worldedit.world.biome.BiomeType;
 import com.sk89q.worldedit.world.biome.BiomeTypes;
+import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.guis.Gui;
+import dev.triumphteam.gui.guis.GuiItem;
 import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.utils.HexUtils;
+import lol.maltest.islandsmp.utils.MenuUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -55,7 +59,40 @@ public class IslandCommand extends BaseCommand {
 
     @Default
     public void onIslandCommand(Player player) {
-        player.sendMessage("trying to fix my git");
+        User user = UserCache.getUser(player.getUniqueId());
+
+        if(user.getIsland() == null) {
+            plugin.getGridManager().createIsland(player);
+            return;
+        }
+
+        Gui gui = Gui.gui()
+                .title(HexUtils.colour("helo"))
+                .rows(4)
+                .create();
+
+        GuiItem membersGui = ItemBuilder.from(MenuUtil.menuMainMembers.getMaterial()).setSkullOwner(player).name(HexUtils.colour(MenuUtil.menuMainMembers.getName())).lore(MenuUtil.menuMainMembers.getColorLore()).asGuiItem(event -> {
+            player.sendMessage("click");
+        });
+
+        Bukkit.broadcast(HexUtils.colour(MenuUtil.menuMainMembers.getName()));
+
+        gui.setItem(13, membersGui);
+
+        gui.open(player);
+    }
+
+    @Subcommand("go")
+    public void onIslandGoCommand(Player player) {
+        User user = UserCache.getUser(player.getUniqueId());
+
+        // Check if the player has an island
+        if (user.getIsland() == null) {
+            player.sendActionBar(HexUtils.colour("&dno island dork"));
+            return;
+        }
+
+        player.teleport(user.getIsland().getIslandLocation().getSpawnLocation());
     }
 
     @Subcommand("create")

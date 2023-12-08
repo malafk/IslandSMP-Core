@@ -31,4 +31,34 @@ public final class Island extends IslandStorageObject<UUID> {
         this.islandOwner = islandOwner;
     }
 
+    /**
+     * Checks if the given location is inside this island.
+     *
+     * @param location The location to check.
+     * @return True if the location is inside the island; otherwise, false.
+     */
+    public boolean isLocationInsideIsland(Location location) {
+        // Debug: Print the coordinates being checked
+        boolean xWithinBounds = (getIslandLocation().minX <= getIslandLocation().maxX) ?
+                (location.getX() >= getIslandLocation().minX && location.getX() <= getIslandLocation().maxX) :
+                (location.getX() >= getIslandLocation().maxX && location.getX() <= getIslandLocation().minX);
+
+        if (!xWithinBounds) {
+            return false;
+        }
+
+        // Check the z coordinate
+        boolean zWithinBounds = (getIslandLocation().minZ <= getIslandLocation().maxZ) ?
+                (location.getZ() >= getIslandLocation().minZ && location.getZ() <= getIslandLocation().maxZ) :
+                (location.getZ() >= getIslandLocation().maxZ && location.getZ() <= getIslandLocation().minZ);
+
+        if (!zWithinBounds) {
+            return false;
+        }
+
+        // If we've passed both checks, the location is within the island.
+        return true;
+    }
+
+
 }

@@ -6,6 +6,8 @@ import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.manager.BorderManager;
 import lol.maltest.islandsmp.manager.GridManager;
 import lol.maltest.islandsmp.storage.UserStorage;
+import lol.maltest.islandsmp.utils.LanguageUtil;
+import lol.maltest.islandsmp.utils.MenuUtil;
 import lombok.Getter;
 import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
@@ -62,6 +64,9 @@ public final class IslandSMP extends JavaPlugin {
         islandCache = new IslandCache(islandStorage);
         userCache = new UserCache(userStorage);
 
+        new LanguageUtil(this);
+        new MenuUtil(this);
+
         getServer().getPluginManager().registerEvents(new JoinListener(userCache), this);
         getServer().getPluginManager().registerEvents(new LeaveListener(userCache), this);
 
@@ -77,13 +82,15 @@ public final class IslandSMP extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getLogger().info("Saving data on shutdown...");
         for (Island island : IslandCache.activeIslands) {
-            islandStorage.saveAsync(island);
+            islandStorage.save(island);
         }
 
         for(User user : UserCache.users) {
-            userStorage.saveAsync(user);
+            userStorage.save(user);
         }
+        Bukkit.getLogger().info("Saved data!");
     }
 
     private boolean worldExists(String worldName) {

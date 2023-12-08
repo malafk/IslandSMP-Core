@@ -1,12 +1,12 @@
 package lol.maltest.islandsmp.manager;
 
-import com.github.yannicklamprecht.worldborder.api.BorderAPI;
 import com.github.yannicklamprecht.worldborder.api.WorldBorderApi;
 import com.github.yannicklamprecht.worldborder.impl.WorldBorder;
 import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.entities.Island;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -35,17 +35,31 @@ public class BorderManager {
         startBorderTask();
     }
 
+    public Island getIsland(Location location) {
+        if(!location.getWorld().getName().equals(plugin.getWorldName()))
+            return null;
+
+        for (Island island : IslandCache.activeIslands) {
+            if (island.isLocationInsideIsland(location)) {
+                return island;
+            }
+        }
+
+        return null;
+    }
+
     public void startBorderTask() {
         new BukkitRunnable() {
             @Override
             public void run() {
                 for(Player player : Bukkit.getOnlinePlayers()) {
-                    for(Island island : IslandCache.activeIslands) {
+                    Island island = getIsland(player.getLocation());
+                    if(island != null) {
+//                        player.sendMessage("You are in the island " + island.getIslandName());
                         worldBorderApi.setBorder(player, island.getWorldBorderSize(), island.getIslandLocation().getMiddleLocation());
-                        System.out.println("Set " + player.getName() +"  border " + island.getIslandLocation().getMiddleLocation());
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(plugin, 0, 20);
+        }.runTaskTimer(plugin, 0, 5);
     }
 }
