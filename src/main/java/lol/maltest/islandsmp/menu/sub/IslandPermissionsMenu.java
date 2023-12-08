@@ -1,13 +1,19 @@
 package lol.maltest.islandsmp.menu.sub;
 
 import dev.triumphteam.gui.guis.Gui;
+import lol.maltest.islandsmp.cache.UserCache;
+import lol.maltest.islandsmp.entities.User;
+import lol.maltest.islandsmp.menu.DynamicMenuItem;
 import lol.maltest.islandsmp.menu.Menu;
 import lol.maltest.islandsmp.menu.Menuable;
+import lol.maltest.islandsmp.utils.HexUtils;
 import lol.maltest.islandsmp.utils.MenuUtil;
 import lol.maltest.islandsmp.utils.Rank;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IslandPermissionsMenu extends Menu {
@@ -40,6 +46,38 @@ public class IslandPermissionsMenu extends Menu {
 
     @Override
     public List<Menuable> getMenuItems(Player player) {
-        return MenuUtil.menuPermissionsButtons;
+        ArrayList<Menuable> buttons = new ArrayList<>(MenuUtil.menuPermissionsButtons);
+
+        ArrayList<Menuable> buttonToReturn = new ArrayList<>();
+
+        User user = UserCache.getUser(player.getUniqueId());
+
+        if(user == null) return null;
+
+        for(Menuable menuable : buttons) {
+
+            ArrayList<Component> newMen = new ArrayList<>();
+
+            String rankName = menuable.getKeyPrefix().substring(menuable.getKeyPrefix().lastIndexOf(".") + 1);
+
+
+            for(String lore : MenuUtil._menuFile.getStringList(menuable.getKeyPrefix() + ".lore")) {
+                newMen.add(HexUtils.colour(lore.replace("%permissions%", user.getIsland().getNumberOfActivePermissions(Rank.valueOf(rankName.toUpperCase())) + "")));
+            }
+
+            buttonToReturn.add(
+                    new DynamicMenuItem(
+                            menuable.getMaterial(),
+                            menuable.getName(),
+                            newMen,
+                            menuable.getKeyPrefix(),
+                            menuable.getSlot(),
+                            null
+                    )
+            );
+        }
+
+
+        return buttonToReturn;
     }
 }

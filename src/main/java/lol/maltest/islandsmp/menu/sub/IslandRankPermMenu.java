@@ -1,14 +1,20 @@
 package lol.maltest.islandsmp.menu.sub;
 
+import com.sun.jdi.ArrayReference;
 import dev.triumphteam.gui.guis.Gui;
+import lol.maltest.islandsmp.cache.UserCache;
+import lol.maltest.islandsmp.entities.User;
+import lol.maltest.islandsmp.menu.DynamicMenuItem;
 import lol.maltest.islandsmp.menu.Menu;
 import lol.maltest.islandsmp.menu.MenuItem;
 import lol.maltest.islandsmp.menu.Menuable;
-import lol.maltest.islandsmp.utils.MenuUtil;
-import lol.maltest.islandsmp.utils.Rank;
+import lol.maltest.islandsmp.utils.*;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.checkerframework.checker.units.qual.A;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +26,14 @@ public class IslandRankPermMenu extends Menu {
         this.selectedRank = selectedRank;
     }
 
+    Gui gui;
+
     @Override
     public void open(Player player) {
 
         setPreviousMenu(IslandPermissionsMenu.class);
 
-        Gui gui = Gui.gui()
+        gui = Gui.gui()
                 .title(MenuUtil.menuRankPermissionsTitle)
                 .rows(MenuUtil.menuRankPermissionsRows)
                 .create();
@@ -35,7 +43,31 @@ public class IslandRankPermMenu extends Menu {
 
     @Override
     public void onClick(Player player, String key, ClickType clickType) {
-        player.sendMessage("You just clicked " + key);
+        if(!key.startsWith("rankpermissions.buttons.")) return;
+
+        User user = UserCache.getUser(player.getUniqueId());
+
+        if(user == null) return;
+
+        String permission = key.replace("rankpermissions.buttons.", "").toUpperCase();
+
+        // TODO: CHECK PERMISSIONS
+        if(!PermUtil.canGrantPermissionRankCheck(user, selectedRank)) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorHigherRank));
+            return;
+        }
+
+        if(!PermUtil.hasPermission(user, Permission.PERMISSIONS)) {
+            return;
+        }
+
+        if(user.getIsland().hasPermission(selectedRank, permission)) {
+            user.getIsland().revokePermission(selectedRank, permission);
+        } else {
+            user.getIsland().grantPermission(selectedRank, permission);
+        }
+
+        new IslandRankPermMenu(selectedRank).open(player);
     }
 
     @Override
@@ -45,23 +77,36 @@ public class IslandRankPermMenu extends Menu {
 
     @Override
     public List<Menuable> getMenuItems(Player player) {
-        ArrayList<Menuable> menuRankPermissionsButtons = new ArrayList<>();
+        ArrayList<Menuable> menuRankPermissionsButtons = new ArrayList<>(MenuUtil.menuRankPermissionsButtons);
 
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.place"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.break"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.container"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.invite"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.kick"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.promote"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.demote"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.settings"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.upgrade"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.permissions"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.sethome"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.home"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.setwarp"));
-        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.warp"));
+        ArrayList<Menuable> buttonToReturn = new ArrayList<>();
 
-        return MenuUtil.menuRankPermissionsButtons;
+        User user = UserCache.getUser(player.getUniqueId());
+
+        if(user == null) return null;
+
+        for(Menuable menuable : menuRankPermissionsButtons) {
+
+            String permissionName = menuable.getKeyPrefix().substring(menuable.getKeyPrefix().lastIndexOf(".") + 1);
+            ArrayList<Component> newMen = new ArrayList<>();
+
+            for(String lore : MenuUtil._menuFile.getStringList(menuable.getKeyPrefix() + ".lore")) {
+                newMen.add(HexUtils.colour(lore.replace("%status%", (user.getIsland().hasPermission(selectedRank, permissionName) ? "&aEnabled" : "&cDisabled"))));
+            }
+
+            buttonToReturn.add(
+                    new DynamicMenuItem(
+                    menuable.getMaterial(),
+                    menuable.getName(),
+                    newMen,
+                    menuable.getKeyPrefix(),
+                    menuable.getSlot(),
+                    null
+                    )
+            );
+        }
+
+
+        return buttonToReturn;
     }
 }

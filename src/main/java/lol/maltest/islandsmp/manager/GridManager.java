@@ -16,10 +16,9 @@ import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.entities.sub.IslandLocation;
-import lol.maltest.islandsmp.utils.LocationUtils;
+import lol.maltest.islandsmp.entities.sub.IslandMember;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,7 +26,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class GridManager {
@@ -58,38 +56,58 @@ public class GridManager {
     }
 
 
+    public void disbandIsland(UUID islandUuid) {
+        Island island = IslandCache.getIsland(islandUuid);
 
-    public void pasteTest(Player player, Location location) {
-        Bukkit.broadcastMessage("Creating  island test");
-        Island island = new Island("s Island", UUID.randomUUID(), UUID.randomUUID());
+        if(island == null) {
+            System.out.println("Tried to disband a invalid island");
+            return;
+        }
 
+        Player islandOwner = Bukkit.getPlayer(island.getIslandOwner());
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                IslandLocation islandLocation;
-                Location rawGridLocation = getFreeGridLocation();
+        if(islandOwner == null) {
+            System.out.println("Tried to disband island whilst owner was offline!");
+            return;
+        }
 
-                try {
-                    islandLocation = pasteSchematic(gridWorld, new File(plugin.getDataFolder(), "schematics/schem.schem"), BlockVector3.at(rawGridLocation.getX(), rawGridLocation.getY(), rawGridLocation.getZ()));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        islandOwner.closeInventory();
 
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        player.teleport(island.getIslandLocation().getSpawnLocation());
-                    }
-                }.runTask(plugin);
+        islandOwner.getInventory().clear();
+        islandOwner.getEnderChest().clear();
 
+        for(IslandMember islandMember : island.getIslandMembers()) {
+            Player islandPlayer = Bukkit.getPlayer(islandMember.getPlayerUuid());
+
+            if(islandPlayer == null) {
+                plugin.getUserCache().cacheProfileFromDatabase(islandMember.getPlayerUuid());
+
+                User islandUser = UserCache.getUser(islandMember.getPlayerUuid());
+
+                islandUser.setIslandUUID(plugin.getNullUuid());
+
+                plugin.getUserCache().removeFromCacheAndSaveToDatabase(islandUser.getPlayer());
+                continue;
             }
-        }.runTaskAsynchronously(plugin);
 
+            User user = UserCache.getUser(islandPlayer.getUniqueId());
 
+            user.setIslandUUID(null);
 
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "espawn " + islandPlayer.getName());
 
-//        Bukkit.broadcastMessage("X: " + island.getIslandLocation().getX() + " Y: " + island.getIslandLocation().getY() + " Z: " + island.getIslandLocation().getZ());
+            // Set all islandid in their json to null
+        }
+
+        island.setTrustedMembers(null);
+        island.setIslandMembers(null);
+        island.setIslandWarps(null);
+        island.setRankPermissions(null);
+
+        // Set null to save some memory in future idk
+
+        island.setIslandOwner(plugin.getNullUuid());
+        island.setIslandName(islandOwner.getName() +"'s deleted island");
     }
 
     public void createIsland(Player player) {

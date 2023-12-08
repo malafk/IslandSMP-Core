@@ -20,7 +20,7 @@ public final class Island extends IslandStorageObject<UUID> {
 
     // Object Values
     @Getter @Setter private String islandName;
-    @Getter private final UUID islandOwner;
+    @Getter @Setter private UUID islandOwner;
     @Getter @Setter private IslandLocation islandLocation;
 
     private List<IslandMember> islandMembers = new ArrayList<>();
@@ -28,7 +28,7 @@ public final class Island extends IslandStorageObject<UUID> {
 
     @Getter private List<IslandWarp> islandWarps = new ArrayList<>();
 
-    @Getter private final Map<Rank, Set<String>> rankPermissions = new HashMap<>();
+    @Getter @Setter private Map<Rank, Set<String>> rankPermissions = new HashMap<>();
 
     // Island Upgrade Related Levels
     @Getter private int worldBorderSize = 150;
@@ -118,6 +118,11 @@ public final class Island extends IslandStorageObject<UUID> {
         trustedMembers.add(player.getUniqueId());
     }
 
+
+    public void addIslandMember(Player player) {
+        islandMembers.add(new IslandMember(player.getUniqueId()));
+    }
+
     public void grantPermission(Rank rank, String permission) {
         this.rankPermissions.computeIfAbsent(rank, k -> new HashSet<>()).add(permission);
     }
@@ -142,13 +147,23 @@ public final class Island extends IslandStorageObject<UUID> {
     public void revokePermission(Rank rank, String permission) {
         Set<String> permissions = this.rankPermissions.get(rank);
         if (permissions != null) {
-            permissions.remove(permission);
+            permissions.remove(permission.toUpperCase());
         }
     }
 
     public boolean hasPermission(Rank rank, String permission) {
         Set<String> permissions = this.rankPermissions.get(rank);
-        return permissions != null && permissions.contains(permission);
+        return permissions != null && permissions.contains(permission.toUpperCase());
+    }
+
+    public int getNumberOfActivePermissions(Rank rank) {
+        Set<String> permissions = this.rankPermissions.get(rank);
+        if (permissions != null) {
+            return permissions.size();
+        } else {
+            // No permissions found for rank
+            return 0;
+        }
     }
 
     // Check if a rank has a permission
@@ -160,6 +175,6 @@ public final class Island extends IslandStorageObject<UUID> {
         if(user.getIsland().getIslandOwner().equals(player.getUniqueId())) return true;
 
         Set<String> permissions = this.rankPermissions.get(getPlayerRank(player));
-        return permissions != null && permissions.contains(permission);
+        return permissions != null && permissions.contains(permission.toUpperCase());
     }
 }

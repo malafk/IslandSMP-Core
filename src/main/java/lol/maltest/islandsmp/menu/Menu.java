@@ -56,7 +56,7 @@ public abstract class Menu {
         ItemBuilder itemBuilder = ItemBuilder.from(item.getMaterial());
 
         if (item.getMaterial().equals(Material.PLAYER_HEAD)) {
-            itemBuilder = itemBuilder.setSkullOwner(player);
+            itemBuilder = itemBuilder.setSkullOwner(item.getSkullOwner());
         }
 
         itemBuilder.name(HexUtils.colour(item.getName()));

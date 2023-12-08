@@ -5,6 +5,7 @@ import lol.maltest.islandsmp.utils.HexUtils;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class MenuItem implements Menuable {
         return getLore().stream()
                 .map(HexUtils::colour)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public OfflinePlayer getSkullOwner() {
+        return null;
     }
     // The getters are automatically fulfilled by the use of Lombok's @Getter annotation at the class level
 }

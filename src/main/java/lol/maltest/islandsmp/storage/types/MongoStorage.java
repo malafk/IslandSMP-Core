@@ -105,6 +105,13 @@ public abstract class MongoStorage<I, T extends IslandStorageObject<I>> {
         });
     }
 
+
+    public void deleteObject(I identifier) {
+        CompletableFuture.runAsync(() -> {
+            collection.deleteOne(Filters.eq(ID_FIELD, String.valueOf(identifier)));
+        });
+    }
+
     // Return a list of all objects
     public List<T> loadAllObjects() {
         List<T> objects = new ArrayList<>();

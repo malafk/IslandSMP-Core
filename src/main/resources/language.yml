@@ -3,12 +3,24 @@ prefix: "&#36FB2B&lɪѕʟᴀɴᴅ &8» &f"
 errors:
   global:
     need-island: "You need a island to perform this action!"
+    need-permission: "You need the permission &c%permission% &fto do this!"
+    only-owner-disband: "Only owners can disband islands!"
+    cant-find-player: "Unable to find the player &c%player% &fdid they go offline?"
   members:
     cant-modify-owner: "You can't modify the island owner!"
   warps:
     max-warps: "You have hit the max amount of warps, upgrade your island to get more!"
+  rankpermissions:
+    higher-rank: "You can't modify this ranks permissions since its a higher rank than your current rank!"
 messages:
   island:
+    are-you-sure-disband: "Are you sure you want to disband? This will delete your island and clear your inventory and enderchest! Run this command again to confirm."
+    disbanded: "You have disbanded your island, your inventory and enderchest have also been cleared!"
     created: "Your brand new island has been created! Teleporting you!"
+    invited: "You have invited &c%player% &fto your island!"
+    received-invite: "%invitee% has invited you to join their island! Type &c/is join %invitee% &fto join their island!"
+    cant-join-island: "You can't join someone else's island when you have an island. Disband it first"
+    joined-island: "You have joined %player%'s island!"
+    accepted-invite: "%player% accepted your invite and has joined your island!"
   warps:
     created: "You have set the warp %warp% at your current location!"

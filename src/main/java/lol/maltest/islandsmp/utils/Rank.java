@@ -17,4 +17,12 @@ public enum Rank {
     Rank(String display) {
         this.display = display;
     }
+
+    public boolean isHigherThan(Rank other){
+        return this.ordinal() > other.ordinal();
+    }
+
+    public boolean isLowerThan(Rank other){
+        return this.ordinal() < other.ordinal();
+    }
 }

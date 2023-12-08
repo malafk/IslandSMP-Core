@@ -2,6 +2,7 @@ package lol.maltest.islandsmp.menu;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,4 +13,5 @@ public interface Menuable {
     List<Component> getColorLore();
     String getKeyPrefix();
     int getSlot();
+    OfflinePlayer getSkullOwner();
 }

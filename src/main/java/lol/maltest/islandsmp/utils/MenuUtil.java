@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuUtil {
-    private YamlDocument _menuFile;
+    public static YamlDocument _menuFile;
 
     public static Component menuPageForwardName;
     public static List<Component> menuPageForwardLore;

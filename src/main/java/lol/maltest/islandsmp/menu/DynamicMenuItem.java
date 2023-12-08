@@ -49,4 +49,9 @@ public class DynamicMenuItem implements Menuable {
         return slot;
     }
 
+    @Override
+    public OfflinePlayer getSkullOwner() {
+        return skullOwner;
+    }
+
 }

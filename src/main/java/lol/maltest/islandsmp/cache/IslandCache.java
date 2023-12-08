@@ -3,9 +3,7 @@ package lol.maltest.islandsmp.cache;
 import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.storage.IslandStorage;
 import lol.maltest.islandsmp.entities.Island;
-import lol.maltest.islandsmp.utils.LocationUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,4 +37,8 @@ public final class IslandCache {
         return null;
     }
 
+    public void deleteIslandFromDatabase(UUID islandUuid) {
+        System.out.println("Deleting islandUUid " + islandUuid);
+        islandStorage.deleteObject(islandUuid);
+    }
 }
