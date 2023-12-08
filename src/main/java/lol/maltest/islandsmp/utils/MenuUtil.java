@@ -38,6 +38,11 @@ public class MenuUtil {
     public static String menuMembersButtonName;
     public static List<String> menuMembersButtonRawLore;
 
+    public static Component menuTrustedTitle;
+    public static String menuTrustedButtonName;
+    public static List<String> menuTrustedButtonRawLore;
+
+
     public static Component menuPermissionsTitle;
     public static int menuPermissionsRows;
     public static ArrayList<Menuable> menuPermissionsButtons = new ArrayList<>();
@@ -83,6 +88,10 @@ public class MenuUtil {
         menuMembersTitle = HexUtils.colour(_menuFile.getString("members.title"));
         menuMembersButtonName = _menuFile.getString("members.buttons.member.name");
         menuMembersButtonRawLore = _menuFile.getStringList("members.buttons.member.lore");
+
+        menuTrustedTitle = HexUtils.colour(_menuFile.getString("trusted.title"));
+        menuTrustedButtonName = _menuFile.getString("trusted.buttons.member.name");
+        menuTrustedButtonRawLore = _menuFile.getStringList("trusted.buttons.member.lore");
 
         menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.trusted"));
         menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.member"));

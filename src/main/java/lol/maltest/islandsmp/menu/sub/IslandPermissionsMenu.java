@@ -4,12 +4,15 @@ import dev.triumphteam.gui.guis.Gui;
 import lol.maltest.islandsmp.menu.Menu;
 import lol.maltest.islandsmp.menu.Menuable;
 import lol.maltest.islandsmp.utils.MenuUtil;
+import lol.maltest.islandsmp.utils.Rank;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
 
 public class IslandPermissionsMenu extends Menu {
+
+    private Rank lastSelectedRank;
 
     @Override
     public void open(Player player) {
@@ -26,9 +29,8 @@ public class IslandPermissionsMenu extends Menu {
 
     @Override
     public void onClick(Player player, String key, ClickType clickType) {
-        player.sendMessage("Opening");
-
-        new IslandRankPermMenu().open(player);
+        this.lastSelectedRank = Rank.valueOf(key.split("\\.")[2].toUpperCase());
+        new IslandRankPermMenu(lastSelectedRank).open(player);
     }
 
     @Override

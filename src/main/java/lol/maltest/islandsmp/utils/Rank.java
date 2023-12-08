@@ -3,7 +3,9 @@ package lol.maltest.islandsmp.utils;
 import lombok.Getter;
 
 @Getter
-public enum IslandRank {
+public enum Rank {
+
+    TRUSTED("Trusted"),
 
     MEMBER("Member"),
     MODERATOR("Moderator"),
@@ -12,7 +14,7 @@ public enum IslandRank {
 
     private final String display;
 
-    IslandRank(String display) {
+    Rank(String display) {
         this.display = display;
     }
 }

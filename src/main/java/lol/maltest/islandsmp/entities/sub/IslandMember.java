@@ -1,6 +1,6 @@
 package lol.maltest.islandsmp.entities.sub;
 
-import lol.maltest.islandsmp.utils.IslandRank;
+import lol.maltest.islandsmp.utils.Rank;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -11,22 +11,22 @@ import java.util.UUID;
 public class IslandMember {
 
     @Getter private final UUID playerUuid;
-    @Getter @Setter private final String playerName;
-    private String rank = IslandRank.MEMBER.getDisplay();
+    @Getter private final String playerName;
+    private String rank = Rank.MEMBER.getDisplay();
 
     public IslandMember(UUID playerUuid) {
         this.playerUuid = playerUuid;
         this.playerName = Bukkit.getPlayer(playerUuid).getName();
     }
 
-    public IslandRank getRank() {
-        return Arrays.stream(IslandRank.values())
+    public Rank getRank() {
+        return Arrays.stream(Rank.values())
                 .filter(rank -> rank.getDisplay().equalsIgnoreCase(this.rank))
                 .findFirst()
                 .orElse(null);
     }
 
-    public void setRank(IslandRank islandRank) {
-        this.rank = islandRank.getDisplay();
+    public void setRank(Rank rank) {
+        this.rank = rank.getDisplay();
     }
 }

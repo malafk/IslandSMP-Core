@@ -124,6 +124,21 @@ members:
         - " &8● &fMiddle Click: &7Kick"
         - "&f"
         - "&f"
+trusted:
+  title: "Island Trusted Members"
+  buttons:
+    member:
+      name: "&#36FB2B&l%player%"
+      lore:
+        - "&8Island Trusted Member"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fStatus: &7%status%"
+        - "&f"
+        - "&#36FB2Bᴀᴄᴛɪᴏɴѕ:"
+        - " &8● &fClick: &7Remove trust"
+        - "&f"
+        - "&f"
 warps:
   title: "Island Warps"
   buttons:
@@ -202,7 +217,7 @@ rankpermissions:
         - "      &fon your island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     break:
@@ -217,7 +232,7 @@ rankpermissions:
         - "      &fon your island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     container:
@@ -232,7 +247,7 @@ rankpermissions:
         - "      &fon your island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     invite:
@@ -247,7 +262,7 @@ rankpermissions:
         - "      &fto your island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     kick:
@@ -262,7 +277,7 @@ rankpermissions:
         - "      &ffrom your island team."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     promote:
@@ -277,7 +292,7 @@ rankpermissions:
         - "      &fplayers from your island team."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     demote:
@@ -292,7 +307,7 @@ rankpermissions:
         - "      &fplayers from your island team."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     settings:
@@ -307,7 +322,7 @@ rankpermissions:
         - "      &fsettings such as pvp enabled, etc"
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     upgrade:
@@ -322,7 +337,7 @@ rankpermissions:
         - "      &fislands upgrades."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     permissions:
@@ -337,7 +352,7 @@ rankpermissions:
         - "      &flike what you are doing now."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     sethome:
@@ -352,7 +367,7 @@ rankpermissions:
         - "      &fislands home location."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     home:
@@ -367,7 +382,7 @@ rankpermissions:
         - "      &fto the island home."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     setwarp:
@@ -382,7 +397,7 @@ rankpermissions:
         - "      &ffor your island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
     warp:
@@ -397,6 +412,6 @@ rankpermissions:
         - "      &fyour islands warps."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
-        - " &8● &fStatus: %status"
+        - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
