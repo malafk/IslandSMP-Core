@@ -40,6 +40,7 @@ import lol.maltest.islandsmp.menu.Menu;
 import lol.maltest.islandsmp.menu.MenuItem;
 import lol.maltest.islandsmp.menu.sub.IslandMainMenu;
 import lol.maltest.islandsmp.utils.HexUtils;
+import lol.maltest.islandsmp.utils.LanguageUtil;
 import lol.maltest.islandsmp.utils.MenuUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -75,13 +76,36 @@ public class IslandCommand extends BaseCommand {
         menu.open(player);
     }
 
+    @Subcommand("setwarp")
+    public void onSetWarpCommand(Player player, String warpName) {
+        User user = UserCache.getUser(player.getUniqueId());
+
+        // Check if the player has an island
+        if (user.getIsland() == null) {
+            player.sendActionBar(HexUtils.colour(LanguageUtil.publicNeedIsland));
+            return;
+        }
+
+        // TODO: Check if user has permmission
+
+        if(user.getIsland().getFreeWarps() == 0) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorWarpsMax));
+            return;
+        }
+
+        user.getIsland().setNewWarp(warpName, player);
+        player.sendMessage(HexUtils.colour(LanguageUtil.messageWarpCreated.replace("%warp%", warpName)));
+
+        // Todo: alert all island members that they put a warp
+    }
+
     @Subcommand("go")
     public void onIslandGoCommand(Player player) {
         User user = UserCache.getUser(player.getUniqueId());
 
         // Check if the player has an island
         if (user.getIsland() == null) {
-            player.sendActionBar(HexUtils.colour("&dno island dork"));
+            player.sendActionBar(HexUtils.colour(LanguageUtil.publicNeedIsland));
             return;
         }
 
@@ -108,30 +132,6 @@ public class IslandCommand extends BaseCommand {
             plugin.getIslandCache().islandStorage.saveAsync(island);
         }
         player.sendMessage("done");
-    }
-
-    @Subcommand("test")
-    @CommandPermission("minecraft.operator")
-    public void onTestCommand(Player player) {
-//
-//        int spawnX = -181;
-//        int spawnY = 94;
-//        int spawnZ = 134;
-//
-//
-//        player.sendMessage("Hopefully pasting");
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    pasteSchematic(player.getWorld(), new File(plugin.getDataFolder(), "schematics/schem.schem"), BlockVector3.at(0, -14, 0));
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }.runTaskAsynchronously(plugin);
-
-        plugin.getGridManager().pasteTest(player, player.getLocation());
     }
 
 }

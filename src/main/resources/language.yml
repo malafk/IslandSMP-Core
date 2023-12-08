@@ -1,2 +1,14 @@
 file-version: 1.0
-island-created: "&7Your brand new island has been created! Teleporting you!"
+prefix: "&#36FB2B&lɪѕʟᴀɴᴅ &8» &f"
+errors:
+  global:
+    need-island: "You need a island to perform this action!"
+  members:
+    cant-modify-owner: "You can't modify the island owner!"
+  warps:
+    max-warps: "You have hit the max amount of warps, upgrade your island to get more!"
+messages:
+  island:
+    created: "Your brand new island has been created! Teleporting you!"
+  warps:
+    created: "You have set the warp %warp% at your current location!"

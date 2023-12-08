@@ -16,7 +16,16 @@ public class LanguageUtil {
 
     private YamlDocument _languageFile;
 
-    public static String IslandCreated;
+    public static String PREFIX;
+
+    public static String publicNeedIsland;
+
+    public static String errorMembersCantModifyOwner;
+
+    public static String errorWarpsMax;
+
+    public static String messageIslandCreated;
+    public static String messageWarpCreated;
 
     public LanguageUtil(JavaPlugin plugin) {
         try {
@@ -25,6 +34,15 @@ public class LanguageUtil {
             throw new RuntimeException(e);
         }
 
-        IslandCreated = _languageFile.getString("island-created");
+        PREFIX = _languageFile.getString("prefix");
+
+        publicNeedIsland = PREFIX + _languageFile.getString("errors.public.need-island");
+
+        errorMembersCantModifyOwner = PREFIX + _languageFile.getString("errors.members.cant-modify-owner");
+
+        errorWarpsMax = PREFIX + _languageFile.getString("errors.warps.max-warps");
+
+        messageIslandCreated = PREFIX + _languageFile.getString("messages.island.created");
+        messageWarpCreated = PREFIX + _languageFile.getString("messages.warps.created");
     }
 }

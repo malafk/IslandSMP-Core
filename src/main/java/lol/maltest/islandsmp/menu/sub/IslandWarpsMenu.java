@@ -1,17 +1,15 @@
 package lol.maltest.islandsmp.menu.sub;
 
-import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
-import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.entities.sub.IslandMember;
+import lol.maltest.islandsmp.entities.sub.IslandWarp;
 import lol.maltest.islandsmp.menu.DynamicMenuItem;
 import lol.maltest.islandsmp.menu.Menu;
-import lol.maltest.islandsmp.menu.MenuItem;
 import lol.maltest.islandsmp.menu.Menuable;
 import lol.maltest.islandsmp.utils.HexUtils;
 import lol.maltest.islandsmp.utils.LanguageUtil;
@@ -22,13 +20,12 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class IslandMembersMenu extends Menu {
+public class IslandWarpsMenu extends Menu {
 
     @Override
     public void open(Player player) {
@@ -36,7 +33,7 @@ public class IslandMembersMenu extends Menu {
         setPreviousMenu(IslandMainMenu.class);
 
         PaginatedGui gui = Gui.paginated()
-                .title(MenuUtil.menuMembersTitle)
+                .title(MenuUtil.menuWarpsTitle)
                 .rows(3)
                 .create();
 
@@ -45,9 +42,9 @@ public class IslandMembersMenu extends Menu {
 
     @Override
     public void onClick(Player player, String key, ClickType clickType) {
-        if(!key.startsWith("members.menu.")) return;
+        if(!key.startsWith("warp.")) return;
 
-        UUID targetUuid = UUID.fromString(key.replace("members.menu.", ""));
+        String warpName = key.replace("warp.", "");
 
         User user = UserCache.getUser(player.getUniqueId());
 
@@ -58,12 +55,14 @@ public class IslandMembersMenu extends Menu {
             return;
         }
 
-        if(island.getIslandOwner() == targetUuid) {
-            player.sendMessage(HexUtils.colour(LanguageUtil.errorMembersCantModifyOwner));
+        IslandWarp warp = island.getWarpByName(warpName);
+
+        if(warp == null) {
+            player.closeInventory();
             return;
         }
 
-        // todo check perms, then check the click type and do whatever
+        player.teleport(warp.getWarpLocation());
     }
 
     @Override
@@ -75,7 +74,6 @@ public class IslandMembersMenu extends Menu {
     public List<Menuable> getMenuItems(Player player) {
         List<Menuable> items = new ArrayList<>();
 
-        // Dynamic slot for positioning menu items
         int dynamicSlot = 0;
 
         User user = UserCache.getUser(player.getUniqueId());
@@ -84,27 +82,25 @@ public class IslandMembersMenu extends Menu {
 
         Island island = IslandCache.getIsland(user.getIslandUUID());
 
-        for(IslandMember member : island.getIslandMembers()) {
-
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(member.getPlayerUuid());
+        for(IslandWarp warp : island.getIslandWarps()) {
 
             ArrayList<Component> finalLore = new ArrayList<>();
 
-            for(String lore : MenuUtil.menuMembersButtonRawLore) {
+            for(String lore : MenuUtil.menuWarpsButtonRawLore) {
                 finalLore.add(HexUtils.colour(lore
-                        .replace("%player%", member.getPlayerName())
-                        .replace("%status%", (offlinePlayer.isOnline() ? "&aOnline" : "&cOffline"))
-                        .replace("%rank%", member.getRank().getDisplay())
+                        .replace("%x%", warp.getWarpLocation().getX() + "")
+                        .replace("%y%", warp.getWarpLocation().getY() + "")
+                        .replace("%z%", warp.getWarpLocation().getZ() + "")
                 ));
             }
 
             items.add(new DynamicMenuItem(
-                    Material.PLAYER_HEAD,
-                    MenuUtil.menuMembersButtonName.replace("%player%", member.getPlayerName()),
+                    Material.ENDER_PEARL,
+                    MenuUtil.menuWarpsButtonName.replace("%warp%", warp.getWarpName()),
                     finalLore,
-                    "members.menu." + member.getPlayerUuid(),
+                    "warp." + warp.getWarpName(),
                     dynamicSlot++,
-                    offlinePlayer
+                    null
             ));
         }
 

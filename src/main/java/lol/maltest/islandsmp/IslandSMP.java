@@ -80,6 +80,10 @@ public final class IslandSMP extends JavaPlugin {
         commandManager.registerCommand(new IslandCommand(this));
     }
 
+    public void loadPermissions() {
+
+    }
+
     @Override
     public void onDisable() {
         Bukkit.getLogger().info("Saving data on shutdown...");

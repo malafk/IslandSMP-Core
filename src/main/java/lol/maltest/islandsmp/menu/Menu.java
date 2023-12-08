@@ -8,13 +8,16 @@ import lol.maltest.islandsmp.utils.HexUtils;
 import lol.maltest.islandsmp.utils.MenuUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
 
 public abstract class Menu {
     public abstract void open(Player player);
 
-    public abstract void onClick(Player player, String key);
+    public abstract void onClick(Player player, String key, ClickType clickType);
+
+    public abstract int backButtonSlot();
 
     public abstract List<Menuable> getMenuItems(Player player);
 
@@ -49,24 +52,35 @@ public abstract class Menu {
         paginatedGui.open(player);
     }
 
+    private GuiItem createGuiItem(Menuable item, Player player) {
+        ItemBuilder itemBuilder = ItemBuilder.from(item.getMaterial());
+
+        if (item.getMaterial().equals(Material.PLAYER_HEAD)) {
+            itemBuilder = itemBuilder.setSkullOwner(player);
+        }
+
+        itemBuilder.name(HexUtils.colour(item.getName()));
+        itemBuilder.lore(item.getColorLore());
+
+        return itemBuilder.asGuiItem(event -> {
+            event.setCancelled(true);
+            onClick(player, item.getKeyPrefix(), event.getClick());
+        });
+    }
+
     public void populateGui(Gui gui, Player player) {
         for (Menuable item : getMenuItems(player)) {
-            ItemBuilder itemBuilder = ItemBuilder.from(item.getMaterial());
-
-            if (item.getMaterial().equals(Material.PLAYER_HEAD)) {
-                itemBuilder = itemBuilder.setSkullOwner(player);
-            }
-
-            itemBuilder.name(HexUtils.colour(item.getName()));
-
-            itemBuilder.lore(item.getColorLore());
-
-            GuiItem guiItem = itemBuilder.asGuiItem(event -> {
-                event.setCancelled(true);
-                onClick(player, item.getKeyPrefix());
-            });
-
+            GuiItem guiItem = createGuiItem(item, player);
             gui.setItem(item.getSlot(), guiItem);
+        }
+
+        if(getPreviousMenu() != null || backButtonSlot() != -1) {
+            gui.setItem(backButtonSlot(), ItemBuilder.from(Material.PAPER).model(5).name(MenuUtil.menuPageBackMenuName).lore(MenuUtil.menuPageBackMenuLore)
+                    .asGuiItem(event -> {
+                                event.setCancelled(true);
+                                openPreviousMenu(player);
+                            }
+                    ));
         }
 
         gui.getFiller().fill(getFiller());
@@ -74,29 +88,12 @@ public abstract class Menu {
 
     public void populatePaginatedGui(PaginatedGui gui, Player player) {
 
-        gui.getFiller().fillBorder(getFiller());
-
         for (Menuable item : getMenuItems(player)) {
-            ItemBuilder itemBuilder = ItemBuilder.from(item.getMaterial());
-
-            if (item.getMaterial().equals(Material.PLAYER_HEAD)) {
-                itemBuilder = itemBuilder.setSkullOwner(player);
-            }
-
-            itemBuilder.name(HexUtils.colour(item.getName()));
-
-            itemBuilder.lore(item.getColorLore());
-
-            GuiItem guiItem = itemBuilder.asGuiItem(event -> {
-                event.setCancelled(true);
-                onClick(player, item.getKeyPrefix());
-            });
-
-            for (int i = 0; i < 12; i++) {
-                gui.addItem(guiItem);
-            } // test loop
-
+            GuiItem guiItem = createGuiItem(item, player);
+            gui.addItem(guiItem);
         }
+
+        gui.getFiller().fillBorder(getFiller());
 
         // Previous item
         gui.setItem(3, 4, ItemBuilder.from(Material.PAPER).model(2).name(MenuUtil.menuPagePreviousName).lore(MenuUtil.menuPagePreviousLore)

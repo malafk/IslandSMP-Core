@@ -1,29 +1,24 @@
 package lol.maltest.islandsmp.menu.sub;
 
 import dev.triumphteam.gui.guis.Gui;
-import lol.maltest.islandsmp.cache.UserCache;
-import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.menu.Menu;
-import lol.maltest.islandsmp.menu.MenuItem;
 import lol.maltest.islandsmp.menu.Menuable;
-import lol.maltest.islandsmp.utils.HexUtils;
 import lol.maltest.islandsmp.utils.MenuUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class IslandMainMenu extends Menu {
+public class IslandRankPermMenu extends Menu {
 
     @Override
     public void open(Player player) {
 
-        setPreviousMenu(null);
+        setPreviousMenu(IslandPermissionsMenu.class);
 
         Gui gui = Gui.gui()
-                .title(MenuUtil.menuMainTitle)
-                .rows(MenuUtil.menuMainRows)
+                .title(MenuUtil.menuRankPermissionsTitle)
+                .rows(MenuUtil.menuRankPermissionsRows)
                 .create();
 
         openGui(gui, player);
@@ -31,6 +26,7 @@ public class IslandMainMenu extends Menu {
 
     @Override
     public void onClick(Player player, String key, ClickType clickType) {
+        player.sendMessage("You just clicked " + key);
         switch (key) {
             case "main.buttons.members":
                 new IslandMembersMenu().open(player);
@@ -38,23 +34,16 @@ public class IslandMainMenu extends Menu {
             case "main.buttons.warps":
                 new IslandWarpsMenu().open(player);
                 break;
-            case "main.buttons.permissions":
-                new IslandPermissionsMenu().open(player);
-                break;
-            case "main.buttons.home":
-                User user = UserCache.getUser(player.getUniqueId());
-                player.closeInventory();
-                player.teleport(user.getIsland().getIslandLocation().getSpawnLocation());
         }
     }
 
     @Override
     public int backButtonSlot() {
-        return -1;
+        return 31;
     }
 
     @Override
     public List<Menuable> getMenuItems(Player player) {
-        return MenuUtil.menuMainButtons;
+        return MenuUtil.menuRankPermissionsButtons;
     }
 }

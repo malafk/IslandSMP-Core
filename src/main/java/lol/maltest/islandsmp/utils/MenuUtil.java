@@ -38,6 +38,18 @@ public class MenuUtil {
     public static String menuMembersButtonName;
     public static List<String> menuMembersButtonRawLore;
 
+    public static Component menuPermissionsTitle;
+    public static int menuPermissionsRows;
+    public static ArrayList<Menuable> menuPermissionsButtons = new ArrayList<>();
+
+    public static Component menuRankPermissionsTitle;
+    public static int menuRankPermissionsRows;
+    public static ArrayList<Menuable> menuRankPermissionsButtons = new ArrayList<>();
+
+    public static Component menuWarpsTitle;
+    public static String menuWarpsButtonName;
+    public static List<String> menuWarpsButtonRawLore;
+
 
     public MenuUtil(JavaPlugin plugin) {
         try {
@@ -58,9 +70,39 @@ public class MenuUtil {
         menuMainTitle = HexUtils.colour(_menuFile.getString("main.title"));
         menuMainRows = _menuFile.getInt("main.rows");
 
+        menuPermissionsTitle = HexUtils.colour(_menuFile.getString("permissions.title"));
+        menuPermissionsRows = _menuFile.getInt("permissions.rows");
+
+        menuRankPermissionsTitle = HexUtils.colour(_menuFile.getString("rankpermissions.title"));
+        menuRankPermissionsRows = _menuFile.getInt("rankpermissions.rows");
+
+        menuWarpsTitle = HexUtils.colour(_menuFile.getString("warps.title"));
+        menuWarpsButtonName = _menuFile.getString("warps.buttons.warp.name");
+        menuWarpsButtonRawLore = _menuFile.getStringList("warps.buttons.warp.lore");
+
         menuMembersTitle = HexUtils.colour(_menuFile.getString("members.title"));
         menuMembersButtonName = _menuFile.getString("members.buttons.member.name");
         menuMembersButtonRawLore = _menuFile.getStringList("members.buttons.member.lore");
+
+        menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.trusted"));
+        menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.member"));
+        menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.moderator"));
+        menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.administrator"));
+
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.place"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.break"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.container"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.invite"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.kick"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.promote"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.demote"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.settings"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.upgrade"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.permissions"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.sethome"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.home"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.setwarp"));
+        menuRankPermissionsButtons.add(new MenuItem(_menuFile, "rankpermissions.buttons.warp"));
 
         menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.members"));
         menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.trusted"));

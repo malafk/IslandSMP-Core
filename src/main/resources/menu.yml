@@ -118,9 +118,285 @@ members:
         - " &8● &fRole: &7%rank%"
         - " &8● &fStatus: &7%status%"
         - "&f"
-        - "&#36FB2Bᴀᴄᴛɪᴏɴѕ"
+        - "&#36FB2Bᴀᴄᴛɪᴏɴѕ:"
         - " &8● &fLeft Click: &7Promote"
         - " &8● &fRight Click: &7Demote"
         - " &8● &fMiddle Click: &7Kick"
+        - "&f"
+        - "&f"
+warps:
+  title: "Island Warps"
+  buttons:
+    warp:
+      name: "&#36FB2B&l%warp%"
+      lore:
+        - "&8Island Warp"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fX: &7%x%"
+        - " &8● &fY: &7%y%"
+        - " &8● &fZ: &7%z%"
+        - "&f"
+        - "&f"
+permissions:
+  title: "Island Permissions"
+  rows: 3
+  buttons:
+    trusted:
+      name: "&#36FB2B&lᴛʀᴜѕᴛᴇᴅ"
+      material: COAL
+      slot: 10
+      lore:
+        - "&8Rank"
+        - "&7"
+        - "&#36FB2Bѕᴛᴀᴛѕ:"
+        - " &8● &fPermissions: &7%permissions%"
+        - "&f"
+        - "&f"
+    member:
+      name: "&#36FB2B&lᴍᴇᴍʙᴇʀ"
+      material: GOLD_INGOT
+      slot: 12
+      lore:
+        - "&8Rank"
+        - "&7"
+        - "&#36FB2Bѕᴛᴀᴛѕ:"
+        - " &8● &fPermissions: &7%permissions%"
+        - "&f"
+        - "&f"
+    moderator:
+      name: "&#36FB2B&lᴍᴏᴅᴇʀᴀᴛᴏʀ"
+      material: DIAMOND
+      slot: 14
+      lore:
+        - "&8Rank"
+        - "&7"
+        - "&#36FB2Bѕᴛᴀᴛѕ:"
+        - " &8● &fPermissions: &7%permissions%"
+        - "&f"
+        - "&f"
+    administrator:
+      name: "&#36FB2B&lᴀᴅᴍɪɴɪѕᴛʀᴀᴛᴏʀ"
+      material: EMERALD
+      slot: 16
+      lore:
+        - "&8Rank"
+        - "&7"
+        - "&#36FB2Bѕᴛᴀᴛѕ:"
+        - " &8● &fPermissions: &7%permissions%"
+        - "&f"
+        - "&f"
+rankpermissions:
+  title: "Rank Permissions"
+  rows: 4
+  buttons:
+    place:
+      name: "&#36FB2B&lᴘʟᴀᴄᴇ"
+      material: GRASS_BLOCK
+      slot: 10
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to place blocks"
+        - "      &fon your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    break:
+      name: "&#36FB2B&lʙʀᴇᴀᴋ"
+      material: DIAMOND_PICKAXE
+      slot: 11
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to break blocks"
+        - "      &fon your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    container:
+      name: "&#36FB2B&lᴄᴏɴᴛᴀɪɴᴇʀ"
+      material: CHEST
+      slot: 12
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to use containers"
+        - "      &fon your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    invite:
+      name: "&#36FB2B&lɪɴᴠɪᴛᴇ"
+      material: PAPER
+      slot: 13
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to invite players"
+        - "      &fto your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    kick:
+      name: "&#36FB2B&lᴋɪᴄᴋ"
+      material: FEATHER
+      slot: 14
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to kick other players"
+        - "      &ffrom your island team."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    promote:
+      name: "&#36FB2B&lᴘʀᴏᴍᴏᴛᴇ"
+      material: ARROW
+      slot: 15
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to promote other"
+        - "      &fplayers from your island team."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    demote:
+      name: "&#36FB2B&lᴅᴇᴍᴏᴛᴇ"
+      material: ARROW
+      slot: 16
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to demote other"
+        - "      &fplayers from your island team."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    settings:
+      name: "&#36FB2B&lѕᴇᴛᴛɪɴɢѕ"
+      material: COMPARATOR
+      slot: 19
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to change island"
+        - "      &fsettings such as pvp enabled, etc"
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    upgrade:
+      name: "&#36FB2B&lᴜᴘɢʀᴀᴅᴇ"
+      material: GOLD_INGOT
+      slot: 20
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to upgrade your"
+        - "      &fislands upgrades."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    permissions:
+      name: "&#36FB2B&lᴘᴇʀᴍɪѕѕɪᴏɴѕ"
+      material: NETHER_STAR
+      slot: 21
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to change permissions"
+        - "      &flike what you are doing now."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    sethome:
+      name: "&#36FB2B&lѕᴇᴛ ʜᴏᴍᴇ"
+      material: RED_BED
+      slot: 22
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to change your"
+        - "      &fislands home location."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    home:
+      name: "&#36FB2B&lʜᴏᴍᴇ"
+      material: WHITE_BED
+      slot: 23
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to teleport"
+        - "      &fto the island home."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    setwarp:
+      name: "&#36FB2B&lѕᴇᴛ ᴡᴀʀᴘ"
+      material: ENDER_EYE
+      slot: 24
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to create warps"
+        - "      &ffor your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
+        - "&f"
+        - "&f"
+    warp:
+      name: "&#36FB2B&lᴡᴀʀᴘ"
+      material: ENDER_PEARL
+      slot: 25
+      lore:
+        - "&8Permission"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to teleport to"
+        - "      &fyour islands warps."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status"
         - "&f"
         - "&f"

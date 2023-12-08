@@ -2,11 +2,13 @@ package lol.maltest.islandsmp.entities;
 
 import lol.maltest.islandsmp.entities.sub.IslandLocation;
 import lol.maltest.islandsmp.entities.sub.IslandMember;
+import lol.maltest.islandsmp.entities.sub.IslandWarp;
 import lol.maltest.islandsmp.entities.type.IslandStorageObject;
 import lol.maltest.islandsmp.utils.IslandRank;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,13 @@ public final class Island extends IslandStorageObject<UUID> {
     @Getter @Setter private IslandLocation islandLocation;
 
     private List<IslandMember> islandMembers = new ArrayList<>();
+    @Getter private List<IslandWarp> islandWarps = new ArrayList<>();
 
     // Island Upgrade Related Levels
     @Getter private int worldBorderSize = 150;
+
+    private int maxWarps = 3; // default
+
     private int oreDropUpgrade, farmDropUpgrade, mobDropUpgrade, mobSpawnUpgrade, xpUpgrade;
     private boolean keepInventoryUpgrade;
 
@@ -73,7 +79,23 @@ public final class Island extends IslandStorageObject<UUID> {
             members.addAll(islandMembers);
         }
 
-
         return members;
+    }
+
+    public int getFreeWarps() {
+        return maxWarps - islandWarps.size();
+    }
+
+    public IslandWarp getWarpByName(String warpName) {
+        for(IslandWarp warp : islandWarps) {
+            if(warp.getWarpName().equalsIgnoreCase(warpName)) {
+                return warp;
+            }
+        }
+        return null;
+    }
+
+    public void setNewWarp(String warpName, Player creator) {
+        islandWarps.add(new IslandWarp(warpName, creator.getUniqueId(), creator.getLocation()));
     }
 }
