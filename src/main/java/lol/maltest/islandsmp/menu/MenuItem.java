@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public class MenuItem {
-    @Getter private String name;
-    @Getter private Material material;
-    @Getter private List<String> lore;
-    @Getter private int slot;
+    private String name;
+    private Material material;
+    private List<String> lore;
+    private int slot;
 
     public MenuItem(YamlDocument yamlDocument, String keyPrefix) {
         this.name = yamlDocument.getString(keyPrefix + ".name");

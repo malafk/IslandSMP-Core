@@ -36,14 +36,19 @@ import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
+import lol.maltest.islandsmp.menu.Menu;
+import lol.maltest.islandsmp.menu.MenuItem;
+import lol.maltest.islandsmp.menu.sub.IslandMainMenu;
 import lol.maltest.islandsmp.utils.HexUtils;
 import lol.maltest.islandsmp.utils.MenuUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,20 +71,8 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
-        Gui gui = Gui.gui()
-                .title(HexUtils.colour("helo"))
-                .rows(4)
-                .create();
-
-        GuiItem membersGui = ItemBuilder.from(MenuUtil.menuMainMembers.getMaterial()).setSkullOwner(player).name(HexUtils.colour(MenuUtil.menuMainMembers.getName())).lore(MenuUtil.menuMainMembers.getColorLore()).asGuiItem(event -> {
-            player.sendMessage("click");
-        });
-
-        Bukkit.broadcast(HexUtils.colour(MenuUtil.menuMainMembers.getName()));
-
-        gui.setItem(13, membersGui);
-
-        gui.open(player);
+        Menu menu = new IslandMainMenu();
+        menu.open(player);
     }
 
     @Subcommand("go")

@@ -17,13 +17,9 @@ import java.util.ArrayList;
 public class MenuUtil {
     private YamlDocument _menuFile;
 
-    public static MenuItem menuMainMembers;
-    public static MenuItem menuMainTrusted;
-    public static MenuItem menuMainWarps;
-    public static MenuItem menuMainSettings;
-    public static MenuItem menuMainUpgrades;
-    public static MenuItem menuMainHome;
-    public static MenuItem menuMainPermissions;
+    public static String menuMainTitle;
+    public static int menuMainRows;
+    public static ArrayList<MenuItem> menuMainButtons = new ArrayList<>();
 
     public MenuUtil(JavaPlugin plugin) {
         try {
@@ -32,12 +28,15 @@ public class MenuUtil {
             throw new RuntimeException(e);
         }
 
-        menuMainMembers = new MenuItem(_menuFile, "main.buttons.members");
-        menuMainTrusted = new MenuItem(_menuFile, "main.buttons.trusted");
-        menuMainWarps = new MenuItem(_menuFile, "main.buttons.warps");
-        menuMainSettings = new MenuItem(_menuFile, "main.buttons.settings");
-        menuMainUpgrades = new MenuItem(_menuFile, "main.buttons.upgrades");
-        menuMainHome = new MenuItem(_menuFile, "main.buttons.home");
-        menuMainPermissions = new MenuItem(_menuFile, "main.buttons.permissions");
+        menuMainTitle = _menuFile.getString("main.title");
+        menuMainRows = _menuFile.getInt("main.rows");
+
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.members"));
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.trusted"));
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.warps"));
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.settings"));
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.upgrades"));
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.home"));
+        menuMainButtons.add(new MenuItem(_menuFile, "main.buttons.permissions"));
     }
 }

@@ -1,5 +1,7 @@
 file-version: 1.0
 main:
+  title: "Team Menu"
+  rows: 4
   buttons:
     members:
       name: "&#36FB2B&lᴍᴇᴍʙᴇʀѕ"
@@ -8,79 +10,79 @@ main:
       lore:
         - "&8Action Button"
         - "&7"
-        - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
         - " &8● &fView a list of all the"
         - "      &fmembers in your island."
         - "&f"
         - "&f"
-  trusted:
-    name: "&#36FB2B&lᴛʀᴜѕᴛᴇᴅ"
-    material: EMERALD
-    slot: 12
-    lore:
-      - "&8Action Button"
-      - "&7"
-      - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-      - " &8● &fView a list of all the"
-      - "      &ftrusted members in your island."
-      - "&f"
-      - "&f"
-  warps:
-    name: "&#36FB2B&lᴡᴀʀᴘѕ"
-    material: ENDER_PEARL
-    slot: 13
-    lore:
-      - "&8Action Button"
-      - "&7"
-      - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-      - " &8● &fView a list of all the"
-      - "      &fwarps in your island."
-      - "&f"
-      - "&f"
-  settings:
-    name: "&#36FB2B&lѕᴇᴛᴛɪɴɢѕ"
-    material: COMPARATOR
-    slot: 14
-    lore:
-      - "&8Action Button"
-      - "&7"
-      - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-      - " &8● &fView and change settings"
-      - "      &ffor your island."
-      - "&f"
-      - "&f"
-  upgrades:
-    name: "&#36FB2B&lᴜᴘɢʀᴀᴅᴇѕ"
-    material: ANVIL
-    slot: 15
-    lore:
-      - "&8Action Button"
-      - "&7"
-      - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-      - " &8● &fView and upgrade your island"
-      - "      &fupgrades."
-      - "&f"
-      - "&f"
-  home:
-    name: "&#36FB2B&lʜᴏᴍᴇ"
-    material: ENDER_CHEST
-    slot: 21
-    lore:
-      - "&8Action Button"
-      - "&7"
-      - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-      - " &8● &fTeleport to your island home"
-      - "&f"
-      - "&f"
-  permissions:
-    name: "&#36FB2B&lᴘᴇʀᴍɪѕѕɪᴏɴѕ"
-    material: ENDER_CHEST
-    slot: 23
-    lore:
-      - "&8Action Button"
-      - "&7"
-      - "&#36FB2B&lɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-      - " &8● &fView and edit your islands"
-      - "      &fpermissions."
-      - "&f"
-      - "&f"
+    trusted:
+      name: "&#36FB2B&lᴛʀᴜѕᴛᴇᴅ"
+      material: EMERALD
+      slot: 12
+      lore:
+        - "&8Action Button"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fView a list of all the"
+        - "      &ftrusted members in your island."
+        - "&f"
+        - "&f"
+    warps:
+      name: "&#36FB2B&lᴡᴀʀᴘѕ"
+      material: ENDER_PEARL
+      slot: 13
+      lore:
+        - "&8Action Button"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fView a list of all the"
+        - "      &fwarps in your island."
+        - "&f"
+        - "&f"
+    settings:
+      name: "&#36FB2B&lѕᴇᴛᴛɪɴɢѕ"
+      material: COMPARATOR
+      slot: 14
+      lore:
+        - "&8Action Button"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fView and change settings"
+        - "      &ffor your island."
+        - "&f"
+        - "&f"
+    upgrades:
+      name: "&#36FB2B&lᴜᴘɢʀᴀᴅᴇѕ"
+      material: ANVIL
+      slot: 15
+      lore:
+        - "&8Action Button"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fView and upgrade your island"
+        - "      &fupgrades."
+        - "&f"
+        - "&f"
+    home:
+      name: "&#36FB2B&lʜᴏᴍᴇ"
+      material: ENDER_CHEST
+      slot: 21
+      lore:
+        - "&8Action Button"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fTeleport to your island home"
+        - "&f"
+        - "&f"
+    permissions:
+      name: "&#36FB2B&lᴘᴇʀᴍɪѕѕɪᴏɴѕ"
+      material: BOOK
+      slot: 23
+      lore:
+        - "&8Action Button"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fView and edit your islands"
+        - "      &fpermissions."
+        - "&f"
+        - "&f"
