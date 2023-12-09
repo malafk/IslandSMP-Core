@@ -35,7 +35,7 @@ public class IslandDisbandCommand extends BaseCommand {
 
         // Check if the player has an island
         if (user.getIsland() == null) {
-            player.sendActionBar(HexUtils.colour(LanguageUtil.publicNeedIsland));
+            player.sendMessage(HexUtils.colour(LanguageUtil.publicNeedIsland));
             return;
         }
 

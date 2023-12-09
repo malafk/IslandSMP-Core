@@ -34,6 +34,8 @@ public final class Island extends IslandStorageObject<UUID> {
     // Island Upgrade Related Levels
     @Getter private int worldBorderSize = 150;
 
+    @Getter @Setter private boolean locked = false;
+
     private int maxWarps = 3; // default
 
     private int oreDropUpgrade, farmDropUpgrade, mobDropUpgrade, mobSpawnUpgrade, xpUpgrade;
@@ -98,6 +100,19 @@ public final class Island extends IslandStorageObject<UUID> {
         return members;
     }
 
+    public boolean isTrustedMember(Player player) {
+        return trustedMembers.contains(player.getUniqueId());
+    }
+
+    public boolean isIslandMember(Player player) {
+        return getIslandMembers().stream()
+                .anyMatch(member -> member.getPlayerUuid().equals(player.getUniqueId()));
+    }
+
+    public boolean isTrustedOrIslandMember(Player player) {
+        return isTrustedMember(player) || isIslandMember(player);
+    }
+
     public int getFreeWarps() {
         return maxWarps - islandWarps.size();
     }
@@ -131,6 +146,13 @@ public final class Island extends IslandStorageObject<UUID> {
                 return islandMember.getRank();
             }
         }
+
+        for(UUID trusted : trustedMembers) {
+            if(player.getUniqueId().equals(trusted)) {
+                return Rank.TRUSTED;
+            }
+        }
+
         return null;
     }
 
@@ -163,17 +185,17 @@ public final class Island extends IslandStorageObject<UUID> {
     public void toggleSetting(String setting) {
         Setting settingEnumValue = Setting.valueOf(setting.toUpperCase());
         if(settings.contains(settingEnumValue)) {
-            settings.add(settingEnumValue);
-        } else {
             settings.remove(settingEnumValue);
+        } else {
+            settings.add(settingEnumValue);
         }
     }
 
     public void toggleSetting(Setting setting) {
         if(settings.contains(setting)) {
-            settings.add(setting);
-        } else {
             settings.remove(setting);
+        } else {
+            settings.add(setting);
         }
     }
 

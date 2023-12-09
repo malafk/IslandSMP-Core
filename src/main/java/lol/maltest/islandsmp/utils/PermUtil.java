@@ -58,4 +58,24 @@ public class PermUtil {
         return !userRank.isLowerThan(selectedRank);
     }
 
+    public static boolean isAdminOrHigher(User user) {
+        Player player = Bukkit.getPlayer(user.getPlayer());
+
+        if(player == null) return false;
+
+        Rank userRank = user.getIsland().getPlayerRank(player);
+
+        return userRank == Rank.ADMINISTRATOR || userRank == Rank.OWNER;
+    }
+
+    public static boolean isModOrHigher(User user) {
+        Player player = Bukkit.getPlayer(user.getPlayer());
+
+        if(player == null) return false;
+
+        Rank userRank = user.getIsland().getPlayerRank(player);
+
+        return userRank == Rank.ADMINISTRATOR || userRank == Rank.OWNER || userRank == Rank.MODERATOR;
+    }
+
 }

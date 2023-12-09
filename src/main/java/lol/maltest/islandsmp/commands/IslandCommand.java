@@ -8,10 +8,12 @@ import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.menu.Menu;
-import lol.maltest.islandsmp.menu.sub.IslandMainMenu;
+import lol.maltest.islandsmp.menu.sub.*;
 import lol.maltest.islandsmp.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.N;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -39,12 +41,10 @@ public class IslandCommand extends BaseCommand {
 
     @Subcommand("invite")
     @CommandCompletion("@players")
-    public void onIslandInviteCommand(Player player, String target) {
-        User user = UserCache.getUser(player.getUniqueId());
+    public void onIslandInviteCommand(Player player, @Name("Player") String target) {
+        User user = checkIslandExistence(player);
 
-        // Check if the player has an island
-        if (user.getIsland() == null) {
-            player.sendActionBar(HexUtils.colour(LanguageUtil.publicNeedIsland));
+        if (user == null) {
             return;
         }
 
@@ -60,17 +60,16 @@ public class IslandCommand extends BaseCommand {
         targetPlayer.sendMessage(HexUtils.colour(LanguageUtil.messageIslandReceivedInvite.replaceAll("%invitee%", player.getName())));
     }
 
-
     @Subcommand("join|accept")
     @CommandCompletion("@players")
-    public void onIslandJoinCommand(Player player, String target) {
+    public void onIslandJoinCommand(@NotNull Player player, @Name("Player") String target) {
         UUID inviterUniqueId = plugin.invites.get(player.getUniqueId());
 
         User user = UserCache.getUser(player.getUniqueId());
 
         // Check if the player has an island
         if (user.getIsland() != null) {
-            player.sendActionBar(HexUtils.colour(LanguageUtil.messageIslandCantJoin));
+            player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandCantJoin));
             return;
         }
 
@@ -82,12 +81,10 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
-        // Check if player has an invite from the target player
         if (targetPlayer.getUniqueId().equals(inviterUniqueId)) {
             plugin.invites.remove(player.getUniqueId()); // Remove the invite as it has been responded to.
             player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandJoined.replaceAll("%player%", targetPlayer.getName())));
             targetPlayer.sendMessage(HexUtils.colour(LanguageUtil.messageIslandInviteAccepted.replaceAll("%player%", player.getName())));
-            // todo: Add code to handle the player joining the island
 
             User userInviter = UserCache.getUser(targetPlayer.getUniqueId());
 
@@ -95,19 +92,115 @@ public class IslandCommand extends BaseCommand {
             userInviter.getIsland().addIslandMember(player);
 
         } else {
-            player.sendMessage("You do not have an invite from " + targetPlayer.getName() + ".");
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorNoInvite.replace("%player%", target)));
         }
     }
 
-    @Subcommand("setwarp")
-    public void onSetWarpCommand(Player player, String warpName) {
-        User user = UserCache.getUser(player.getUniqueId());
+    @Subcommand("lock")
+    public void onLockCommand(Player player) {
+        User user = checkIslandExistence(player);
 
-        // Check if the player has an island
-        if (user.getIsland() == null) {
-            player.sendActionBar(HexUtils.colour(LanguageUtil.publicNeedIsland));
+        if(user == null) {
             return;
         }
+
+
+        if(!PermUtil.isModOrHigher(user)) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantLockIsland.replace("%status%", "lock")));
+            return;
+        }
+
+        for(Player p : plugin.getBorderManager().getPlayersOnIsland(user.getIsland())) {
+            if(!user.getIsland().isIslandMember(p)) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "espawn " + p.getName());
+            }
+        }
+
+        user.getIsland().setLocked(true);
+        player.sendMessage(HexUtils.colour(LanguageUtil.messageLockedIslandSuccess.replace("%status%", "locked")));
+    }
+
+    @Subcommand("unlock")
+    public void onUnlockCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        if(!PermUtil.isModOrHigher(user)) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantLockIsland.replace("%status%", "unlock")));
+            return;
+        }
+
+        user.getIsland().setLocked(false);
+        player.sendMessage(HexUtils.colour(LanguageUtil.messageLockedIslandSuccess.replace("%status%", "unlocked")));
+    }
+
+    @Subcommand("settings")
+    public void onSettingsCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        new IslandSettingsMenu().open(player);
+    }
+
+    @Subcommand("warps")
+    public void onWarpsCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        new IslandWarpsMenu().open(player);
+    }
+
+    @Subcommand("members")
+    public void onMembersCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        new IslandMembersMenu().open(player);
+    }
+
+    @Subcommand("trusted")
+    public void onTrustedCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        new IslandTrustedMenu().open(player);
+    }
+
+    @Subcommand("upgrades")
+    public void onUpgradesCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        // todo change to upgrades
+        new IslandTrustedMenu().open(player);
+    }
+
+    @Subcommand("setwarp")
+    public void onSetWarpCommand(Player player, @Name("Warp name") String warpName) {
+    User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
 
         if(!PermUtil.hasPermission(user, Permission.SETWARP)) {
             return;
@@ -124,13 +217,60 @@ public class IslandCommand extends BaseCommand {
         // Todo: alert all island members that they put a warp
     }
 
-    @Subcommand("go")
-    public void onIslandGoCommand(Player player) {
-        User user = UserCache.getUser(player.getUniqueId());
+    @Subcommand("setvisit")
+    public void onSetVisitCommand(Player player) {
+        User user = checkIslandExistence(player);
 
-        // Check if the player has an island
-        if (user.getIsland() == null) {
-            player.sendActionBar(HexUtils.colour(LanguageUtil.publicNeedIsland));
+        if(user == null) {
+            return;
+        }
+
+        if(!PermUtil.hasPermission(user, Permission.SETHOME)) {
+            return;
+        }
+
+        Island island = plugin.getBorderManager().getIsland(player.getLocation());
+
+        if(island == null || !island.isIslandMember(player)) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantSetVisitLocation));
+            return;
+        }
+
+        user.getIsland().getIslandLocation().setVisitorLocation(player.getLocation());
+        player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandSetVisitorLoc));
+    }
+
+    @Subcommand("trust")
+    @CommandCompletion("@players")
+    public void onIslandGoCommand(Player player, @Name("Player") String target) {
+        User user = checkIslandExistence(player);
+
+        if (user == null) {
+            return;
+        }
+
+        if(!PermUtil.isAdminOrHigher(user)) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorMembersCantTrustPlayer));
+            return;
+        }
+
+        Player targetPlayer = Bukkit.getPlayer(target);
+
+
+        if(targetPlayer == null) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantFindPlayer.replace("%player%", target)));
+            return;
+        }
+
+        user.getIsland().addTrustedMember(targetPlayer);
+        player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandTrustedPlayer.replace("%player%", target)));
+    }
+
+    @Subcommand("home|go")
+    public void onIslandGoCommand(Player player) {
+    User user = checkIslandExistence(player);
+
+        if(user == null) {
             return;
         }
 
@@ -143,12 +283,56 @@ public class IslandCommand extends BaseCommand {
 
         // Check if the player has an island
         if (user.getIsland() != null) {
-            player.sendActionBar(HexUtils.colour("&dcʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ ᴀɴ ɪsʟᴀɴᴅ!"));
+            player.sendMessage(HexUtils.colour("&dcʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ ᴀɴ ɪsʟᴀɴᴅ!"));
             return;
         }
 
         plugin.getGridManager().createIsland(player);
     }
+
+    @Subcommand("visit")
+    @CommandCompletion("@players")
+    public void onVisitCommand(Player player, @Name("Player") String target) {
+        User user = checkIslandExistence(player);
+
+        if (user == null) {
+            return;
+        }
+
+        Player targetPlayer = Bukkit.getPlayer(target);
+
+
+        if(targetPlayer == null) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantFindPlayer.replace("%player%", target)));
+            return;
+        }
+
+        User targetUser = UserCache.getUser(targetPlayer.getUniqueId());
+        if(targetUser == null) return;
+
+        Island targetIsland = targetUser.getIsland();
+
+        if(targetIsland == null) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantVisitIsland.replace("%player%", target)));
+            return;
+        }
+
+        if(targetIsland.isLocked()) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantVisitLocked.replace("%player%", target)));
+            return;
+        }
+
+        if(!targetIsland.getIslandLocation().hasVisitorLocation()) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantVisitNoVisitorLocation.replace("%player%", target)));
+            return;
+        }
+
+        player.teleport(targetIsland.getIslandLocation().getVisitorLocation());
+    }
+
+    /**
+     * Admin commands below
+     */
 
     @Subcommand("forcesave")
     @CommandPermission("minecraft.operator")
@@ -159,4 +343,17 @@ public class IslandCommand extends BaseCommand {
         player.sendMessage("done");
     }
 
+
+    private User checkIslandExistence(Player player) {
+        User user = UserCache.getUser(player.getUniqueId());
+
+        // Check if the player has an island
+        if (user.getIsland() == null) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.publicNeedIsland));
+            return null;
+        }
+
+        return user;
+    }
+    
 }

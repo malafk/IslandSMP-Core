@@ -7,7 +7,10 @@ import org.bukkit.Location;
 
 public class IslandLocation {
     public int minX, maxX, minZ, maxZ;
+
     private int spawnX, spawnY, spawnZ;
+    private int visitX = -1, visitY = -1, visitZ = -1;
+
     private String worldName;
 
     public IslandLocation(int minX, int maxX, int minZ, int maxZ) {
@@ -18,8 +21,6 @@ public class IslandLocation {
 
         this.worldName = IslandSMP.getInstance().getWorldName();
 
-        // Assuming defaultLocation is at minX, -14, minZ
-        // For spawnLocation, adding the offsets to the default location
         this.spawnX = minX - 182; // Adjusted from -181.5 for integer
         this.spawnY = 81;         // 95 - 14
         this.spawnZ = minZ + 135; // Adjusted from 134.5 for integer
@@ -33,6 +34,10 @@ public class IslandLocation {
         return new Location(Bukkit.getWorld(this.worldName), spawnX, spawnY, spawnZ);
     }
 
+    public Location getVisitorLocation() {
+        return new Location(Bukkit.getWorld(this.worldName), visitX, visitY, visitZ);
+    }
+
     public Location getMiddleLocation() {
         int middleX = (minX + maxX) / 2;
 
@@ -44,5 +49,20 @@ public class IslandLocation {
         return new Location(Bukkit.getWorld(this.worldName), middleX, middleY, middleZ);
     }
 
+    public boolean hasVisitorLocation() {
+        return visitX != -1 && visitY != -1 && visitZ != -1;
+    }
+
+    public void setSpawnLocation(Location location) {
+        spawnX = location.getBlockX();
+        spawnY = location.getBlockY();
+        spawnZ = location.getBlockZ();
+    }
+
+    public void setVisitorLocation(Location location) {
+        visitX = location.getBlockX();
+        visitY = location.getBlockY();
+        visitZ = location.getBlockZ();
+    }
 
 }

@@ -5,17 +5,17 @@ import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
-import lol.maltest.islandsmp.utils.PermUtil;
-import lol.maltest.islandsmp.utils.Permission;
+import lol.maltest.islandsmp.utils.*;
 import org.bukkit.block.*;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.GlowSquid;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,23 +48,19 @@ public class IslandListener implements Listener {
         if(e.getBlock().getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) e.setCancelled(true);
     }
 
-
-    public User doChecksAndGetUser(Player player) {
-        User user = UserCache.getUser(player.getUniqueId());
-
-        if(user == null) {
-            player.kick();
-            return null;
-        }
-
-        return user;
-    }
-
     @EventHandler
     public void onBlockBreakEvent(@NotNull EntityDamageEvent e) {
         if(!(e.getEntity() instanceof Player player)) return;
 
-        if(player.getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) e.setCancelled(true);
+        if(!player.getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) return;
+
+        Island island = plugin.getBorderManager().getPlayerIsland(player);
+
+        if(island == null) return;
+
+        if(island.isTrustedOrIslandMember(player)) return;
+
+        e.setCancelled(true);
     }
 
     @EventHandler
@@ -78,9 +74,53 @@ public class IslandListener implements Listener {
     }
 
     @EventHandler
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if(!(e.getDamager() instanceof Player player)) return;
+        if(e.getEntity() instanceof Player) return;
+
+        Island island = plugin.getBorderManager().getPlayerIsland(player);
+        if(island == null) return;
+
+        if (!island.isSettingActive(Setting.ENTITY_INTERACT)) return;
+
+        if(island.isTrustedOrIslandMember(player)) return;
+
+        e.setCancelled(true);
+        e.getDamager().sendMessage(HexUtils.colour(LanguageUtil.messageIslandCantInterEntity));
+    }
+
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)) return;
+
+        Island island = plugin.getBorderManager().getIsland(event.getLocation());
+        if (island == null) return;
+
+
+        if(event.getEntity() instanceof GlowSquid) return;
+
+        if (event.getEntity() instanceof Animals) {
+            if (island.isSettingActive(Setting.ANIMAL_SPAWNING)) {
+                event.setCancelled(true);
+            }
+        } else {
+            if (island.isSettingActive(Setting.MOB_SPAWNING)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+
+    @EventHandler
     public void onPlayerInteractDetect(PlayerInteractEntityEvent e) {
         cancelEventIfNoPermission(e, e.getPlayer(), Permission.PLACE);
     }
+
+    @EventHandler
+    public void onPlayerInteractDetect(PlayerItemFrameChangeEvent e) {
+        cancelEventIfNoPermission(e, e.getPlayer(), Permission.PLACE);
+    }
+
     List<String> blocksNoInteract = Arrays.asList("pressure plate", "button", "door", "gate");
 
     @EventHandler
@@ -88,7 +128,7 @@ public class IslandListener implements Listener {
         if(e.getClickedBlock() == null) return;
         BlockState state = e.getClickedBlock().getState();
         if(state instanceof InventoryHolder) {
-            cancelEventIfNoPermission(e, (Player) e.getPlayer(), Permission.CONTAINER);
+            cancelEventIfNoPermission(e, e.getPlayer(), Permission.CONTAINER);
             return;
         }
 
@@ -99,13 +139,32 @@ public class IslandListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInteractDetect(PlayerItemFrameChangeEvent e) {
-        cancelEventIfNoPermission(e, e.getPlayer(), Permission.PLACE);
+    public void onEntitySpawnEvent(EntitySpawnEvent e) {
+        if(e.getEntityType() != EntityType.PHANTOM) return;
+        if(!e.getEntity().getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) return;
+
+        Island island = plugin.getBorderManager().getIsland(e.getLocation());
+
+        if(island == null) return;
+
+        if(!island.isSettingActive(Setting.PHANTOMS)) return;
+
+        e.getEntity().remove();
     }
 
     @EventHandler
     public void onCreeperExplode(@NotNull ExplosionPrimeEvent e) {
         if(e.getEntityType().equals(EntityType.CREEPER)) e.setCancelled(true);
+
+        if(!e.getEntity().getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) return;
+
+        Island island = plugin.getBorderManager().getIsland(e.getEntity().getLocation());
+
+        if(island == null) return;
+
+        if(!island.isSettingActive(Setting.EXPLOSIONS)) return;
+
+        e.setCancelled(true);
     }
 
     private void cancelEventIfNoPermission(Cancellable e, @NotNull Player player, Permission permission) {
@@ -115,5 +174,15 @@ public class IslandListener implements Listener {
         if(island == null) return;
 
         e.setCancelled(!PermUtil.hasPermissionInCurrentIsland(player, permission));
+    }
+
+    private boolean cancelEventIfSetting(Cancellable e, @NotNull Player player, Setting setting) {
+        if (!player.getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) return false;
+
+        Island island = plugin.getBorderManager().getPlayerIsland(player);
+        if(island == null) return false;
+
+        e.setCancelled(island.isSettingActive(setting));
+        return true;
     }
 }

@@ -12,10 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class BorderManager {
 
@@ -56,6 +53,17 @@ public class BorderManager {
     public Island getPlayerIsland(Player player) {
         return playerIslandMap.get(player.getUniqueId());
     }
+
+    public List<Player> getPlayersOnIsland(Island island) {
+        List<Player> playersOnIsland = new LinkedList<>();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (Objects.equals(playerIslandMap.get(player.getUniqueId()), island)) {
+                playersOnIsland.add(player);
+            }
+        }
+        return playersOnIsland;
+    }
+
 
     public void startBorderTask() {
         new BukkitRunnable() {

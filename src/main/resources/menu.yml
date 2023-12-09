@@ -208,7 +208,7 @@ settings:
     visit:
       name: "&#36FB2B&lᴠɪѕɪᴛ"
       material: ENDER_EYE
-      slot: 11
+      slot: 10
       lore:
         - "&8Setting"
         - "&7"
@@ -222,13 +222,13 @@ settings:
         - "&f"
     entity_interact:
       name: "&#36FB2B&lᴇɴᴛɪᴛʏ ɪɴᴛᴇʀᴀᴄᴛ"
-      material: ENDER_EYE
-      slot: 12
+      material: DIAMOND_SWORD
+      slot: 11
       lore:
         - "&8Setting"
         - "&7"
         - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-        - " &8● &fAllow players to damage or interact"
+        - " &8● &fPrevent players damaging or interacting"
         - "      &fwith entities on your island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
@@ -238,7 +238,7 @@ settings:
     phantoms:
       name: "&#36FB2B&lᴘʜᴀɴᴛᴏᴍѕ"
       material: PHANTOM_MEMBRANE
-      slot: 13
+      slot: 12
       lore:
         - "&8Setting"
         - "&7"
@@ -253,12 +253,12 @@ settings:
     mob_spawning:
       name: "&#36FB2B&lᴍᴏʙ ѕᴘᴀᴡɴɪɴɢ"
       material: ROTTEN_FLESH
-      slot: 14
+      slot: 13
       lore:
         - "&8Setting"
         - "&7"
         - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-        - " &8● &fAllow mobs to spawn on"
+        - " &8● &fPrevent mobs spawning on"
         - "      &fyour island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
@@ -268,12 +268,12 @@ settings:
     animal_spawning:
       name: "&#36FB2B&lᴀɴɪᴍᴀʟ ѕᴘᴀᴡɴɪɴɢ"
       material: WHEAT_SEEDS
-      slot: 15
+      slot: 14
       lore:
         - "&8Setting"
         - "&7"
         - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
-        - " &8● &fAllow players visit"
+        - " &8● &fPrevent animals spawning on"
         - "      &fyour island."
         - "&f"
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
@@ -283,7 +283,7 @@ settings:
     explosions:
       name: "&#36FB2B&lᴇхᴘʟᴏѕɪᴏɴѕ"
       material: TNT
-      slot: 16
+      slot: 15
       lore:
         - "&8Setting"
         - "&7"

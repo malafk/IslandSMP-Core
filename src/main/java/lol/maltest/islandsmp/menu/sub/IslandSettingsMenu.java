@@ -41,9 +41,7 @@ public class IslandSettingsMenu extends Menu {
 
         String setting = key.replace("settings.buttons.", "").toUpperCase();
 
-        if(!PermUtil.hasPermission(user, Permission.SETTINGS)) {
-            return;
-        }
+        if(!PermUtil.hasPermission(user, Permission.SETTINGS)) return;
 
         user.getIsland().toggleSetting(setting);
 

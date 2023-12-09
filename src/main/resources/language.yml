@@ -6,8 +6,15 @@ errors:
     need-permission: "You need the permission &c%permission% &fto do this!"
     only-owner-disband: "Only owners can disband islands!"
     cant-find-player: "Unable to find the player &c%player% &fdid they go offline?"
+    no-invite: "You don't have any invites from %player%"
+    cant-lock-island: "You need to be MODERATOR to %status% the island!"
+    island-locked: "You can't visit %player%'s island, it's locked!"
+    cant-visit-island: "You can't visit %player%'s island since they dont have one!"
+    cant-visit-no-visitor: "You can't visit %player%'s island since they haven't set a visitors location!"
+    cant-set-visitor-location: "You can only set the visitor location on your island!"
   members:
     cant-modify-owner: "You can't modify the island owner!"
+    cant-trust-player: "You need to be ADMIN or higher to trust players!"
   warps:
     max-warps: "You have hit the max amount of warps, upgrade your island to get more!"
   rankpermissions:
@@ -22,5 +29,9 @@ messages:
     cant-join-island: "You can't join someone else's island when you have an island. Disband it first"
     joined-island: "You have joined %player%'s island!"
     accepted-invite: "%player% accepted your invite and has joined your island!"
+    cant-interact-entities: "You cant interact with entities on this island!"
+    set-visitor-location: "Set the visitor location!"
+    trusted-player: "You have trusted the player %player%!"
+    locked-island: "You have %status% the island!"
   warps:
     created: "You have set the warp %warp% at your current location!"

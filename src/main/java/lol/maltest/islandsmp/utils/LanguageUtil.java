@@ -21,12 +21,19 @@ public class LanguageUtil {
     public static String publicNeedPermission;
 
     public static String errorMembersCantModifyOwner;
+    public static String errorMembersCantTrustPlayer;
 
     public static String errorOnlyOwner;
     public static String errorWarpsMax;
     public static String errorHigherRank;
+    public static String errorNoInvite;
+    public static String errorCantLockIsland;
+    public static String errorCantVisitIsland;
+    public static String errorCantVisitNoVisitorLocation;
+    public static String errorCantSetVisitLocation;
 
     public static String errorCantFindPlayer;
+    public static String errorCantVisitLocked;
 
     public static String messageIslandCreated;
     public static String messageIslandDisbanded;
@@ -37,6 +44,10 @@ public class LanguageUtil {
     public static String messageIslandCantJoin;
     public static String messageIslandJoined;
     public static String messageIslandInviteAccepted;
+    public static String messageIslandCantInterEntity;
+    public static String messageIslandSetVisitorLoc;
+    public static String messageIslandTrustedPlayer;
+    public static String messageLockedIslandSuccess;
 
     public LanguageUtil(JavaPlugin plugin) {
         try {
@@ -51,12 +62,17 @@ public class LanguageUtil {
         publicNeedPermission = PREFIX + _languageFile.getString("errors.global.need-permission");
 
         errorMembersCantModifyOwner = PREFIX + _languageFile.getString("errors.members.cant-modify-owner");
+        errorMembersCantTrustPlayer = PREFIX + _languageFile.getString("errors.members.cant-trust-player");
         errorOnlyOwner = PREFIX + _languageFile.getString("errors.global.only-owner-disband");
-
         errorWarpsMax = PREFIX + _languageFile.getString("errors.warps.max-warps");
         errorHigherRank = PREFIX + _languageFile.getString("errors.rankpermissions.higher-rank");
-
+        errorNoInvite = PREFIX + _languageFile.getString("errors.global.no-invite");
         errorCantFindPlayer = PREFIX + _languageFile.getString("errors.global.cant-find-player");
+        errorCantLockIsland = PREFIX + _languageFile.getString("errors.global.cant-lock-island");
+        errorCantVisitLocked = PREFIX + _languageFile.getString("errors.global.island-locked");
+        errorCantVisitIsland = PREFIX + _languageFile.getString("errors.global.cant-visit-island");
+        errorCantVisitNoVisitorLocation = PREFIX + _languageFile.getString("errors.global.cant-visit-no-visitor");
+        errorCantSetVisitLocation = PREFIX + _languageFile.getString("errors.global.cant-set-visitor-location");
 
         messageIslandCreated = PREFIX + _languageFile.getString("messages.island.created");
         messageWarpCreated = PREFIX + _languageFile.getString("messages.warps.created");
@@ -67,5 +83,9 @@ public class LanguageUtil {
         messageIslandCantJoin = PREFIX + _languageFile.getString("messages.island.cant-join-island");
         messageIslandJoined = PREFIX + _languageFile.getString("messages.island.joined-island");
         messageIslandInviteAccepted = PREFIX + _languageFile.getString("messages.island.accepted-invite");
+        messageIslandCantInterEntity = PREFIX + _languageFile.getString("messages.island.cant-interact-entities");
+        messageIslandSetVisitorLoc  = PREFIX + _languageFile.getString("messages.island.set-visitor-location");
+        messageIslandTrustedPlayer  = PREFIX + _languageFile.getString("messages.island.trusted-player");
+        messageLockedIslandSuccess = PREFIX + _languageFile.getString("messages.island.locked-island");
     }
 }
