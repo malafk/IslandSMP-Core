@@ -98,6 +98,10 @@ public final class Island extends IslandStorageObject<UUID> {
         upgradeSpins.put(upgradeType.name().toUpperCase(), getAmountSpins(upgradeType) + 1);
     }
 
+    public void resetAmountSpins(UpgradeType upgradeType) {
+        upgradeSpins.put(upgradeType.name().toUpperCase(), 0);
+    }
+
     public int getAmountSpins(UpgradeType upgradeType) {
         return upgradeSpins.get(upgradeType.name().toUpperCase());
     }

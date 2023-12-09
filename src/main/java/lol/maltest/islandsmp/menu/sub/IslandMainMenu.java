@@ -52,6 +52,9 @@ public class IslandMainMenu extends Menu {
             case "main.buttons.settings":
                 new IslandSettingsMenu().open(player);
                 break;
+            case "main.buttons.upgrades":
+                new IslandUpgradeMenu().open(player);
+                break;
         }
     }
 

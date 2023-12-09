@@ -36,3 +36,5 @@ messages:
     locked-island: "You have %status% the island!"
   warps:
     created: "You have set the warp %warp% at your current location!"
+  upgrades:
+    tier-up: "You have levelled up your upgrade to level %level%!"

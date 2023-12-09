@@ -49,6 +49,7 @@ public class LanguageUtil {
     public static String messageIslandSetVisitorLoc;
     public static String messageIslandTrustedPlayer;
     public static String messageLockedIslandSuccess;
+    public static String messagesUpgradeTierUp;
 
     public LanguageUtil(JavaPlugin plugin) {
         try {
@@ -89,5 +90,7 @@ public class LanguageUtil {
         messageIslandSetVisitorLoc  = PREFIX + _languageFile.getString("messages.island.set-visitor-location");
         messageIslandTrustedPlayer  = PREFIX + _languageFile.getString("messages.island.trusted-player");
         messageLockedIslandSuccess = PREFIX + _languageFile.getString("messages.island.locked-island");
+
+        messagesUpgradeTierUp = PREFIX = _languageFile.getString("messages.upgrades.tier-up");
     }
 }
