@@ -50,6 +50,11 @@ public class LanguageUtil {
     public static String messageIslandTrustedPlayer;
     public static String messageLockedIslandSuccess;
     public static String messagesUpgradeTierUp;
+    public static String messagesUpgradeDiscovered;
+    public static String messagesUpgradeMaxedOut;
+
+    public static String messagesUpgradeFoundSpin;
+    public static String messagesUpgradeCanUpgrade;
 
     public LanguageUtil(JavaPlugin plugin) {
         try {
@@ -91,6 +96,13 @@ public class LanguageUtil {
         messageIslandTrustedPlayer  = PREFIX + _languageFile.getString("messages.island.trusted-player");
         messageLockedIslandSuccess = PREFIX + _languageFile.getString("messages.island.locked-island");
 
-        messagesUpgradeTierUp = PREFIX = _languageFile.getString("messages.upgrades.tier-up");
+        messagesUpgradeTierUp = PREFIX + _languageFile.getString("messages.upgrades.tier-up");
+        messagesUpgradeDiscovered = PREFIX + _languageFile.getString("messages.upgrades.discovered");
+
+        messagesUpgradeFoundSpin = PREFIX + _languageFile.getString("messages.upgrades.found-spin");
+        messagesUpgradeCanUpgrade = PREFIX + _languageFile.getString("messages.upgrades.can-upgrade");
+
+        messagesUpgradeMaxedOut = PREFIX + _languageFile.getString("messages.upgrades.maxed-out");
+
     }
 }

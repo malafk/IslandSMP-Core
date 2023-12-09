@@ -21,7 +21,7 @@ public enum UpgradeType {
     WARP_SLOTS(Material.ENDER_EYE),
     TRUSTED_SLOTS(Material.IRON_CHESTPLATE);
 
-    private Material material;
+    private final Material material;
 
     UpgradeType(Material material) {
         this.material = material;

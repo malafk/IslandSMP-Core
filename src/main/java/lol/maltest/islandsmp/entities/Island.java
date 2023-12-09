@@ -111,6 +111,10 @@ public final class Island extends IslandStorageObject<UUID> {
         upgradeLevels.put(upgrade.name().toUpperCase(), currentLevel + 1);
     }
 
+    public int getLevel(UpgradeType upgrade) {
+        return upgradeLevels.getOrDefault(upgrade.name().toUpperCase(), 0);
+    }
+
     public List<IslandMember> getIslandMembers() {
         List<IslandMember> members = new ArrayList<>();
         IslandMember owner = new IslandMember(islandOwner);

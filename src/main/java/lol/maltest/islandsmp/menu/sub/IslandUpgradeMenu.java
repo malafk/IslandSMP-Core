@@ -39,6 +39,10 @@ public class IslandUpgradeMenu extends Menu {
     private static final int REWARD_SLOT = 13;
     private List<GuiItem> POSSIBLE_REWARDS;
 
+    private boolean firstSpin = true;
+
+
+    Player player;
 
     private Gui gui;
     private User user;
@@ -65,6 +69,8 @@ public class IslandUpgradeMenu extends Menu {
 
         for (Menuable menuable : upgradeButtons) {
             Material material = menuable.getMaterial();
+            if(menuable.getKeyPrefix().equalsIgnoreCase("upgrades.buttons.spin")) continue;
+
             UpgradeType upgradeType = UpgradeType.getByMaterial(material);
 
             int currentLevel = IslandSMP.getInstance().getUpgradeManager().getCurrentLevel(upgradeType, user.getIsland());
@@ -73,7 +79,7 @@ public class IslandUpgradeMenu extends Menu {
             if (rewardTier != null && rewardTier.getRequiredSpins() > 0) {
                 ArrayList<Component> newMen = new ArrayList<>();
 
-                String require = IslandSMP.getInstance().getUpgradeManager().getRequirements(upgradeType, (currentLevel + 1));
+                String require = IslandSMP.getInstance().getUpgradeManager().getRequirements(upgradeType, (currentLevel + 1), user.getIsland(), player);
 
                 for (String lore : MenuUtil._menuFile.getStringList(menuable.getKeyPrefix() + ".lore")) {
                     newMen.add(HexUtils.colour(
@@ -83,7 +89,7 @@ public class IslandUpgradeMenu extends Menu {
                     ));
                 }
 
-                GuiItem item = ItemBuilder.from(menuable.getMaterial()).name(HexUtils.colour(menuable.getName())).asGuiItem();
+                GuiItem item = ItemBuilder.from(menuable.getMaterial()).name(HexUtils.colour(menuable.getName())).asGuiItem(e -> e.setCancelled(true));
 
 
                 rewards.add(
@@ -114,17 +120,19 @@ public class IslandUpgradeMenu extends Menu {
             int getAmountSpins = user.getIsland().getAmountSpins(upgradeType);
 
             if (currentLevel == 0 && getAmountSpins == 0) {
-                player.sendMessage("You have revealed and got tier 1 of " + upgradeType.name());
-
-                if (IslandSMP.getInstance().getUpgradeManager().canUpgradeToTier(player, user.getIsland(), upgradeType, currentLevel)) {
-                    IslandSMP.getInstance().getUpgradeManager().applyUpgradeToTier(user.getIsland(), upgradeType, currentLevel);
-                    player.sendMessage(upgradeType.name() + " upgraded to level " + (currentLevel + 1));
-                }
+                player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeDiscovered.replace("%upgrade%", upgradeType.name())));
+                IslandSMP.getInstance().getUpgradeManager().applyUpgradeToTier(user.getIsland(), upgradeType, currentLevel);
             }
 
             if (currentLevel > 0 && getAmountSpins == 0) {
                 user.getIsland().addAmountSpins(upgradeType);
-                player.sendMessage(upgradeType.name() + " you found a spin again.. adding it");
+                player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeFoundSpin.replace("%upgrade%", upgradeType.name())));
+            }
+
+            boolean hasReachRequirements = IslandSMP.getInstance().getUpgradeManager().canUpgradeToTier(player, user.getIsland(), upgradeType, (currentLevel + 1));
+
+            if(hasReachRequirements) {
+                player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeCanUpgrade.replace("%upgrade%", upgradeType.name())));
             }
 
             populateGui(gui, player);
@@ -151,13 +159,14 @@ public class IslandUpgradeMenu extends Menu {
         for (int i = 10; i < 16; i++) {
             ItemStack currentItem = gui.getInventory().getItem(i + 1);
             if (currentItem != null) {
-                GuiItem guiItem = ItemBuilder.from(currentItem).asGuiItem();
+                GuiItem guiItem = ItemBuilder.from(currentItem).asGuiItem(e -> e.setCancelled(true));
                 gui.setItem(i, guiItem);
             }
         }
     }
 
     private void addNewReward(Gui gui) {
+        if(POSSIBLE_REWARDS.isEmpty()) return;
         GuiItem nextReward = POSSIBLE_REWARDS.get(RANDOM.nextInt(POSSIBLE_REWARDS.size()));
         gui.setItem(16, nextReward);
     }
@@ -170,7 +179,13 @@ public class IslandUpgradeMenu extends Menu {
 
     @Override
     public void onClick(Player player, String key, ClickType clickType) {
-        if ("spin".equals(key)) {
+        if ("upgrades.buttons.spin".equals(key)) {
+            if(POSSIBLE_REWARDS.isEmpty()) {
+                player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeMaxedOut));
+                return;
+            }
+
+            // take 15k or whatever
             spinCrate(gui, player);
         }
 
@@ -180,6 +195,8 @@ public class IslandUpgradeMenu extends Menu {
 
         if (user == null) return;
 
+        if(key.equalsIgnoreCase("upgrades.buttons.spin")) return;
+
         UpgradeType upgradeType = UpgradeType.valueOf(key.replace("upgrades.buttons.", "").toUpperCase());
 
         int tier = IslandSMP.getInstance().getUpgradeManager().getCurrentLevel(upgradeType, user.getIsland());
@@ -187,7 +204,9 @@ public class IslandUpgradeMenu extends Menu {
 
         boolean canUpgrade = IslandSMP.getInstance().getUpgradeManager().canUpgradeToTier(player, user.getIsland(), upgradeType, tier);
 
-        Tier tierObject = IslandSMP.getInstance().getUpgradeManager().getTier(upgradeType, (tier + 1));
+        Tier tierObject = IslandSMP.getInstance().getUpgradeManager().getTier(upgradeType, tier);
+
+        System.out.println("Getting " + (tier + 1) + " level of " + upgradeType.name());
 
         if(!canUpgrade) return;
 
@@ -197,7 +216,7 @@ public class IslandUpgradeMenu extends Menu {
         user.getIsland().resetAmountSpins(upgradeType);
         IslandSMP.getInstance().getEconomy().withdrawPlayer(player, moneyToTake);
 
-        IslandSMP.getInstance().getUpgradeManager().applyUpgradeToTier(user.getIsland(), upgradeType, (tier + 1));
+        IslandSMP.getInstance().getUpgradeManager().applyUpgradeToTier(user.getIsland(), upgradeType,  tier);
 
 
         player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeTierUp.replace("%level%", (tier + 1) + "")));
@@ -219,6 +238,7 @@ public class IslandUpgradeMenu extends Menu {
 
     @Override
     public List<Menuable> getMenuItems(Player player) {
+        this.player = player;
         User user = UserCache.getUser(player.getUniqueId());
         if (user == null) return null;
         this.user = user;
@@ -229,44 +249,52 @@ public class IslandUpgradeMenu extends Menu {
         List<Menuable> items = new ArrayList<>();
 
         // Add spinner item
-        items.add(new DynamicMenuItem(Material.LEVER, "Spin", new ArrayList<>(), "spin", 22, null));
+
+//        items.add(new DynamicMenuItem(Material.LEVER, "Spin", new ArrayList<>(), "spin", 22, null));
 
         // Add possible rewards in the row
-//        for (int i = 0; i < 7; i++) {
-//            GuiItem rewardMaterial = POSSIBLE_REWARDS.get(RANDOM.nextInt(POSSIBLE_REWARDS.size()));
-//
-//            Material material = rewardMaterial.getItemStack().getType();
-//            UpgradeType upgradeType = UpgradeType.getByMaterial(material);
-//
-//            int currentLevel = IslandSMP.getInstance().getUpgradeManager().getCurrentLevel(upgradeType, user.getIsland());
-//
-//            Tier rewardTier = IslandSMP.getInstance().getUpgradeManager().getTier(upgradeType, currentLevel);
-//
-//            if(rewardTier == null || rewardTier.getRequiredSpins() > 0) {
-//                items.add(new DynamicMenuItem(rewardMaterial.getItemStack().getType(), "Reward", new ArrayList<>(), "reward", 10 + i, null));
-//            }
-//        }
+        if(firstSpin) {
+            for (int i = 0; i < 7; i++) {
+                items.add(new DynamicMenuItem(Material.YELLOW_STAINED_GLASS_PANE, "Reward", new ArrayList<>(), "reward", 10 + i, null));
+            }
+            firstSpin = false;
+        }
 
         ArrayList<Menuable> upgradeButtons = new ArrayList<>(MenuUtil.menuUpgradesButtons);
 
 
         for (Menuable menuable : upgradeButtons) {
+            if(menuable.getKeyPrefix().equalsIgnoreCase("upgrades.buttons.spin")) {
+                items.add(
+                        new DynamicMenuItem(
+                                menuable.getMaterial(),
+                                menuable.getName(),
+                                menuable.getColorLore(),
+                                menuable.getKeyPrefix(),
+                                menuable.getSlot(),
+                                null
+                        )
+                );
+                continue;
+            }
+
 
             UpgradeType upgradetype = UpgradeType.valueOf(menuable.getKeyPrefix().substring(menuable.getKeyPrefix().lastIndexOf(".") + 1).toUpperCase());
             ArrayList<Component> newMen = new ArrayList<>();
 
             int tier = IslandSMP.getInstance().getUpgradeManager().getCurrentLevel(upgradetype, user.getIsland());
 
-
-            String require = IslandSMP.getInstance().getUpgradeManager().getRequirements(upgradetype, (tier + 1));
+            String require = IslandSMP.getInstance().getUpgradeManager().getRequirements(upgradetype, tier, user.getIsland(), player);
             boolean canUpgrade = IslandSMP.getInstance().getUpgradeManager().canUpgradeToTier(player, user.getIsland(), upgradetype, tier);
+
+            boolean isMaxTier = tier == IslandSMP.getInstance().getUpgradeManager().getMaxTier(upgradetype);
 
             for (String lore : MenuUtil._menuFile.getStringList(menuable.getKeyPrefix() + ".lore")) {
                 newMen.add(HexUtils.colour(
-                        lore.replace("%tier%", tier + "")
-                                .replace("%next_tier%", (tier + 1) + "")
-                                .replace("%requirements%", (require == null ? "None" : require))
-                                .replace("%status%", (canUpgrade ? "&aClick to upgrade to the next tier!" : "&cYou don't meet the requirements to upgrade this!"))
+                        lore.replace("%tier%", String.valueOf(tier))
+                                .replace("%next_tier%", isMaxTier ? "None" : String.valueOf(tier + 1))
+                                .replace("%requirements%", isMaxTier ? "None (You're at the max level!)" : (require == null ? "None" : require))
+                                .replace("%status%", (canUpgrade ? "&aClick to upgrade to the next tier!" : (isMaxTier ? "&cYou're at the maximum tier!" : "&cYou don't meet the requirements to upgrade!")))
                 ));
             }
 

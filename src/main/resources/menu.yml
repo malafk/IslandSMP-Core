@@ -513,6 +513,17 @@ upgrades:
   title: "Island Upgrades"
   rows: 6
   buttons:
+    spin:
+      name: "&#36FB2B&lѕᴘɪɴ ᴡʜᴇᴇʟ"
+      material: LEVER
+      slot: 22
+      lore:
+        - "&8Button"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fClick to spin the wheel!"
+        - "&f"
+        - "&f"
     ore_drops:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴏʀᴇ ᴅʀᴏᴘѕ"
       material: DIAMOND

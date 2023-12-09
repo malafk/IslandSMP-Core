@@ -38,3 +38,7 @@ messages:
     created: "You have set the warp %warp% at your current location!"
   upgrades:
     tier-up: "You have levelled up your upgrade to level %level%!"
+    discovered: "You have discovered the upgrade %upgrade%, now you can view the requirements to level it up to the next level"
+    found-spin: "You have re-spinned %upgrade% and it has been added towards your requirements!"
+    can-upgrade: "You can now upgrade %upgrade% as you have got all the requirements"
+    maxed-out: "You can't spin anymore since you maxed out all the upgrades!"

@@ -1,5 +1,6 @@
 package lol.maltest.islandsmp.manager;
 
+import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.upgrade.Tier;
 import lol.maltest.islandsmp.utils.UpgradeType;
@@ -41,7 +42,7 @@ public class UpgradeManager {
     }
 
     public boolean canUpgradeToTier(Player requestr, Island island, UpgradeType upgradeType, int tierIndex) {
-        if (tierIndex < 0 || tierIndex >= upgradeTiers.size()) {
+        if (tierIndex < 0 || tierIndex > upgradeTiers.size()) {
             return false;
         }
         List<Tier> tiers = upgradeTiers.get(upgradeType);
@@ -52,7 +53,7 @@ public class UpgradeManager {
     }
 
     public void applyUpgradeToTier(Island island, UpgradeType upgradeType, int tierIndex) {
-        if (tierIndex < 0 || tierIndex >= upgradeTiers.size()) {
+        if (tierIndex < 0 || tierIndex > upgradeTiers.size()) {
             return;
         }
         List<Tier> tiers = upgradeTiers.get(upgradeType);
@@ -61,22 +62,39 @@ public class UpgradeManager {
         }
     }
 
-    public String getRequirements(UpgradeType upgradeType, int tierIndex) {
-        if (tierIndex < 0 || tierIndex >= upgradeTiers.size()) {
+    public int getMaxTier(UpgradeType upgradeType) {
+        List<Tier> tiers = upgradeTiers.get(upgradeType);
+        if (tiers != null) {
+            return tiers.size();
+        }
+        return 0;
+    }
+
+    public String getRequirements(UpgradeType upgradeType, int tierIndex, Island island, Player player) {
+        if (tierIndex < 0 || tierIndex > upgradeTiers.size()) {
             return null; // or return a suitable default value or perhaps throw an exception depending upon your requirements
         }
+
         List<Tier> tiers = upgradeTiers.get(upgradeType);
         if (tiers != null && tierIndex < tiers.size()) {
             Tier tier = tiers.get(tierIndex);
             int cost = tier.getRequiredMoney();
             int spins = tier.getRequiredSpins();
-            String spinCost = spins > 0 ? spins + " Spin" + (spins > 1 ? "(s)" : "") : "";
-            String costStr = cost > 0 ? cost + "$" : "";
+
+            // Assume that Island has methods getMoney() and getSpins(UpgradeType upgradeType)
+            int existingMoney = (int) IslandSMP.getInstance().getEconomy().getBalance(player);
+            int existingSpins = island.getAmountSpins(upgradeType);
+
+            String spinColor = existingSpins >= spins ? "&a" : "&c";
+            String moneyColor = existingMoney >= cost ? "&a" : "&c";
+
+            String spinCost = spins > 0 ? spinColor + spins + " Spin" + (spins > 1 ? "(s)" : "") : "";
+            String costStr = cost > 0 ? moneyColor + cost + "$" : "";
+
             return (spinCost.isEmpty() ? "" : spinCost + ", ") + costStr;
         }
         return null; // or return a suitable default value or perhaps throw an exception depending upon your requirements
     }
-
     public void setupDefaults() {
         // Increased Ore Drops
         Tier oreTier1 = new Tier(UpgradeType.ORE_DROPS, 1, 0); // First Tier (Fortune 1)

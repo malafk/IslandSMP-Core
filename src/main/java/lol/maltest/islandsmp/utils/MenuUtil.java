@@ -107,6 +107,9 @@ public class MenuUtil {
         menuUpgradesTitle = HexUtils.colour(_menuFile.getString("upgrades.title"));
         menuUpgradesRows = _menuFile.getInt("upgrades.rows");
 
+        // spin button
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.spin"));
+
         menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.ore_drops"));
         menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.farm_drops"));
         menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.mob_drops"));
