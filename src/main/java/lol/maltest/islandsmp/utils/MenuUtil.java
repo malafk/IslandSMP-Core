@@ -29,7 +29,6 @@ public class MenuUtil {
     public static Component menuPageBackMenuName;
     public static List<Component> menuPageBackMenuLore;
 
-
     public static Component menuMainTitle;
     public static int menuMainRows;
     public static ArrayList<Menuable> menuMainButtons = new ArrayList<>();
@@ -50,6 +49,10 @@ public class MenuUtil {
     public static Component menuRankPermissionsTitle;
     public static int menuRankPermissionsRows;
     public static ArrayList<Menuable> menuRankPermissionsButtons = new ArrayList<>();
+
+    public static Component menuSettingsTitle;
+    public static int menuSettingsRows;
+    public static ArrayList<Menuable> menuSettingsButtons = new ArrayList<>();
 
     public static Component menuWarpsTitle;
     public static String menuWarpsButtonName;
@@ -81,6 +84,9 @@ public class MenuUtil {
         menuRankPermissionsTitle = HexUtils.colour(_menuFile.getString("rankpermissions.title"));
         menuRankPermissionsRows = _menuFile.getInt("rankpermissions.rows");
 
+        menuSettingsTitle = HexUtils.colour(_menuFile.getString("settings.title"));
+        menuSettingsRows = _menuFile.getInt("settings.rows");
+
         menuWarpsTitle = HexUtils.colour(_menuFile.getString("warps.title"));
         menuWarpsButtonName = _menuFile.getString("warps.buttons.warp.name");
         menuWarpsButtonRawLore = _menuFile.getStringList("warps.buttons.warp.lore");
@@ -89,9 +95,18 @@ public class MenuUtil {
         menuMembersButtonName = _menuFile.getString("members.buttons.member.name");
         menuMembersButtonRawLore = _menuFile.getStringList("members.buttons.member.lore");
 
+
         menuTrustedTitle = HexUtils.colour(_menuFile.getString("trusted.title"));
         menuTrustedButtonName = _menuFile.getString("trusted.buttons.member.name");
         menuTrustedButtonRawLore = _menuFile.getStringList("trusted.buttons.member.lore");
+
+        menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.visit"));
+        menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.entity_interact"));
+        menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.phantoms"));
+        menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.mob_spawning"));
+        menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.animal_spawning"));
+        menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.explosions"));
+
 
         menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.trusted"));
         menuPermissionsButtons.add(new MenuItem(_menuFile, "permissions.buttons.member"));

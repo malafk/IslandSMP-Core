@@ -45,8 +45,12 @@ public class IslandMainMenu extends Menu {
                 User user = UserCache.getUser(player.getUniqueId());
                 player.closeInventory();
                 player.teleport(user.getIsland().getIslandLocation().getSpawnLocation());
+                break;
             case "main.buttons.trusted":
                 new IslandTrustedMenu().open(player);
+                break;
+            case "main.buttons.settings":
+                new IslandSettingsMenu().open(player);
                 break;
         }
     }

@@ -201,6 +201,100 @@ permissions:
         - " &8● &fPermissions: &7%permissions%"
         - "&f"
         - "&f"
+settings:
+  title: "Island Settings"
+  rows: 3
+  buttons:
+    visit:
+      name: "&#36FB2B&lᴠɪѕɪᴛ"
+      material: ENDER_EYE
+      slot: 11
+      lore:
+        - "&8Setting"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players visit"
+        - "      &fyour island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status%"
+        - "&f"
+        - "&f"
+    entity_interact:
+      name: "&#36FB2B&lᴇɴᴛɪᴛʏ ɪɴᴛᴇʀᴀᴄᴛ"
+      material: ENDER_EYE
+      slot: 12
+      lore:
+        - "&8Setting"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players to damage or interact"
+        - "      &fwith entities on your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status%"
+        - "&f"
+        - "&f"
+    phantoms:
+      name: "&#36FB2B&lᴘʜᴀɴᴛᴏᴍѕ"
+      material: PHANTOM_MEMBRANE
+      slot: 13
+      lore:
+        - "&8Setting"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fPrevent phantoms spawning"
+        - "      &fon your island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status%"
+        - "&f"
+        - "&f"
+    mob_spawning:
+      name: "&#36FB2B&lᴍᴏʙ ѕᴘᴀᴡɴɪɴɢ"
+      material: ROTTEN_FLESH
+      slot: 14
+      lore:
+        - "&8Setting"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow mobs to spawn on"
+        - "      &fyour island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status%"
+        - "&f"
+        - "&f"
+    animal_spawning:
+      name: "&#36FB2B&lᴀɴɪᴍᴀʟ ѕᴘᴀᴡɴɪɴɢ"
+      material: WHEAT_SEEDS
+      slot: 15
+      lore:
+        - "&8Setting"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fAllow players visit"
+        - "      &fyour island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status%"
+        - "&f"
+        - "&f"
+    explosions:
+      name: "&#36FB2B&lᴇхᴘʟᴏѕɪᴏɴѕ"
+      material: TNT
+      slot: 16
+      lore:
+        - "&8Setting"
+        - "&7"
+        - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
+        - " &8● &fPrevent explosions damaging"
+        - "      &fyour island."
+        - "&f"
+        - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
+        - " &8● &fStatus: %status%"
+        - "&f"
+        - "&f"
 rankpermissions:
   title: "Rank Permissions"
   rows: 4

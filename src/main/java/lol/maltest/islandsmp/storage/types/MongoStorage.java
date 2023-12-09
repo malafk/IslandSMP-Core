@@ -56,7 +56,6 @@ public abstract class MongoStorage<I, T extends IslandStorageObject<I>> {
         return CompletableFuture.runAsync(() -> {
             Document document = serialize(object);
             if (document != null) {
-                System.out.println("saving");
                 collection.replaceOne(
                         Filters.eq(ID_FIELD, String.valueOf(object.getIslandUUID())),
                         document,

@@ -13,11 +13,16 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class BorderManager {
 
     private IslandSMP plugin;
     private WorldBorderApi worldBorderApi;
+
+    private Map<UUID, Island> playerIslandMap = new HashMap<>();
 
     public BorderManager(IslandSMP plugin) {
         this.plugin = plugin;
@@ -48,6 +53,10 @@ public class BorderManager {
         return null;
     }
 
+    public Island getPlayerIsland(Player player) {
+        return playerIslandMap.get(player.getUniqueId());
+    }
+
     public void startBorderTask() {
         new BukkitRunnable() {
             @Override
@@ -55,8 +64,8 @@ public class BorderManager {
                 for(Player player : Bukkit.getOnlinePlayers()) {
                     Island island = getIsland(player.getLocation());
                     if(island != null) {
-//                        player.sendMessage("You are in the island " + island.getIslandName());
                         worldBorderApi.setBorder(player, island.getWorldBorderSize(), island.getIslandLocation().getMiddleLocation());
+                        playerIslandMap.put(player.getUniqueId(), island);
                     }
                 }
             }

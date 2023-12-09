@@ -1,12 +1,12 @@
 package lol.maltest.islandsmp.entities;
 
-import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.sub.IslandLocation;
 import lol.maltest.islandsmp.entities.sub.IslandMember;
 import lol.maltest.islandsmp.entities.sub.IslandWarp;
 import lol.maltest.islandsmp.entities.type.IslandStorageObject;
 import lol.maltest.islandsmp.utils.Permission;
 import lol.maltest.islandsmp.utils.Rank;
+import lol.maltest.islandsmp.utils.Setting;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -29,6 +29,7 @@ public final class Island extends IslandStorageObject<UUID> {
     @Getter private List<IslandWarp> islandWarps = new ArrayList<>();
 
     @Getter @Setter private Map<Rank, Set<String>> rankPermissions = new HashMap<>();
+    private List<Setting> settings = new ArrayList<>();
 
     // Island Upgrade Related Levels
     @Getter private int worldBorderSize = 150;
@@ -118,22 +119,12 @@ public final class Island extends IslandStorageObject<UUID> {
         trustedMembers.add(player.getUniqueId());
     }
 
-
     public void addIslandMember(Player player) {
         islandMembers.add(new IslandMember(player.getUniqueId()));
     }
 
-    public void grantPermission(Rank rank, String permission) {
-        this.rankPermissions.computeIfAbsent(rank, k -> new HashSet<>()).add(permission);
-    }
-
     public Rank getPlayerRank(Player player) {
-
-        User user = UserCache.getUser(player.getUniqueId());
-
-        if(user == null) return null;
-
-        if(user.getIsland().getIslandOwner().equals(player.getUniqueId())) return Rank.OWNER;
+        if(getIslandOwner().equals(player.getUniqueId())) return Rank.OWNER;
 
         for(IslandMember islandMember : islandMembers) {
             if(islandMember.getPlayerUuid().equals(player.getUniqueId())) {
@@ -150,10 +141,40 @@ public final class Island extends IslandStorageObject<UUID> {
             permissions.remove(permission.toUpperCase());
         }
     }
+    public void grantPermission(Rank rank, String permission) {
+        this.rankPermissions.computeIfAbsent(rank, k -> new HashSet<>()).add(permission);
+    }
+
 
     public boolean hasPermission(Rank rank, String permission) {
         Set<String> permissions = this.rankPermissions.get(rank);
         return permissions != null && permissions.contains(permission.toUpperCase());
+    }
+
+    public boolean isSettingActive(Setting setting) {
+        return settings.contains(setting);
+    }
+
+    public boolean isSettingActive(String setting) {
+        Setting settingEnumValue = Setting.valueOf(setting.toUpperCase());
+        return settings.contains(settingEnumValue);
+    }
+
+    public void toggleSetting(String setting) {
+        Setting settingEnumValue = Setting.valueOf(setting.toUpperCase());
+        if(settings.contains(settingEnumValue)) {
+            settings.add(settingEnumValue);
+        } else {
+            settings.remove(settingEnumValue);
+        }
+    }
+
+    public void toggleSetting(Setting setting) {
+        if(settings.contains(setting)) {
+            settings.add(setting);
+        } else {
+            settings.remove(setting);
+        }
     }
 
     public int getNumberOfActivePermissions(Rank rank) {
@@ -168,11 +189,7 @@ public final class Island extends IslandStorageObject<UUID> {
 
     // Check if a rank has a permission
     public boolean hasPermission(Player player, String permission) {
-        User user = UserCache.getUser(player.getUniqueId());
-
-        if(user == null) return false;
-
-        if(user.getIsland().getIslandOwner().equals(player.getUniqueId())) return true;
+        if(getIslandOwner().equals(player.getUniqueId())) return true;
 
         Set<String> permissions = this.rankPermissions.get(getPlayerRank(player));
         return permissions != null && permissions.contains(permission.toUpperCase());

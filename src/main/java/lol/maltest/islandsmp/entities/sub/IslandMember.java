@@ -16,7 +16,7 @@ public class IslandMember {
 
     public IslandMember(UUID playerUuid) {
         this.playerUuid = playerUuid;
-        this.playerName = Bukkit.getPlayer(playerUuid).getName();
+        this.playerName = Bukkit.getOfflinePlayer(playerUuid).getName();
     }
 
     public Rank getRank() {

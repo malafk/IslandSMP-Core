@@ -38,7 +38,6 @@ public final class IslandCache {
     }
 
     public void deleteIslandFromDatabase(UUID islandUuid) {
-        System.out.println("Deleting islandUUid " + islandUuid);
         islandStorage.deleteObject(islandUuid);
     }
 }
