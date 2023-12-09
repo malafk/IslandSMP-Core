@@ -1,0 +1,179 @@
+package lol.maltest.islandsmp.manager;
+
+import lol.maltest.islandsmp.entities.Island;
+import lol.maltest.islandsmp.upgrade.Tier;
+import lol.maltest.islandsmp.utils.UpgradeType;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class UpgradeManager {
+
+    private final Map<UpgradeType, List<Tier>> upgradeTiers = new HashMap<>();
+
+    public UpgradeManager() {
+        setupDefaults();
+    }
+
+    private void addTierToUpgradeTiers(Tier tier) {
+        UpgradeType upgradeType = tier.getUpgradeType();
+
+        if (!upgradeTiers.containsKey(upgradeType)) {
+            upgradeTiers.put(upgradeType, new ArrayList<>());
+        }
+
+        upgradeTiers.get(upgradeType).add(tier);
+    }
+
+    public int getCurrentLevel(UpgradeType upgradeType, Island island) {
+        return island.getUpgradeLevels().get(upgradeType.name().toUpperCase());
+    }
+
+    public Tier getTier(UpgradeType upgradeType, int tierIndex) {
+        List<Tier> tiers = upgradeTiers.get(upgradeType);
+        if (tiers != null && tierIndex >= 0 && tierIndex < tiers.size()) {
+            return tiers.get(tierIndex);
+        }
+        return null; //or throw exception depending upon your requirements
+    }
+
+    public boolean canUpgradeToTier(Player requestr, Island island, UpgradeType upgradeType, int tierIndex) {
+        if (tierIndex < 0 || tierIndex >= upgradeTiers.size()) {
+            return false;
+        }
+        List<Tier> tiers = upgradeTiers.get(upgradeType);
+        if (tiers != null && tierIndex < tiers.size()) {
+            return tiers.get(tierIndex).canUpgrade(requestr, island);
+        }
+        return false;
+    }
+
+    public void applyUpgradeToTier(Island island, UpgradeType upgradeType, int tierIndex) {
+        if (tierIndex < 0 || tierIndex >= upgradeTiers.size()) {
+            return;
+        }
+        List<Tier> tiers = upgradeTiers.get(upgradeType);
+        if (tiers != null && tierIndex < tiers.size()) {
+            island.levelUpUpgrade(upgradeType);
+        }
+    }
+
+    public String getRequirements(UpgradeType upgradeType, int tierIndex) {
+        if (tierIndex < 0 || tierIndex >= upgradeTiers.size()) {
+            return null; // or return a suitable default value or perhaps throw an exception depending upon your requirements
+        }
+        List<Tier> tiers = upgradeTiers.get(upgradeType);
+        if (tiers != null && tierIndex < tiers.size()) {
+            Tier tier = tiers.get(tierIndex);
+            int cost = tier.getRequiredMoney();
+            int spins = tier.getRequiredSpins();
+            String spinCost = spins > 0 ? spins + " Spin" + (spins > 1 ? "(s)" : "") : "";
+            String costStr = cost > 0 ? cost + "$" : "";
+            return (spinCost.isEmpty() ? "" : spinCost + ", ") + costStr;
+        }
+        return null; // or return a suitable default value or perhaps throw an exception depending upon your requirements
+    }
+
+    public void setupDefaults() {
+        // Increased Ore Drops
+        Tier oreTier1 = new Tier(UpgradeType.ORE_DROPS, 1, 0); // First Tier (Fortune 1)
+        Tier oreTier2 = new Tier(UpgradeType.ORE_DROPS, 1, 50000); // Second tier (Fortune 2)
+        Tier oreTier3 = new Tier(UpgradeType.ORE_DROPS, 1, 250000); // Third Tier (Fortune 3)
+        addTierToUpgradeTiers(oreTier1);
+        addTierToUpgradeTiers(oreTier2);
+        addTierToUpgradeTiers(oreTier3);
+
+        // Increased Farm Drops
+        Tier farmTier1 = new Tier(UpgradeType.FARM_DROPS, 1, 0); // First Tier (25% chance)
+        Tier farmTier2 = new Tier(UpgradeType.FARM_DROPS, 1, 50000); // Second Tier (50% chance)
+        Tier farmTier3 = new Tier(UpgradeType.FARM_DROPS, 1, 250000); // Third Tier (75% chance)
+        Tier farmTier4 = new Tier(UpgradeType.FARM_DROPS, 1, 0); // Fourth Tier (100% chance)
+        addTierToUpgradeTiers(farmTier1);
+        addTierToUpgradeTiers(farmTier2);
+        addTierToUpgradeTiers(farmTier3);
+        addTierToUpgradeTiers(farmTier4);
+
+        // Increased Mob Drops
+        Tier mobTier1 = new Tier(UpgradeType.MOB_DROPS, 1, 0); // First Tier (Looting 1)
+        Tier mobTier2 = new Tier(UpgradeType.MOB_DROPS, 1, 50000); // Second Tier (Looting 2)
+        Tier mobTier3 = new Tier(UpgradeType.MOB_DROPS, 1, 250000); // Third Tier (Looting 3)
+        addTierToUpgradeTiers(mobTier1);
+        addTierToUpgradeTiers(mobTier2);
+        addTierToUpgradeTiers(mobTier3);
+
+        // Increased Mob Spawns
+        Tier mobSpawnTier1 = new Tier(UpgradeType.MOB_SPAWNS, 1, 0); // First Tier (15% spawn rate)
+        Tier mobSpawnTier2 = new Tier(UpgradeType.MOB_SPAWNS, 1, 50000); // Second Tier (30% spawn rate)
+        Tier mobSpawnTier3 = new Tier(UpgradeType.MOB_SPAWNS, 1, 250000); // Third Tier (50% spawn rate)
+        Tier mobSpawnTier4 = new Tier(UpgradeType.MOB_SPAWNS, 1, 0); // Fourth Tier (100% spawn rate)
+        addTierToUpgradeTiers(mobSpawnTier1);
+        addTierToUpgradeTiers(mobSpawnTier2);
+        addTierToUpgradeTiers(mobSpawnTier3);
+        addTierToUpgradeTiers(mobSpawnTier4);
+
+        // Increased XP Drops
+        Tier xpTier1 = new Tier(UpgradeType.XP_DROPS, 1, 0); // First Tier (1.2x xp rate)
+        Tier xpTier2 = new Tier(UpgradeType.XP_DROPS, 1, 50000); // Second Tier (1.4x xp rate)
+        Tier xpTier3 = new Tier(UpgradeType.XP_DROPS, 1, 250000); // Third Tier (1.6x xp rate)
+        Tier xpTier4 = new Tier(UpgradeType.XP_DROPS, 1, 0); // Fourth Tier (2x xp rate)
+        addTierToUpgradeTiers(xpTier1);
+        addTierToUpgradeTiers(xpTier2);
+        addTierToUpgradeTiers(xpTier3);
+        addTierToUpgradeTiers(xpTier4);
+
+        // Keep Inventory
+        Tier keepInventoryTier1 = new Tier(UpgradeType.KEEP_INVENTORY, 1, 0); // First Tier (Keep Inventory)
+        addTierToUpgradeTiers(keepInventoryTier1);
+
+        // Keep XP
+        Tier keepXPTier1 = new Tier(UpgradeType.KEEP_XP, 1, 0); // First Tier (Keep XP)
+        addTierToUpgradeTiers(keepXPTier1);
+        // Permanent Speed
+        Tier speedTier1 = new Tier(UpgradeType.SPEED, 1, 0); // First Tier (Speed 1)
+        Tier speedTier2 = new Tier(UpgradeType.SPEED, 1, 50000); // Second Tier (Speed 2)
+        Tier speedTier3 = new Tier(UpgradeType.SPEED, 1, 250000); // Third Tier (Speed 3)
+        addTierToUpgradeTiers(speedTier1);
+        addTierToUpgradeTiers(speedTier2);
+        addTierToUpgradeTiers(speedTier3);
+
+        // Permanent Haste
+        Tier hasteTier1 = new Tier(UpgradeType.HASTE, 1, 0); // First Tier (Haste 1)
+        Tier hasteTier2 = new Tier(UpgradeType.HASTE, 1, 50000); // Second Tier (Haste 2)
+        Tier hasteTier3 = new Tier(UpgradeType.HASTE, 1, 250000); // Third Tier (Haste 3)
+        addTierToUpgradeTiers(hasteTier1);
+        addTierToUpgradeTiers(hasteTier2);
+        addTierToUpgradeTiers(hasteTier3);
+
+        // Permanent Night Vision
+        Tier nightVisionTier1 = new Tier(UpgradeType.NIGHT_VISION, 1, 0); // First Tier (Night Vision 1)
+        Tier nightVisionTier2 = new Tier(UpgradeType.NIGHT_VISION, 1, 50000); // Second Tier (Night Vision 2)
+        Tier nightVisionTier3 = new Tier(UpgradeType.NIGHT_VISION, 1, 250000); // Third Tier (Night Vision 3)
+        addTierToUpgradeTiers(nightVisionTier1);
+        addTierToUpgradeTiers(nightVisionTier2);
+        addTierToUpgradeTiers(nightVisionTier3);
+
+        // Nether Access
+        Tier netherAccessTier1 = new Tier(UpgradeType.NETHER_ACCESS, 1, 0); // First Tier (Nether Access)
+        addTierToUpgradeTiers(netherAccessTier1);
+
+        // Increased Warp Slots
+        Tier warpSlotsTier1 = new Tier(UpgradeType.WARP_SLOTS, 1, 0); // First Tier (5 Warp Slots)
+        Tier warpSlotsTier2 = new Tier(UpgradeType.WARP_SLOTS, 1, 50000); // Second Tier (7 Warp Slots)
+        Tier warpSlotsTier3 = new Tier(UpgradeType.WARP_SLOTS, 1, 250000); // Third Tier (10 Warp Slots)
+
+        addTierToUpgradeTiers(warpSlotsTier1);
+        addTierToUpgradeTiers(warpSlotsTier2);
+        addTierToUpgradeTiers(warpSlotsTier3);
+
+        // Increased Trusted Slots
+        Tier trustedSlotsTier1 = new Tier(UpgradeType.TRUSTED_SLOTS, 1, 0); // First Tier (5 Trusted Slots)
+        Tier trustedSlotsTier2 = new Tier(UpgradeType.TRUSTED_SLOTS, 1, 50000); // Second Tier (7 Trusted Slots)
+        Tier trustedSlotsTier3 = new Tier(UpgradeType.TRUSTED_SLOTS, 1, 250000); // Third Tier (10 Trusted Slots)
+        addTierToUpgradeTiers(trustedSlotsTier1);
+        addTierToUpgradeTiers(trustedSlotsTier2);
+        addTierToUpgradeTiers(trustedSlotsTier3);
+    }
+}

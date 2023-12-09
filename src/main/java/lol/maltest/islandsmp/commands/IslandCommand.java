@@ -48,6 +48,8 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
+        if(!PermUtil.hasPermission(user, Permission.INVITE)) return;
+
         Player targetPlayer = Bukkit.getPlayer(target);
 
         if(targetPlayer == null) {
@@ -94,6 +96,27 @@ public class IslandCommand extends BaseCommand {
         } else {
             player.sendMessage(HexUtils.colour(LanguageUtil.errorNoInvite.replace("%player%", target)));
         }
+    }
+
+    @Subcommand("leave")
+    public void onLeaveCommand(Player player) {
+        User user = checkIslandExistence(player);
+
+        if(user == null) {
+            return;
+        }
+
+        Island island = user.getIsland();
+
+        if(island.getIslandOwner().equals(player.getUniqueId())) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorCantLeaveIsland));
+            return;
+        }
+
+        island.removeIslandMember(player);
+        user.setIslandUUID(null);
+
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "espawn " + player.getName());
     }
 
     @Subcommand("lock")
@@ -293,12 +316,6 @@ public class IslandCommand extends BaseCommand {
     @Subcommand("visit")
     @CommandCompletion("@players")
     public void onVisitCommand(Player player, @Name("Player") String target) {
-        User user = checkIslandExistence(player);
-
-        if (user == null) {
-            return;
-        }
-
         Player targetPlayer = Bukkit.getPlayer(target);
 
 
@@ -341,6 +358,13 @@ public class IslandCommand extends BaseCommand {
             plugin.getIslandCache().islandStorage.saveAsync(island);
         }
         player.sendMessage("done");
+    }
+
+
+    @Subcommand("tesgui")
+    @CommandPermission("minecraft.operator")
+    public void onTestGuiCommand(Player player) {
+        new IslandUpgradeMenu().open(player);
     }
 
 

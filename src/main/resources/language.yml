@@ -12,6 +12,7 @@ errors:
     cant-visit-island: "You can't visit %player%'s island since they dont have one!"
     cant-visit-no-visitor: "You can't visit %player%'s island since they haven't set a visitors location!"
     cant-set-visitor-location: "You can only set the visitor location on your island!"
+    cant-leave: "You cant leave your island as the owner, instead you must disband your island!"
   members:
     cant-modify-owner: "You can't modify the island owner!"
     cant-trust-player: "You need to be ADMIN or higher to trust players!"

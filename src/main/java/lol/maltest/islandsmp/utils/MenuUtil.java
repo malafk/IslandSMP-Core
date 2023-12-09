@@ -54,6 +54,10 @@ public class MenuUtil {
     public static int menuSettingsRows;
     public static ArrayList<Menuable> menuSettingsButtons = new ArrayList<>();
 
+    public static Component menuUpgradesTitle;
+    public static int menuUpgradesRows;
+    public static ArrayList<Menuable> menuUpgradesButtons = new ArrayList<>();
+
     public static Component menuWarpsTitle;
     public static String menuWarpsButtonName;
     public static List<String> menuWarpsButtonRawLore;
@@ -99,6 +103,23 @@ public class MenuUtil {
         menuTrustedTitle = HexUtils.colour(_menuFile.getString("trusted.title"));
         menuTrustedButtonName = _menuFile.getString("trusted.buttons.member.name");
         menuTrustedButtonRawLore = _menuFile.getStringList("trusted.buttons.member.lore");
+
+        menuUpgradesTitle = HexUtils.colour(_menuFile.getString("upgrades.title"));
+        menuUpgradesRows = _menuFile.getInt("upgrades.rows");
+
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.ore_drops"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.farm_drops"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.mob_drops"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.mob_spawns"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.xp_drops"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.keep_inventory"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.keep_xp"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.speed"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.haste"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.night_vision"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.nether_access"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.warp_slots"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.trusted_slots"));
 
         menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.visit"));
         menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.entity_interact"));

@@ -31,6 +31,7 @@ public class LanguageUtil {
     public static String errorCantVisitIsland;
     public static String errorCantVisitNoVisitorLocation;
     public static String errorCantSetVisitLocation;
+    public static String errorCantLeaveIsland;
 
     public static String errorCantFindPlayer;
     public static String errorCantVisitLocked;
@@ -73,6 +74,7 @@ public class LanguageUtil {
         errorCantVisitIsland = PREFIX + _languageFile.getString("errors.global.cant-visit-island");
         errorCantVisitNoVisitorLocation = PREFIX + _languageFile.getString("errors.global.cant-visit-no-visitor");
         errorCantSetVisitLocation = PREFIX + _languageFile.getString("errors.global.cant-set-visitor-location");
+        errorCantLeaveIsland = PREFIX + _languageFile.getString("errors.global.cant-leave");
 
         messageIslandCreated = PREFIX + _languageFile.getString("messages.island.created");
         messageWarpCreated = PREFIX + _languageFile.getString("messages.warps.created");

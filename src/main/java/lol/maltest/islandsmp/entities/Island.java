@@ -7,6 +7,7 @@ import lol.maltest.islandsmp.entities.type.IslandStorageObject;
 import lol.maltest.islandsmp.utils.Permission;
 import lol.maltest.islandsmp.utils.Rank;
 import lol.maltest.islandsmp.utils.Setting;
+import lol.maltest.islandsmp.utils.UpgradeType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -38,8 +39,10 @@ public final class Island extends IslandStorageObject<UUID> {
 
     private int maxWarps = 3; // default
 
-    private int oreDropUpgrade, farmDropUpgrade, mobDropUpgrade, mobSpawnUpgrade, xpUpgrade;
-    private boolean keepInventoryUpgrade;
+    // used to keep track of island upgrade lveels
+    @Getter private Map<String, Integer> upgradeLevels = new HashMap<>();
+    // when a spin lands here it
+    @Getter private Map<String, Integer> upgradeSpins = new HashMap<>();
 
     public Island(String islandName, UUID islandUUID, UUID islandOwner) {
         super(islandUUID);
@@ -55,6 +58,11 @@ public final class Island extends IslandStorageObject<UUID> {
                 .stream()
                 .map(Permission::name)
                 .collect(Collectors.toSet()));
+
+        for (UpgradeType type : UpgradeType.values()) {
+            upgradeLevels.put(type.name().toUpperCase(), 0);
+            upgradeSpins.put(type.name().toUpperCase(), 0);
+        }
     }
 
     /**
@@ -86,6 +94,18 @@ public final class Island extends IslandStorageObject<UUID> {
         return true;
     }
 
+    public void addAmountSpins(UpgradeType upgradeType) {
+        upgradeSpins.put(upgradeType.name().toUpperCase(), getAmountSpins(upgradeType) + 1);
+    }
+
+    public int getAmountSpins(UpgradeType upgradeType) {
+        return upgradeSpins.get(upgradeType.name().toUpperCase());
+    }
+
+    public void levelUpUpgrade(UpgradeType upgrade) {
+        Integer currentLevel = upgradeLevels.getOrDefault(upgrade.name().toUpperCase(), 0);
+        upgradeLevels.put(upgrade.name().toUpperCase(), currentLevel + 1);
+    }
 
     public List<IslandMember> getIslandMembers() {
         List<IslandMember> members = new ArrayList<>();
@@ -107,6 +127,13 @@ public final class Island extends IslandStorageObject<UUID> {
     public boolean isIslandMember(Player player) {
         return getIslandMembers().stream()
                 .anyMatch(member -> member.getPlayerUuid().equals(player.getUniqueId()));
+    }
+
+    public IslandMember getIslandMemberByUUID(UUID uuid) {
+        return getIslandMembers().stream()
+                .filter(member -> member.getPlayerUuid().equals(uuid))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean isTrustedOrIslandMember(Player player) {
@@ -137,6 +164,13 @@ public final class Island extends IslandStorageObject<UUID> {
     public void addIslandMember(Player player) {
         islandMembers.add(new IslandMember(player.getUniqueId()));
     }
+
+    public void removeIslandMember(Player player) {
+        IslandMember isM = getIslandMemberByUUID(player.getUniqueId());
+        if(isM == null) return;
+        islandMembers.remove(isM);
+    }
+
 
     public Rank getPlayerRank(Player player) {
         if(getIslandOwner().equals(player.getUniqueId())) return Rank.OWNER;

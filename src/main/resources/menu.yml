@@ -509,3 +509,248 @@ rankpermissions:
         - " &8● &fStatus: %status%"
         - "&f"
         - "&f"
+upgrades:
+  title: "Island Upgrades"
+  rows: 6
+  buttons:
+    ore_drops:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴏʀᴇ ᴅʀᴏᴘѕ"
+      material: DIAMOND
+      slot: 28
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fAfter breaking an ore, you'll get"
+        - " &f  a fortune enchant based drop."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    farm_drops:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ꜰᴀʀᴍ ᴅʀᴏᴘѕ"
+      material: WHEAT_SEEDS
+      slot: 29
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fHave a chance to get twice the amount"
+        - " &f  of crops."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    mob_drops:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴍᴏʙ ᴅʀᴏᴘѕ"
+      material: FEATHER
+      slot: 30
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fAfter killing a mob, you'll get"
+        - " &f  a looting enchant based drop."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    mob_spawns:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴍᴏʙ ѕᴘᴀᴡɴѕ"
+      material: ROTTEN_FLESH
+      slot: 31
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fMultiply someone's mob spawning through"
+        - " &f  mob spawners."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    xp_drops:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ хᴘ ᴅʀᴏᴘѕ"
+      material: EXPERIENCE_BOTTLE
+      slot: 32
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fMultiply mobs's XP drops."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    keep_inventory:
+      name: "&#36FB2B&lᴋᴇᴇᴘ ɪɴᴠᴇɴᴛᴏʀʏ"
+      material: TOTEM_OF_UNDYING
+      slot: 33
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fYou keep your inventory when you die on your island."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+    keep_xp:
+      name: "&#36FB2B&lᴋᴇᴇᴘ хᴘ"
+      material: NETHER_STAR
+      slot: 34
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fYou keep your XP when you die on your island."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+    speed:
+      name: "&#36FB2B&lᴘᴇʀᴍᴀɴᴇɴᴛ ѕᴘᴇᴇᴅ"
+      material: SUGAR
+      slot: 37
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fReceive permanent speed effects."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    haste:
+      name: "&#36FB2B&lᴘᴇʀᴍᴀɴᴇɴᴛ ʜᴀѕᴛᴇ"
+      material: GLOWSTONE_DUST
+      slot: 38
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fReceive permanent haste effects."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    night_vision:
+      name: "&#36FB2B&lᴘᴇʀᴍᴀɴᴇɴᴛ ɴɪɢʜᴛ ᴠɪѕɪᴏɴ"
+      material: REDSTONE_LAMP
+      slot: 39
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fReceive permanent night vision effects."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    nether_access:
+      name: "&#36FB2B&lɴᴇᴛʜᴇʀ ᴀᴄᴄᴇѕѕ"
+      material: OBSIDIAN
+      slot: 40
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fGives a person/all team members on their island"
+        - " &f  access to use the nether portal on their island."
+        - "&f"
+    warp_slots:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴡᴀʀᴘ ѕʟᴏᴛѕ"
+      material: ENDER_EYE
+      slot: 41
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fAllowed to make more warps on your island."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"
+    trusted_slots:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴛʀᴜѕᴛᴇᴅ ѕʟᴏᴛѕ"
+      material: IRON_CHESTPLATE
+      slot: 42
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fAllowed to make more people trusted on your island."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"

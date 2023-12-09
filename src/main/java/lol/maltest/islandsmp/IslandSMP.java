@@ -7,6 +7,7 @@ import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.listener.IslandListener;
 import lol.maltest.islandsmp.manager.BorderManager;
 import lol.maltest.islandsmp.manager.GridManager;
+import lol.maltest.islandsmp.manager.UpgradeManager;
 import lol.maltest.islandsmp.storage.UserStorage;
 import lol.maltest.islandsmp.utils.LanguageUtil;
 import lol.maltest.islandsmp.utils.MenuUtil;
@@ -18,8 +19,10 @@ import lol.maltest.islandsmp.listener.JoinListener;
 import lol.maltest.islandsmp.listener.LeaveListener;
 import lol.maltest.islandsmp.storage.IslandStorage;
 import lol.maltest.islandsmp.utils.VoidChunkGenerator;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -36,6 +39,7 @@ public final class IslandSMP extends JavaPlugin {
 
     @Getter private GridManager gridManager;
     @Getter private BorderManager borderManager;
+    @Getter private UpgradeManager upgradeManager;
 
     @Getter private IslandCache islandCache;
     @Getter private UserCache userCache;
@@ -43,6 +47,8 @@ public final class IslandSMP extends JavaPlugin {
     @Getter private String worldName;
 
     @Getter private final UUID nullUuid = UUID.fromString("3e3261ee-9c17-408c-a882-36a947c82911");
+
+    @Getter private Economy economy;
 
     // This map will store <Invitee UUID, Inviter UUID>
     public Map<UUID, UUID> invites = new HashMap<>();
@@ -71,6 +77,7 @@ public final class IslandSMP extends JavaPlugin {
 
         gridManager = new GridManager(this);
         borderManager = new BorderManager(this);
+        upgradeManager = new UpgradeManager();
 
         islandCache = new IslandCache(islandStorage);
         userCache = new UserCache(userStorage);
@@ -83,6 +90,12 @@ public final class IslandSMP extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new IslandListener(this), this);
 
         loadCommands();
+
+        if (!setupEconomy() ) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
     }
 
@@ -104,6 +117,18 @@ public final class IslandSMP extends JavaPlugin {
             userStorage.save(user);
         }
         Bukkit.getLogger().info("Saved data!");
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        economy = rsp.getProvider();
+        return true;
     }
 
     private boolean worldExists(String worldName) {
