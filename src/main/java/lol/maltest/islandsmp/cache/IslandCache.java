@@ -13,6 +13,7 @@ public final class IslandCache {
 
     // Identifiers
     public static final List<Island> activeIslands = new ArrayList<>();
+    public static final List<Island> islandsWithPlayersOnline = new ArrayList<>();
     public final IslandStorage islandStorage;
 
     public IslandCache(IslandStorage islandStorage) {

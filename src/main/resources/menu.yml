@@ -765,3 +765,23 @@ upgrades:
         - "%status%"
         - "&f"
         - "&f"
+    world_border:
+      name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇ ᴡᴏʀʟᴅ ʙᴏʀᴅᴇʀ"
+      material: BARRIER
+      slot: 43
+      lore:
+        - "&8Upgrade"
+        - "&7"
+        - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
+        - " &8● &fIncrease your island world border."
+        - "&f"
+        - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%tier%"
+        - "&f"
+        - "&#36FB2B&lɴᴇхᴛ ᴛɪᴇʀ:"
+        - " &8● &fTier: &7%next_tier%"
+        - " &8● &fRequirements: &7%requirements%"
+        - "&f"
+        - "%status%"
+        - "&f"
+        - "&f"

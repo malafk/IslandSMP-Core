@@ -49,7 +49,7 @@ public class PermUtil {
         return null;
     }
 
-    public static boolean canGrantPermissionRankCheck(User user, Rank selectedRank) {
+    public static boolean canModifyRank(User user, Rank selectedRank) {
         Player player = Bukkit.getPlayer(user.getPlayer());
         if(player == null) return false;
 

@@ -17,6 +17,8 @@ import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.entities.sub.IslandLocation;
 import lol.maltest.islandsmp.entities.sub.IslandMember;
+import lol.maltest.islandsmp.utils.HexUtils;
+import lol.maltest.islandsmp.utils.LanguageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -111,8 +113,10 @@ public class GridManager {
     }
 
     public void createIsland(Player player) {
+        player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandCreating));
         Island island = new Island(player.getName() + "'s Island", UUID.randomUUID(), player.getUniqueId());
         IslandCache.activeIslands.add(island);
+        IslandCache.islandsWithPlayersOnline.add(island);
 
         User user = UserCache.getUser(player.getUniqueId());
         user.setIslandUUID(island.getIslandUUID());
@@ -135,6 +139,7 @@ public class GridManager {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
+                        player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandCreated));
                         player.teleport(island.getIslandLocation().getSpawnLocation());
                     }
                 }.runTask(plugin);

@@ -1,5 +1,6 @@
 package lol.maltest.islandsmp.entities;
 
+import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.entities.sub.IslandLocation;
 import lol.maltest.islandsmp.entities.sub.IslandMember;
 import lol.maltest.islandsmp.entities.sub.IslandWarp;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,11 +35,9 @@ public final class Island extends IslandStorageObject<UUID> {
     private List<Setting> settings = new ArrayList<>();
 
     // Island Upgrade Related Levels
-    @Getter private int worldBorderSize = 150;
+    @Getter @Setter private transient boolean isWorldBorderGrowing = false;
 
     @Getter @Setter private boolean locked = false;
-
-    private int maxWarps = 3; // default
 
     // used to keep track of island upgrade lveels
     @Getter private Map<String, Integer> upgradeLevels = new HashMap<>();
@@ -109,6 +109,16 @@ public final class Island extends IslandStorageObject<UUID> {
     public void levelUpUpgrade(UpgradeType upgrade) {
         Integer currentLevel = upgradeLevels.getOrDefault(upgrade.name().toUpperCase(), 0);
         upgradeLevels.put(upgrade.name().toUpperCase(), currentLevel + 1);
+
+        if(upgrade == UpgradeType.WORLD_BORDER) {
+            setWorldBorderGrowing(true);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    setWorldBorderGrowing(false);
+                }
+            }.runTaskLaterAsynchronously(IslandSMP.getInstance(), 20 * 10);
+        }
     }
 
     public int getLevel(UpgradeType upgrade) {
@@ -148,8 +158,36 @@ public final class Island extends IslandStorageObject<UUID> {
         return isTrustedMember(player) || isIslandMember(player);
     }
 
-    public int getFreeWarps() {
-        return maxWarps - islandWarps.size();
+    public int getMaxWarps() {
+        int level = getLevel(UpgradeType.WARP_SLOTS);
+        return switch (level) {
+            case 1 -> 5;
+            case 2 -> 7;
+            case 3 -> 10;
+            default -> 3;
+        };
+    }
+
+    public int getMaxTrusted() {
+        int level = getLevel(UpgradeType.TRUSTED_SLOTS);
+        return switch (level) {
+            case 1 -> 5;
+            case 2 -> 7;
+            case 3 -> 10;
+            default -> 3;
+        };
+    }
+
+    public int getWorldBorderSize() {
+        int level = getLevel(UpgradeType.WORLD_BORDER);
+        return switch (level) {
+            case 1 -> 200;
+            case 2 -> 250;
+            case 3 -> 300;
+            case 4 -> 350;
+            case 5 -> 368;
+            default -> 150;
+        };
     }
 
     public IslandWarp getWarpByName(String warpName) {

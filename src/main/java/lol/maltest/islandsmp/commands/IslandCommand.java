@@ -12,15 +12,20 @@ import lol.maltest.islandsmp.menu.sub.*;
 import lol.maltest.islandsmp.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.N;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-@CommandAlias("island|is")
+@CommandAlias("island|is|team")
 public class IslandCommand extends BaseCommand {
 
     private IslandSMP plugin;
+
+    private final Set<UUID> confirmDisband = new HashSet<>();
+
 
     public IslandCommand(IslandSMP plugin) {
         this.plugin = plugin;
@@ -40,6 +45,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("invite")
+    @CommandAlias("invite")
     @CommandCompletion("@players")
     public void onIslandInviteCommand(Player player, @Name("Player") String target) {
         User user = checkIslandExistence(player);
@@ -63,6 +69,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("join|accept")
+    @CommandAlias("join|accept")
     @CommandCompletion("@players")
     public void onIslandJoinCommand(@NotNull Player player, @Name("Player") String target) {
         UUID inviterUniqueId = plugin.invites.get(player.getUniqueId());
@@ -99,6 +106,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("leave")
+    @CommandAlias("leave")
     public void onLeaveCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -120,6 +128,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("lock")
+    @CommandAlias("lock")
     public void onLockCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -144,6 +153,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("unlock")
+    @CommandAlias("unlock")
     public void onUnlockCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -161,6 +171,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("settings")
+    @CommandAlias("settings")
     public void onSettingsCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -172,6 +183,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("warps")
+    @CommandAlias("warps")
     public void onWarpsCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -183,6 +195,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("members")
+    @CommandAlias("members")
     public void onMembersCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -194,6 +207,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("trusted")
+    @CommandAlias("trusted")
     public void onTrustedCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -205,6 +219,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("upgrades")
+    @CommandAlias("upgrades")
     public void onUpgradesCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -212,11 +227,13 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
-        // todo change to upgrades
-        new IslandTrustedMenu().open(player);
+        if(!PermUtil.hasPermission(user, Permission.UPGRADE)) return;
+
+        new IslandUpgradeMenu().open(player);
     }
 
-    @Subcommand("setwarp")
+    @Subcommand("setwarp|addwarp")
+    @CommandAlias("setwarp|addwarp")
     public void onSetWarpCommand(Player player, @Name("Warp name") String warpName) {
     User user = checkIslandExistence(player);
 
@@ -229,7 +246,7 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
-        if(user.getIsland().getFreeWarps() == 0) {
+        if(user.getIsland().getMaxWarps() == 0) {
             player.sendMessage(HexUtils.colour(LanguageUtil.errorWarpsMax));
             return;
         }
@@ -241,6 +258,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("setvisit")
+    @CommandAlias("setvisit")
     public void onSetVisitCommand(Player player) {
         User user = checkIslandExistence(player);
 
@@ -263,7 +281,8 @@ public class IslandCommand extends BaseCommand {
         player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandSetVisitorLoc));
     }
 
-    @Subcommand("trust")
+    @Subcommand("trust|coop")
+    @CommandAlias("trust|coop")
     @CommandCompletion("@players")
     public void onIslandGoCommand(Player player, @Name("Player") String target) {
         User user = checkIslandExistence(player);
@@ -285,28 +304,37 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
+        if (user.getIsland().getTrustedMembers().size() >= user.getIsland().getMaxTrusted()) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorTrustedMaxLimit));
+            return;
+        }
+
         user.getIsland().addTrustedMember(targetPlayer);
         player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandTrustedPlayer.replace("%player%", target)));
     }
 
     @Subcommand("home|go")
+    @CommandAlias("home|go")
     public void onIslandGoCommand(Player player) {
-    User user = checkIslandExistence(player);
+        User user = checkIslandExistence(player);
 
         if(user == null) {
             return;
         }
 
+        if(!PermUtil.hasPermission(user, Permission.HOME)) return;
+
         player.teleport(user.getIsland().getIslandLocation().getSpawnLocation());
     }
 
     @Subcommand("create")
+    @CommandAlias("create")
     public void onCreateCommand(Player player) {
         User user = UserCache.getUser(player.getUniqueId());
 
         // Check if the player has an island
         if (user.getIsland() != null) {
-            player.sendMessage(HexUtils.colour("&dcʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ ᴀɴ ɪsʟᴀɴᴅ!"));
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorAlreadyHaveIsland));
             return;
         }
 
@@ -314,6 +342,7 @@ public class IslandCommand extends BaseCommand {
     }
 
     @Subcommand("visit")
+    @CommandAlias("visit")
     @CommandCompletion("@players")
     public void onVisitCommand(Player player, @Name("Player") String target) {
         Player targetPlayer = Bukkit.getPlayer(target);
@@ -345,6 +374,48 @@ public class IslandCommand extends BaseCommand {
         }
 
         player.teleport(targetIsland.getIslandLocation().getVisitorLocation());
+    }
+
+    @Subcommand("disband")
+    @CommandAlias("disband")
+    public void onDisbandCommand(Player player) {
+        User user = UserCache.getUser(player.getUniqueId());
+        UUID playerId = player.getUniqueId();
+
+        // Check if the player has an island
+        if (user.getIsland() == null) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.publicNeedIsland));
+            return;
+        }
+
+        if(user.getIsland().getPlayerRank(player) != Rank.OWNER) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.errorOnlyOwner));
+            return;
+        }
+
+        // If player isn't in the confirm set
+        if (!confirmDisband.contains(playerId)) {
+            player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandDisbandSure));
+            confirmDisband.add(playerId);
+
+            // schedule to remove the player from the confirm set after 30 seconds
+            Bukkit.getScheduler().runTaskLater(plugin, () -> confirmDisband.remove(playerId), 600L);
+        } else {
+            // Player is in the confirm set, go ahead with disbanding
+            confirmDisband.remove(playerId);
+
+            UUID islanduuid = user.getIslandUUID();
+
+            plugin.getGridManager().disbandIsland(islanduuid);
+//            plugin.getIslandCache().deleteIslandFromDatabase(islanduuid);
+
+            // We dont delete as that would mess up getFreeLocation
+
+            // The disband logic comes here
+            player.sendMessage(HexUtils.colour(LanguageUtil.messageIslandDisbanded));
+
+            confirmDisband.remove(playerId);
+        }
     }
 
     /**

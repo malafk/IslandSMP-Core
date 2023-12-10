@@ -1,22 +1,55 @@
 package lol.maltest.islandsmp.manager;
 
 import lol.maltest.islandsmp.IslandSMP;
+import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.entities.Island;
+import lol.maltest.islandsmp.entities.sub.IslandMember;
 import lol.maltest.islandsmp.upgrade.Tier;
 import lol.maltest.islandsmp.utils.UpgradeType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UpgradeManager {
 
+    private IslandSMP plugin;
+
     private final Map<UpgradeType, List<Tier>> upgradeTiers = new HashMap<>();
 
-    public UpgradeManager() {
+    public UpgradeManager(IslandSMP plugin) {
+        this.plugin = plugin;
         setupDefaults();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for(Island island : IslandCache.islandsWithPlayersOnline) { // Custom array so its faster
+                    boolean hasNightVision = island.getLevel(UpgradeType.NIGHT_VISION) != 0;
+                    int hasteLevel = island.getLevel(UpgradeType.HASTE);
+                    int speedLevel = island.getLevel(UpgradeType.SPEED);
+
+                    for(IslandMember islandPlayer : island.getIslandMembers()) {
+                        Player player = Bukkit.getPlayer(islandPlayer.getPlayerUuid());
+                        if(player == null) continue;
+                        if(hasNightVision) {
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 60, 0, true, false));
+                        }
+                        if(hasteLevel != 0) {
+                            int amplifier = hasteLevel -1;
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 60, hasteLevel, true, false));
+                        }
+                        if(speedLevel != 0) {
+                            int amplifier = speedLevel -1;
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60, speedLevel, true, false));
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 0, 3 * 20);
     }
 
     private void addTierToUpgradeTiers(Tier tier) {
@@ -82,7 +115,7 @@ public class UpgradeManager {
             int spins = tier.getRequiredSpins();
 
             // Assume that Island has methods getMoney() and getSpins(UpgradeType upgradeType)
-            int existingMoney = (int) IslandSMP.getInstance().getEconomy().getBalance(player);
+            int existingMoney = (int) plugin.getEconomy().getBalance(player);
             int existingSpins = island.getAmountSpins(upgradeType);
 
             String spinColor = existingSpins >= spins ? "&a" : "&c";
@@ -123,14 +156,12 @@ public class UpgradeManager {
         addTierToUpgradeTiers(mobTier3);
 
         // Increased Mob Spawns
-        Tier mobSpawnTier1 = new Tier(UpgradeType.MOB_SPAWNS, 1, 0); // First Tier (15% spawn rate)
-        Tier mobSpawnTier2 = new Tier(UpgradeType.MOB_SPAWNS, 1, 50000); // Second Tier (30% spawn rate)
-        Tier mobSpawnTier3 = new Tier(UpgradeType.MOB_SPAWNS, 1, 250000); // Third Tier (50% spawn rate)
-        Tier mobSpawnTier4 = new Tier(UpgradeType.MOB_SPAWNS, 1, 0); // Fourth Tier (100% spawn rate)
+        Tier mobSpawnTier1 = new Tier(UpgradeType.MOB_SPAWNS, 1, 0); // First Tier (10% spawn rate)
+        Tier mobSpawnTier2 = new Tier(UpgradeType.MOB_SPAWNS, 1, 50000); // Second Tier (50% spawn rate)
+        Tier mobSpawnTier3 = new Tier(UpgradeType.MOB_SPAWNS, 1, 300000); // Second Tier (100% spawn rate)
         addTierToUpgradeTiers(mobSpawnTier1);
         addTierToUpgradeTiers(mobSpawnTier2);
         addTierToUpgradeTiers(mobSpawnTier3);
-        addTierToUpgradeTiers(mobSpawnTier4);
 
         // Increased XP Drops
         Tier xpTier1 = new Tier(UpgradeType.XP_DROPS, 1, 0); // First Tier (1.2x xp rate)
@@ -167,11 +198,7 @@ public class UpgradeManager {
 
         // Permanent Night Vision
         Tier nightVisionTier1 = new Tier(UpgradeType.NIGHT_VISION, 1, 0); // First Tier (Night Vision 1)
-        Tier nightVisionTier2 = new Tier(UpgradeType.NIGHT_VISION, 1, 50000); // Second Tier (Night Vision 2)
-        Tier nightVisionTier3 = new Tier(UpgradeType.NIGHT_VISION, 1, 250000); // Third Tier (Night Vision 3)
         addTierToUpgradeTiers(nightVisionTier1);
-        addTierToUpgradeTiers(nightVisionTier2);
-        addTierToUpgradeTiers(nightVisionTier3);
 
         // Nether Access
         Tier netherAccessTier1 = new Tier(UpgradeType.NETHER_ACCESS, 1, 0); // First Tier (Nether Access)
@@ -193,5 +220,16 @@ public class UpgradeManager {
         addTierToUpgradeTiers(trustedSlotsTier1);
         addTierToUpgradeTiers(trustedSlotsTier2);
         addTierToUpgradeTiers(trustedSlotsTier3);
+
+        Tier worldBorderTier1 = new Tier(UpgradeType.WORLD_BORDER, 1, 0);
+        Tier worldBorderTier2 = new Tier(UpgradeType.WORLD_BORDER, 1, 50000);
+        Tier worldBorderTier3 = new Tier(UpgradeType.WORLD_BORDER, 1, 200000);
+        Tier worldBorderTier4 = new Tier(UpgradeType.WORLD_BORDER, 1, 350000);
+        Tier worldBorderTier5 = new Tier(UpgradeType.WORLD_BORDER, 1, 0);
+        addTierToUpgradeTiers(worldBorderTier1);
+        addTierToUpgradeTiers(worldBorderTier2);
+        addTierToUpgradeTiers(worldBorderTier3);
+        addTierToUpgradeTiers(worldBorderTier4);
+        addTierToUpgradeTiers(worldBorderTier5);
     }
 }

@@ -21,7 +21,9 @@ public class LanguageUtil {
     public static String publicNeedPermission;
 
     public static String errorMembersCantModifyOwner;
+    public static String errorMembersCantModifySelf;
     public static String errorMembersCantTrustPlayer;
+    public static String errorMembersCantModifyPlayer;
 
     public static String errorOnlyOwner;
     public static String errorWarpsMax;
@@ -32,11 +34,17 @@ public class LanguageUtil {
     public static String errorCantVisitNoVisitorLocation;
     public static String errorCantSetVisitLocation;
     public static String errorCantLeaveIsland;
+    public static String errorCantDemoteMember;
+    public static String errorCantPromoteMember;
 
     public static String errorCantFindPlayer;
     public static String errorCantVisitLocked;
+    public static String errorTrustedMaxLimit;
+    public static String errorAlreadyHaveIsland;
 
+    public static String messageIslandKicked;
     public static String messageIslandCreated;
+    public static String messageIslandCreating;
     public static String messageIslandDisbanded;
     public static String messageIslandDisbandSure;
     public static String messageWarpCreated;
@@ -52,9 +60,12 @@ public class LanguageUtil {
     public static String messagesUpgradeTierUp;
     public static String messagesUpgradeDiscovered;
     public static String messagesUpgradeMaxedOut;
+    public static String messagesUpgradeNotEnoughPs;
 
     public static String messagesUpgradeFoundSpin;
     public static String messagesUpgradeCanUpgrade;
+
+    public static String messagesMembersUpdated;
 
     public LanguageUtil(JavaPlugin plugin) {
         try {
@@ -69,6 +80,7 @@ public class LanguageUtil {
         publicNeedPermission = PREFIX + _languageFile.getString("errors.global.need-permission");
 
         errorMembersCantModifyOwner = PREFIX + _languageFile.getString("errors.members.cant-modify-owner");
+        errorMembersCantModifySelf = PREFIX + _languageFile.getString("errors.members.cant-modify-owner");
         errorMembersCantTrustPlayer = PREFIX + _languageFile.getString("errors.members.cant-trust-player");
         errorOnlyOwner = PREFIX + _languageFile.getString("errors.global.only-owner-disband");
         errorWarpsMax = PREFIX + _languageFile.getString("errors.warps.max-warps");
@@ -81,9 +93,17 @@ public class LanguageUtil {
         errorCantVisitNoVisitorLocation = PREFIX + _languageFile.getString("errors.global.cant-visit-no-visitor");
         errorCantSetVisitLocation = PREFIX + _languageFile.getString("errors.global.cant-set-visitor-location");
         errorCantLeaveIsland = PREFIX + _languageFile.getString("errors.global.cant-leave");
+        errorTrustedMaxLimit = PREFIX + _languageFile.getString("errors.trusted.max-trusted");
+        errorAlreadyHaveIsland = PREFIX + _languageFile.getString("errors.global.already-have-island");
+        errorMembersCantModifyPlayer = PREFIX + _languageFile.getString("errors.members.cant-modify-player");
+        errorCantDemoteMember = PREFIX + _languageFile.getString("errors.members.cant-demote-member");
+        errorCantPromoteMember = PREFIX + _languageFile.getString("errors.members.cant-promote-member");
 
         messageIslandCreated = PREFIX + _languageFile.getString("messages.island.created");
+        messageIslandCreating = PREFIX + _languageFile.getString("messages.island.creating");
+
         messageWarpCreated = PREFIX + _languageFile.getString("messages.warps.created");
+        messageIslandKicked = PREFIX + _languageFile.getString("messages.island.kicked-from-island");
         messageIslandDisbanded = PREFIX + _languageFile.getString("messages.island.disbanded");
         messageIslandDisbandSure = PREFIX + _languageFile.getString("messages.island.are-you-sure-disband");
         messageIslandInvited = PREFIX + _languageFile.getString("messages.island.invited");
@@ -103,6 +123,8 @@ public class LanguageUtil {
         messagesUpgradeCanUpgrade = PREFIX + _languageFile.getString("messages.upgrades.can-upgrade");
 
         messagesUpgradeMaxedOut = PREFIX + _languageFile.getString("messages.upgrades.maxed-out");
+        messagesUpgradeNotEnoughPs = PREFIX + _languageFile.getString("messages.upgrades.not-enough-ps");
 
+        messagesMembersUpdated = PREFIX + _languageFile.getString("messages.member.updated-player");
     }
 }

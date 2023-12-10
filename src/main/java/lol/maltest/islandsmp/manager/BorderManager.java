@@ -13,6 +13,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class BorderManager {
 
@@ -72,7 +73,12 @@ public class BorderManager {
                 for(Player player : Bukkit.getOnlinePlayers()) {
                     Island island = getIsland(player.getLocation());
                     if(island != null) {
-                        worldBorderApi.setBorder(player, island.getWorldBorderSize(), island.getIslandLocation().getMiddleLocation());
+                        if(island.isWorldBorderGrowing()) {
+                            worldBorderApi.setBorder(player, (island.getWorldBorderSize() - 50));
+                            worldBorderApi.setBorder(player, island.getWorldBorderSize(), 10, TimeUnit.SECONDS);
+                        } else {
+                            worldBorderApi.setBorder(player, island.getWorldBorderSize(), island.getIslandLocation().getMiddleLocation());
+                        }
                         playerIslandMap.put(player.getUniqueId(), island);
                     }
                 }

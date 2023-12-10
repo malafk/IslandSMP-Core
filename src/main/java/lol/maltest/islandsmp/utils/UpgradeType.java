@@ -19,7 +19,8 @@ public enum UpgradeType {
     NIGHT_VISION(Material.REDSTONE_LAMP),
     NETHER_ACCESS(Material.OBSIDIAN),
     WARP_SLOTS(Material.ENDER_EYE),
-    TRUSTED_SLOTS(Material.IRON_CHESTPLATE);
+    TRUSTED_SLOTS(Material.IRON_CHESTPLATE),
+    WORLD_BORDER(Material.BARRIER);
 
     private final Material material;
 

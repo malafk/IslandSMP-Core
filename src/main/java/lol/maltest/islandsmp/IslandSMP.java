@@ -2,9 +2,9 @@ package lol.maltest.islandsmp;
 
 import co.aikar.commands.PaperCommandManager;
 import lol.maltest.islandsmp.commands.IslandCommand;
-import lol.maltest.islandsmp.commands.IslandDisbandCommand;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.listener.IslandListener;
+import lol.maltest.islandsmp.listener.UpgradeListener;
 import lol.maltest.islandsmp.manager.BorderManager;
 import lol.maltest.islandsmp.manager.GridManager;
 import lol.maltest.islandsmp.manager.UpgradeManager;
@@ -77,7 +77,7 @@ public final class IslandSMP extends JavaPlugin {
 
         gridManager = new GridManager(this);
         borderManager = new BorderManager(this);
-        upgradeManager = new UpgradeManager();
+        upgradeManager = new UpgradeManager(this);
 
         islandCache = new IslandCache(islandStorage);
         userCache = new UserCache(userStorage);
@@ -88,6 +88,7 @@ public final class IslandSMP extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(userCache), this);
         getServer().getPluginManager().registerEvents(new LeaveListener(userCache), this);
         getServer().getPluginManager().registerEvents(new IslandListener(this), this);
+        getServer().getPluginManager().registerEvents(new UpgradeListener(this), this);
 
         loadCommands();
 
@@ -103,7 +104,6 @@ public final class IslandSMP extends JavaPlugin {
         PaperCommandManager commandManager = new PaperCommandManager(this);
 
         commandManager.registerCommand(new IslandCommand(this));
-        commandManager.registerCommand(new IslandDisbandCommand(this));
     }
 
     @Override

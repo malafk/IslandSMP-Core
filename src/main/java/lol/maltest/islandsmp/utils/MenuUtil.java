@@ -123,6 +123,7 @@ public class MenuUtil {
         menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.nether_access"));
         menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.warp_slots"));
         menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.trusted_slots"));
+        menuUpgradesButtons.add(new MenuItem(_menuFile, "upgrades.buttons.world_border"));
 
         menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.visit"));
         menuSettingsButtons.add(new MenuItem(_menuFile, "settings.buttons.entity_interact"));

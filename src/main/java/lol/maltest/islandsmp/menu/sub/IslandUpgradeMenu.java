@@ -186,6 +186,15 @@ public class IslandUpgradeMenu extends Menu {
             }
 
             // take 15k or whatever
+            double playerBalance = IslandSMP.getInstance().getEconomy().getBalance(player);
+
+            if(playerBalance < 15000) {
+                player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeNotEnoughPs));
+                return;
+            }
+
+            IslandSMP.getInstance().getEconomy().withdrawPlayer(player, 15000);
+            player.sendMessage(HexUtils.colour("&aSpin &c[$15,000]"));
             spinCrate(gui, player);
         }
 

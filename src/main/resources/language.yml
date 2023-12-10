@@ -13,15 +13,23 @@ errors:
     cant-visit-no-visitor: "You can't visit %player%'s island since they haven't set a visitors location!"
     cant-set-visitor-location: "You can only set the visitor location on your island!"
     cant-leave: "You cant leave your island as the owner, instead you must disband your island!"
+    already-have-island: "You can't do this, you already have a island!"
   members:
     cant-modify-owner: "You can't modify the island owner!"
+    cant-modify-self: "You can't modify yourself."
     cant-trust-player: "You need to be ADMIN or higher to trust players!"
+    cant-modify-player: "You can't modify this player cause they are the same rank or higher than you."
+    cant-demote-member: "You can't demote this player since they are already MEMBER rank"
+    cant-promote-member: "You can't promote this player since they are already ADMINISTRATOR rank"
+  trusted:
+    max-trusted: "You have hit the max amount of trusted players on your island! Upgrade it to get more slots."
   warps:
     max-warps: "You have hit the max amount of warps, upgrade your island to get more!"
   rankpermissions:
     higher-rank: "You can't modify this ranks permissions since its a higher rank than your current rank!"
 messages:
   island:
+    creating: "Your island is being created! Please wait..."
     are-you-sure-disband: "Are you sure you want to disband? This will delete your island and clear your inventory and enderchest! Run this command again to confirm."
     disbanded: "You have disbanded your island, your inventory and enderchest have also been cleared!"
     created: "Your brand new island has been created! Teleporting you!"
@@ -34,6 +42,7 @@ messages:
     set-visitor-location: "Set the visitor location!"
     trusted-player: "You have trusted the player %player%!"
     locked-island: "You have %status% the island!"
+    kicked-from-island: "You got kicked from your island!"
   warps:
     created: "You have set the warp %warp% at your current location!"
   upgrades:
@@ -42,3 +51,6 @@ messages:
     found-spin: "You have re-spinned %upgrade% and it has been added towards your requirements!"
     can-upgrade: "You can now upgrade %upgrade% as you have got all the requirements"
     maxed-out: "You can't spin anymore since you maxed out all the upgrades!"
+    not-enough-ps: "You don't have enough money to spin the wheel!"
+  members:
+    updated-player: "You have %status% %player% to %rank% rank!"

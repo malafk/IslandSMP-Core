@@ -1,8 +1,12 @@
 package lol.maltest.islandsmp.cache;
 
+import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.entities.Island;
 import lol.maltest.islandsmp.storage.UserStorage;
 import lol.maltest.islandsmp.entities.User;
+import lol.maltest.islandsmp.utils.HexUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,12 @@ public final class UserCache {
 
 
                 if(user.getIslandUUID() != null) {
+                    if(user.getIslandUUID() == IslandSMP.getInstance().getNullUuid()) {
+                        Player player = Bukkit.getPlayer(user.getIslandUUID());
+                        player.sendMessage(HexUtils.colour("&cYour island got disbanded or you got kicked from it whilst you were offline."));
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "espawn " + player.getName());
+                        return;
+                    }
                     Island is = IslandCache.getIsland(user.getIslandUUID());
 
                     if(is == null) {
@@ -47,7 +57,9 @@ public final class UserCache {
                         return;
                     }
 
-                    user.setIsland(IslandCache.getIsland(user.getIslandUUID()));
+                    Island island = IslandCache.getIsland(user.getIslandUUID());
+                    IslandCache.islandsWithPlayersOnline.add(island);
+                    user.setIsland(island);
                 }
 
                 return;

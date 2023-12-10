@@ -29,9 +29,6 @@ public final class JoinListener implements Listener {
 
         User user = UserCache.getUser(player);
 
-//        if(user.getIslandUUID() != null) {
-//            user.setIsland(IslandCache.getIsland(user.getIslandUUID()));
-//        }
 
     }
 }

@@ -1,20 +1,16 @@
 package lol.maltest.islandsmp.menu.sub;
 
-import com.sun.jdi.ArrayReference;
 import dev.triumphteam.gui.guis.Gui;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.menu.DynamicMenuItem;
 import lol.maltest.islandsmp.menu.Menu;
-import lol.maltest.islandsmp.menu.MenuItem;
 import lol.maltest.islandsmp.menu.Menuable;
 import lol.maltest.islandsmp.utils.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.checkerframework.checker.units.qual.A;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +48,7 @@ public class IslandRankPermMenu extends Menu {
         String permission = key.replace("rankpermissions.buttons.", "").toUpperCase();
 
         // TODO: CHECK PERMISSIONS
-        if(!PermUtil.canGrantPermissionRankCheck(user, selectedRank)) {
+        if(!PermUtil.canModifyRank(user, selectedRank)) {
             player.sendMessage(HexUtils.colour(LanguageUtil.errorHigherRank));
             return;
         }
