@@ -76,7 +76,7 @@ public class IslandMembersMenu extends Menu {
 
                 Rank targetRank = user.getIsland().getIslandMemberByUUID(targetUuid).getRank();
 
-                if (targetRank == user.getIsland().getPlayerRank(player) || PermUtil.canModifyRank(user, targetRank)) {
+                if (!PermUtil.canModifyRank(user, targetRank)) {
                     player.sendMessage(HexUtils.colour(LanguageUtil.errorMembersCantModifyPlayer));
                     return;
                 }
@@ -101,7 +101,7 @@ public class IslandMembersMenu extends Menu {
 
                 Rank targetRank = user.getIsland().getIslandMemberByUUID(targetUuid).getRank();
 
-                if(targetRank == user.getIsland().getPlayerRank(player) || PermUtil.canModifyRank(user, targetRank)) {
+                if(!PermUtil.canModifyRank(user, targetRank)) {
                     player.sendMessage(HexUtils.colour(LanguageUtil.errorMembersCantModifyPlayer));
                     return;
                 }
@@ -126,7 +126,7 @@ public class IslandMembersMenu extends Menu {
 
                 Rank targetRank = user.getIsland().getIslandMemberByUUID(targetUuid).getRank();
 
-                if(targetRank == user.getIsland().getPlayerRank(player) || PermUtil.canModifyRank(user, targetRank)) {
+                if(!PermUtil.canModifyRank(user, targetRank)) {
                     player.sendMessage(HexUtils.colour(LanguageUtil.errorMembersCantModifyPlayer));
                     return;
                 }
@@ -145,6 +145,7 @@ public class IslandMembersMenu extends Menu {
             }
         }
 
+        new IslandMembersMenu().open(player);
         // todo check perms, then check the click type and do whatever
     }
 

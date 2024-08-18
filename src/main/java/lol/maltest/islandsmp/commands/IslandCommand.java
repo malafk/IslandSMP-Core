@@ -6,18 +6,18 @@ import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
+import lol.maltest.islandsmp.entities.QueuePlayer;
 import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.menu.Menu;
 import lol.maltest.islandsmp.menu.sub.*;
 import lol.maltest.islandsmp.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @CommandAlias("island|is|team")
 public class IslandCommand extends BaseCommand {
@@ -36,7 +36,8 @@ public class IslandCommand extends BaseCommand {
         User user = UserCache.getUser(player.getUniqueId());
 
         if(user.getIsland() == null) {
-            plugin.getGridManager().createIsland(player);
+            QueuePlayer qP = new QueuePlayer(player.getUniqueId());
+            plugin.getQueueManager().addPlayer(qP);
             return;
         }
 
@@ -316,9 +317,11 @@ public class IslandCommand extends BaseCommand {
     @Subcommand("home|go")
     @CommandAlias("home|go")
     public void onIslandGoCommand(Player player) {
-        User user = checkIslandExistence(player);
+        User user = UserCache.getUser(player.getUniqueId());
 
-        if(user == null) {
+        if (user.getIsland() == null) {
+            QueuePlayer qP = new QueuePlayer(player.getUniqueId());
+            plugin.getQueueManager().addPlayer(qP);
             return;
         }
 
@@ -338,7 +341,8 @@ public class IslandCommand extends BaseCommand {
             return;
         }
 
-        plugin.getGridManager().createIsland(player);
+        QueuePlayer qP = new QueuePlayer(player.getUniqueId());
+        plugin.getQueueManager().addPlayer(qP);
     }
 
     @Subcommand("visit")
@@ -438,6 +442,15 @@ public class IslandCommand extends BaseCommand {
         new IslandUpgradeMenu().open(player);
     }
 
+    @Subcommand("queuealldebug")
+    @CommandPermission("minecraft.operator")
+    public void onTestCommand(Player player) {
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        Collections.shuffle(players);
+        for(Player player1 : players) {
+            player1.chat("/is create");
+        }
+    }
 
     private User checkIslandExistence(Player player) {
         User user = UserCache.getUser(player.getUniqueId());

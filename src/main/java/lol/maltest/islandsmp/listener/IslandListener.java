@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class IslandListener implements Listener {
 
@@ -45,7 +47,24 @@ public class IslandListener implements Listener {
 
     @EventHandler
     public void onFireSpread(BlockIgniteEvent e) {
+        if(e.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL) || e.getCause().equals(BlockIgniteEvent.IgniteCause.FIREBALL)) return;
         if(e.getBlock().getWorld().getName().equalsIgnoreCase(plugin.getWorldName())) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntityDamageEntityEvent(EntityDamageByEntityEvent e) {
+        if(!(e.getDamager() instanceof Player player)) return;
+        if(!(e.getEntity() instanceof Player target)) return;
+
+        User playerUser = UserCache.getUser(player.getUniqueId());
+        User targetUser = UserCache.getUser(target.getUniqueId());
+
+        UUID playerIsland = playerUser.getIslandUUID();
+        UUID targetIsland = targetUser.getIslandUUID();
+
+        if(playerIsland != targetIsland) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -104,12 +123,19 @@ public class IslandListener implements Listener {
                 event.setCancelled(true);
             }
         } else {
-            if (island.isSettingActive(Setting.MOB_SPAWNING)) {
+            if (plugin.newPlayers.contains(island.getIslandOwner()) || island.isSettingActive(Setting.MOB_SPAWNING)) {
                 event.setCancelled(true);
             }
         }
     }
 
+    @EventHandler
+    public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
+        if(e.getMessage().equalsIgnoreCase("/worldborder")) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(HexUtils.colour("&c/worldborder command is disabled"));
+        }
+    }
 
 
 

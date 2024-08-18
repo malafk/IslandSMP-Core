@@ -6,19 +6,19 @@ pages:
       lore:
         - "&8Action Button"
         - "&f"
-        - "&f"
+        - "&f"
     forward:
       name: "&#36FB2B&lɴᴇхᴛ ᴘᴀɢᴇ"
       lore:
         - "&8Action Button"
         - "&f"
-        - "&f"
+        - "&f"
     backmenu:
       name: "&#f83131&lʙᴀᴄᴋ"
       lore:
         - "&8Action Button"
         - "&f"
-        - "&f"
+        - "&f"
 main:
   title: "Team Menu"
   rows: 4
@@ -34,7 +34,7 @@ main:
         - " &8● &fView a list of all the"
         - "      &fmembers in your island."
         - "&f"
-        - "&f"
+        - "&f"
     trusted:
       name: "&#36FB2B&lᴛʀᴜѕᴛᴇᴅ"
       material: EMERALD
@@ -46,7 +46,7 @@ main:
         - " &8● &fView a list of all the"
         - "      &ftrusted members in your island."
         - "&f"
-        - "&f"
+        - "&f"
     warps:
       name: "&#36FB2B&lᴡᴀʀᴘѕ"
       material: ENDER_PEARL
@@ -58,7 +58,7 @@ main:
         - " &8● &fView a list of all the"
         - "      &fwarps in your island."
         - "&f"
-        - "&f"
+        - "&f"
     settings:
       name: "&#36FB2B&lѕᴇᴛᴛɪɴɢѕ"
       material: COMPARATOR
@@ -70,7 +70,7 @@ main:
         - " &8● &fView and change settings"
         - "      &ffor your island."
         - "&f"
-        - "&f"
+        - "&f"
     upgrades:
       name: "&#36FB2B&lᴜᴘɢʀᴀᴅᴇѕ"
       material: ANVIL
@@ -82,7 +82,7 @@ main:
         - " &8● &fView and upgrade your island"
         - "      &fupgrades."
         - "&f"
-        - "&f"
+        - "&f"
     home:
       name: "&#36FB2B&lʜᴏᴍᴇ"
       material: ENDER_CHEST
@@ -93,7 +93,7 @@ main:
         - "&#36FB2Bɪɴꜰᴏʀᴍᴀᴛɪᴏɴ:"
         - " &8● &fTeleport to your island home"
         - "&f"
-        - "&f"
+        - "&f"
     permissions:
       name: "&#36FB2B&lᴘᴇʀᴍɪѕѕɪᴏɴѕ"
       material: BOOK
@@ -105,7 +105,7 @@ main:
         - " &8● &fView and edit your islands"
         - "      &fpermissions."
         - "&f"
-        - "&f"
+        - "&f"
 members:
   title: "Island Members"
   buttons:
@@ -123,7 +123,7 @@ members:
         - " &8● &fRight Click: &7Demote"
         - " &8● &fMiddle Click: &7Kick"
         - "&f"
-        - "&f"
+        - "&f"
 trusted:
   title: "Island Trusted Members"
   buttons:
@@ -138,7 +138,7 @@ trusted:
         - "&#36FB2Bᴀᴄᴛɪᴏɴѕ:"
         - " &8● &fClick: &7Remove trust"
         - "&f"
-        - "&f"
+        - "&f"
 warps:
   title: "Island Warps"
   buttons:
@@ -152,7 +152,7 @@ warps:
         - " &8● &fY: &7%y%"
         - " &8● &fZ: &7%z%"
         - "&f"
-        - "&f"
+        - "&f"
 permissions:
   title: "Island Permissions"
   rows: 3
@@ -167,7 +167,7 @@ permissions:
         - "&#36FB2Bѕᴛᴀᴛѕ:"
         - " &8● &fPermissions: &7%permissions%"
         - "&f"
-        - "&f"
+        - "&f"
     member:
       name: "&#36FB2B&lᴍᴇᴍʙᴇʀ"
       material: GOLD_INGOT
@@ -178,7 +178,7 @@ permissions:
         - "&#36FB2Bѕᴛᴀᴛѕ:"
         - " &8● &fPermissions: &7%permissions%"
         - "&f"
-        - "&f"
+        - "&f"
     moderator:
       name: "&#36FB2B&lᴍᴏᴅᴇʀᴀᴛᴏʀ"
       material: DIAMOND
@@ -189,7 +189,7 @@ permissions:
         - "&#36FB2Bѕᴛᴀᴛѕ:"
         - " &8● &fPermissions: &7%permissions%"
         - "&f"
-        - "&f"
+        - "&f"
     administrator:
       name: "&#36FB2B&lᴀᴅᴍɪɴɪѕᴛʀᴀᴛᴏʀ"
       material: EMERALD
@@ -200,7 +200,7 @@ permissions:
         - "&#36FB2Bѕᴛᴀᴛѕ:"
         - " &8● &fPermissions: &7%permissions%"
         - "&f"
-        - "&f"
+        - "&f"
 settings:
   title: "Island Settings"
   rows: 3
@@ -219,7 +219,7 @@ settings:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     entity_interact:
       name: "&#36FB2B&lᴇɴᴛɪᴛʏ ɪɴᴛᴇʀᴀᴄᴛ"
       material: DIAMOND_SWORD
@@ -234,7 +234,7 @@ settings:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     phantoms:
       name: "&#36FB2B&lᴘʜᴀɴᴛᴏᴍѕ"
       material: PHANTOM_MEMBRANE
@@ -249,7 +249,7 @@ settings:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     mob_spawning:
       name: "&#36FB2B&lᴍᴏʙ ѕᴘᴀᴡɴɪɴɢ"
       material: ROTTEN_FLESH
@@ -264,7 +264,7 @@ settings:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     animal_spawning:
       name: "&#36FB2B&lᴀɴɪᴍᴀʟ ѕᴘᴀᴡɴɪɴɢ"
       material: WHEAT_SEEDS
@@ -279,7 +279,7 @@ settings:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     explosions:
       name: "&#36FB2B&lᴇхᴘʟᴏѕɪᴏɴѕ"
       material: TNT
@@ -294,7 +294,7 @@ settings:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
 rankpermissions:
   title: "Rank Permissions"
   rows: 4
@@ -313,7 +313,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     break:
       name: "&#36FB2B&lʙʀᴇᴀᴋ"
       material: DIAMOND_PICKAXE
@@ -328,7 +328,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     container:
       name: "&#36FB2B&lᴄᴏɴᴛᴀɪɴᴇʀ"
       material: CHEST
@@ -343,7 +343,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     invite:
       name: "&#36FB2B&lɪɴᴠɪᴛᴇ"
       material: PAPER
@@ -358,7 +358,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     kick:
       name: "&#36FB2B&lᴋɪᴄᴋ"
       material: FEATHER
@@ -373,7 +373,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     promote:
       name: "&#36FB2B&lᴘʀᴏᴍᴏᴛᴇ"
       material: ARROW
@@ -388,7 +388,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     demote:
       name: "&#36FB2B&lᴅᴇᴍᴏᴛᴇ"
       material: ARROW
@@ -403,7 +403,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     settings:
       name: "&#36FB2B&lѕᴇᴛᴛɪɴɢѕ"
       material: COMPARATOR
@@ -418,7 +418,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     upgrade:
       name: "&#36FB2B&lᴜᴘɢʀᴀᴅᴇ"
       material: GOLD_INGOT
@@ -433,7 +433,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     permissions:
       name: "&#36FB2B&lᴘᴇʀᴍɪѕѕɪᴏɴѕ"
       material: NETHER_STAR
@@ -448,7 +448,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     sethome:
       name: "&#36FB2B&lѕᴇᴛ ʜᴏᴍᴇ"
       material: RED_BED
@@ -463,7 +463,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     home:
       name: "&#36FB2B&lʜᴏᴍᴇ"
       material: WHITE_BED
@@ -478,7 +478,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     setwarp:
       name: "&#36FB2B&lѕᴇᴛ ᴡᴀʀᴘ"
       material: ENDER_EYE
@@ -493,7 +493,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
     warp:
       name: "&#36FB2B&lᴡᴀʀᴘ"
       material: ENDER_PEARL
@@ -508,7 +508,7 @@ rankpermissions:
         - "&#36FB2Bѕᴛᴀᴛᴜѕ:"
         - " &8● &fStatus: %status%"
         - "&f"
-        - "&f"
+        - "&f"
 upgrades:
   title: "Island Upgrades"
   rows: 6
@@ -523,7 +523,7 @@ upgrades:
         - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
         - " &8● &fClick to spin the wheel!"
         - "&f"
-        - "&f"
+        - "&f"
     ore_drops:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴏʀᴇ ᴅʀᴏᴘѕ"
       material: DIAMOND
@@ -544,7 +544,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     farm_drops:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ꜰᴀʀᴍ ᴅʀᴏᴘѕ"
       material: WHEAT_SEEDS
@@ -565,7 +565,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     mob_drops:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴍᴏʙ ᴅʀᴏᴘѕ"
       material: FEATHER
@@ -586,7 +586,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     mob_spawns:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴍᴏʙ ѕᴘᴀᴡɴѕ"
       material: ROTTEN_FLESH
@@ -607,7 +607,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     xp_drops:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ хᴘ ᴅʀᴏᴘѕ"
       material: EXPERIENCE_BOTTLE
@@ -627,7 +627,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     keep_inventory:
       name: "&#36FB2B&lᴋᴇᴇᴘ ɪɴᴠᴇɴᴛᴏʀʏ"
       material: TOTEM_OF_UNDYING
@@ -640,7 +640,7 @@ upgrades:
         - "&f"
         - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
         - " &8● &fTier: &7%tier%"
-        - "&f"
+        - "&f"
     keep_xp:
       name: "&#36FB2B&lᴋᴇᴇᴘ хᴘ"
       material: NETHER_STAR
@@ -653,7 +653,7 @@ upgrades:
         - "&f"
         - "&#36FB2B&lᴄᴜʀʀᴇɴᴛ ᴛɪᴇʀ:"
         - " &8● &fTier: &7%tier%"
-        - "&f"
+        - "&f"
     speed:
       name: "&#36FB2B&lᴘᴇʀᴍᴀɴᴇɴᴛ ѕᴘᴇᴇᴅ"
       material: SUGAR
@@ -673,7 +673,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     haste:
       name: "&#36FB2B&lᴘᴇʀᴍᴀɴᴇɴᴛ ʜᴀѕᴛᴇ"
       material: GLOWSTONE_DUST
@@ -693,7 +693,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     night_vision:
       name: "&#36FB2B&lᴘᴇʀᴍᴀɴᴇɴᴛ ɴɪɢʜᴛ ᴠɪѕɪᴏɴ"
       material: REDSTONE_LAMP
@@ -713,7 +713,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     nether_access:
       name: "&#36FB2B&lɴᴇᴛʜᴇʀ ᴀᴄᴄᴇѕѕ"
       material: OBSIDIAN
@@ -724,7 +724,7 @@ upgrades:
         - "&#36FB2B&lᴅᴇѕᴄʀɪᴘᴛɪᴏɴ:"
         - " &8● &fGives a person/all team members on their island"
         - " &f  access to use the nether portal on their island."
-        - "&f"
+        - "&f"
     warp_slots:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴡᴀʀᴘ ѕʟᴏᴛѕ"
       material: ENDER_EYE
@@ -744,7 +744,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     trusted_slots:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇᴅ ᴛʀᴜѕᴛᴇᴅ ѕʟᴏᴛѕ"
       material: IRON_CHESTPLATE
@@ -764,7 +764,7 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"
     world_border:
       name: "&#36FB2B&lɪɴᴄʀᴇᴀѕᴇ ᴡᴏʀʟᴅ ʙᴏʀᴅᴇʀ"
       material: BARRIER
@@ -784,4 +784,4 @@ upgrades:
         - "&f"
         - "%status%"
         - "&f"
-        - "&f"
+        - "&f"

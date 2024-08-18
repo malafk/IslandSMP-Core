@@ -1,5 +1,6 @@
 package lol.maltest.islandsmp.listener;
 
+import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.cache.IslandCache;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
@@ -23,7 +24,7 @@ public final class LeaveListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
 
         // Identifiers
         UUID player = event.getPlayer().getUniqueId();
@@ -43,5 +44,7 @@ public final class LeaveListener implements Listener {
 
         // Remove profile from cache
         userCache.removeFromCacheAndSaveToDatabase(player);
+
+        IslandSMP.getInstance().getQueueManager().removePlayer(player);
     }
 }

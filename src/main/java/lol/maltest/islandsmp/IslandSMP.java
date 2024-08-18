@@ -7,6 +7,7 @@ import lol.maltest.islandsmp.listener.IslandListener;
 import lol.maltest.islandsmp.listener.UpgradeListener;
 import lol.maltest.islandsmp.manager.BorderManager;
 import lol.maltest.islandsmp.manager.GridManager;
+import lol.maltest.islandsmp.manager.QueueManager;
 import lol.maltest.islandsmp.manager.UpgradeManager;
 import lol.maltest.islandsmp.storage.UserStorage;
 import lol.maltest.islandsmp.utils.LanguageUtil;
@@ -25,9 +26,7 @@ import org.bukkit.WorldCreator;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public final class IslandSMP extends JavaPlugin {
 
@@ -40,6 +39,7 @@ public final class IslandSMP extends JavaPlugin {
     @Getter private GridManager gridManager;
     @Getter private BorderManager borderManager;
     @Getter private UpgradeManager upgradeManager;
+    @Getter private QueueManager queueManager;
 
     @Getter private IslandCache islandCache;
     @Getter private UserCache userCache;
@@ -52,6 +52,8 @@ public final class IslandSMP extends JavaPlugin {
 
     // This map will store <Invitee UUID, Inviter UUID>
     public Map<UUID, UUID> invites = new HashMap<>();
+    public List<UUID> newPlayers = new ArrayList<>();
+
 
     @Override
     public void onEnable() {
@@ -78,6 +80,7 @@ public final class IslandSMP extends JavaPlugin {
         gridManager = new GridManager(this);
         borderManager = new BorderManager(this);
         upgradeManager = new UpgradeManager(this);
+        queueManager = new QueueManager(this);
 
         islandCache = new IslandCache(islandStorage);
         userCache = new UserCache(userStorage);

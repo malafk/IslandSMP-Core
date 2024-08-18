@@ -73,6 +73,7 @@ public final class Island extends IslandStorageObject<UUID> {
      */
     public boolean isLocationInsideIsland(Location location) {
         // Debug: Print the coordinates being checked
+        if(getIslandLocation() == null) return false;
         boolean xWithinBounds = (getIslandLocation().minX <= getIslandLocation().maxX) ?
                 (location.getX() >= getIslandLocation().minX && location.getX() <= getIslandLocation().maxX) :
                 (location.getX() >= getIslandLocation().maxX && location.getX() <= getIslandLocation().minX);

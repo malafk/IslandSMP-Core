@@ -3,8 +3,11 @@ package lol.maltest.islandsmp.listener;
 import lol.maltest.islandsmp.IslandSMP;
 import lol.maltest.islandsmp.cache.UserCache;
 import lol.maltest.islandsmp.entities.Island;
+import lol.maltest.islandsmp.entities.User;
 import lol.maltest.islandsmp.manager.UpgradeManager;
 import lol.maltest.islandsmp.utils.HexUtils;
+import lol.maltest.islandsmp.utils.PermUtil;
+import lol.maltest.islandsmp.utils.Permission;
 import lol.maltest.islandsmp.utils.UpgradeType;
 import org.bukkit.Material;
 import org.bukkit.entity.Animals;
@@ -117,10 +120,12 @@ public class UpgradeListener implements Listener {
     @EventHandler
     public void onFarmBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        Island island = UserCache.getUser(player.getUniqueId()).getIsland();
-
+        User user = UserCache.getUser(player.getUniqueId());
+        Island island = user.getIsland();
         // Early return if the player doesn't have an island
         if (island == null) return;
+
+        if(!PermUtil.hasPermission(user, Permission.BREAK)) return;
 
         Material blockType = event.getBlock().getType();
 
@@ -231,6 +236,11 @@ public class UpgradeListener implements Listener {
     @EventHandler
     public void onPortalUse(PlayerPortalEvent e) {
         if(!e.getTo().getWorld().getName().equals("world_nether")) return;
+        if(e.getFrom().getWorld().getName().equalsIgnoreCase("spawn")) {
+            e.setCancelled(true);
+            e.getPlayer().chat("/is go");
+            return;
+        }
 
 
         Player player = e.getPlayer();

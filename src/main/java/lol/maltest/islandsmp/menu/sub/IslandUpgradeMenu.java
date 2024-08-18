@@ -102,8 +102,6 @@ public class IslandUpgradeMenu extends Menu {
     }
 
     public void spinCrate(Gui gui, Player player) {
-        if (isSpinning) return;
-
         isSpinning = true;
         POSSIBLE_REWARDS = generatePossibleRewards();
         scheduleNextSpin(gui, player);
@@ -177,9 +175,12 @@ public class IslandUpgradeMenu extends Menu {
         return Math.min(40, Math.round(delay));
     }
 
+    int upgradeCost = 7500;
+
     @Override
     public void onClick(Player player, String key, ClickType clickType) {
         if ("upgrades.buttons.spin".equals(key)) {
+            if (isSpinning) return;
             if(POSSIBLE_REWARDS.isEmpty()) {
                 player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeMaxedOut));
                 return;
@@ -188,13 +189,13 @@ public class IslandUpgradeMenu extends Menu {
             // take 15k or whatever
             double playerBalance = IslandSMP.getInstance().getEconomy().getBalance(player);
 
-            if(playerBalance < 15000) {
+            if(playerBalance < upgradeCost) {
                 player.sendMessage(HexUtils.colour(LanguageUtil.messagesUpgradeNotEnoughPs));
                 return;
             }
 
-            IslandSMP.getInstance().getEconomy().withdrawPlayer(player, 15000);
-            player.sendMessage(HexUtils.colour("&aSpin &c[$15,000]"));
+            IslandSMP.getInstance().getEconomy().withdrawPlayer(player, upgradeCost);
+            player.sendMessage(HexUtils.colour("&aSpin &c[$7,500]"));
             spinCrate(gui, player);
         }
 
